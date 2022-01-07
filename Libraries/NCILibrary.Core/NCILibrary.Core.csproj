@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{855CDDF5-BB6D-4FDB-AFCE-9B8C1C9D0D87}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NCI</RootNamespace>
+    <AssemblyName>NCILibrary.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>NCILibrary.Core.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Common.Logging.3.4.1\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Common.Logging.Core.3.4.1\lib\net40\Common.Logging.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Messaging" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Data\SqlHelper.cs" />
+    <Compile Include="Data\UsesSProcAttribute.cs" />
+    <Compile Include="HashMaster.cs" />
+    <Compile Include="Logging\EmailLogger.cs" />
+    <Compile Include="Logging\EventLogger.cs" />
+    <Compile Include="Logging\Factories\EmailLoggerFactoryAdapter.cs" />
+    <Compile Include="Logging\Factories\EventLoggerFactoryAdapter.cs" />
+    <Compile Include="Logging\Factories\MultiLoggerFactoryAdapter.cs" />
+    <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Logging\MultiLogger.cs" />
+    <Compile Include="Logging\NCILoggingException.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Text\Configuration\Config.cs" />
+    <Compile Include="Text\Configuration\LoaderElement.cs" />
+    <Compile Include="Text\Configuration\LoaderElementCollection.cs" />
+    <Compile Include="Text\Configuration\MarkupExtensionsSection.cs" />
+    <Compile Include="Text\HtmlHelperMarkupExtensions\DateHandler.cs" />
+    <Compile Include="Text\HtmlHelperMarkupExtensions\FlashHandler.cs" />
+    <Compile Include="Text\HtmlHelperMarkupExtensions\HtmlHelperLoader.cs" />
+    <Compile Include="Text\MarkupExtensionException.cs" />
+    <Compile Include="Text\MarkupExtensionHandler.cs" />
+    <Compile Include="Text\MarkupExtensionHandlerAttribute.cs" />
+    <Compile Include="Text\MarkupExtensionLoader.cs" />
+    <Compile Include="Text\MarkupExtensionProcessor.cs" />
+    <Compile Include="Util\ConversionUtil.cs" />
+    <Compile Include="Util\NCIStringConversionFailedException.cs" />
+    <Compile Include="Util\Strings.cs" />
+    <Compile Include="Util\XmlStrings.cs" />
+    <Compile Include="Web\Extensions\WebExtensions.cs" />
+    <Compile Include="Web\NciUrl.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="NCILibrary.Core.snk" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
