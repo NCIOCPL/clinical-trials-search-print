@@ -1,8 +1,10 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Xml;
 using System.Data.SqlClient;
 using System.Collections;
+using System.Threading.Tasks;
+
 namespace NCI.Data
 {
     /// <summary>
@@ -182,6 +184,65 @@ namespace NCI.Data
                 AttachParameters(command, commandParameters);
             }
             return;
+        }
+
+        /// <summary>
+        /// This method opens (if necessary) and assigns a connection, transaction, command type and parameters 
+        /// to the provided command.
+        /// </summary>
+        /// <param name="command">The SqlCommand to be prepared</param>
+        /// <param name="connection">A valid SqlConnection, on which to execute this command</param>
+        /// <param name="transaction">A valid SqlTransaction, or 'null'</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandTimeout"></param>
+        /// <param name="commandParameters">An array of SqlParameters to be associated with the command or 'null' if no parameters are required</param>
+        /// <returns>A boolean value indicating whether the caller is responsible for closing the connection.</returns>
+        /// <remarks>This is identical to <c>PrepareCommand</c> aside from being asynchronous, and therefore prohibited from having ref or out parameters.</remarks>
+        private static async Task<bool> PrepareCommandAsync(SqlCommand command, SqlConnection connection, SqlTransaction transaction, CommandType commandType, string commandText, int commandTimeout, SqlParameter[] commandParameters)
+        {
+            bool mustCloseConnection;
+
+            if (command == null) throw new ArgumentNullException("command");
+            if (commandText == null || commandText.Length == 0) throw new ArgumentNullException("commandText");
+
+            // If the provided connection is not open, we will open it
+            if (connection.State != ConnectionState.Open)
+            {
+                mustCloseConnection = true;
+                await connection.OpenAsync();
+            }
+            else
+            {
+                mustCloseConnection = false;
+            }
+
+            // Associate the connection with the command
+            command.Connection = connection;
+
+            // Set the command text (stored procedure name or SQL statement)
+            command.CommandText = commandText;
+
+            if (commandTimeout > 0)
+                command.CommandTimeout = commandTimeout;
+
+            // If we were provided a transaction, assign it
+            if (transaction != null)
+            {
+                if (transaction.Connection == null) throw new ArgumentException("The transaction was rollbacked or commited, please provide an open transaction.", "transaction");
+                command.Transaction = transaction;
+            }
+
+            // Set the command type
+            command.CommandType = commandType;
+
+            // Attach the command parameters if they are provided
+            if (commandParameters != null)
+            {
+                AttachParameters(command, commandParameters);
+            }
+
+            return mustCloseConnection;
         }
 
 
@@ -442,6 +503,260 @@ namespace NCI.Data
             return retval;
         }
         #endregion ExecuteNonQuery With CommandTimeout
+
+        #region ExecuteNonQueryAsync
+
+        /// <summary>
+        /// Execute a SqlCommand with default Command Timeout (that returns no resultset and takes no parameters) against the database specified in 
+        /// the connection string
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  int result = await ExecuteNonQueryAsync(connString, CommandType.StoredProcedure, "PublishOrders");
+        /// </remarks>
+        /// <param name="connectionString">A valid connection string for a SqlConnection</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <returns>An int representing the number of rows affected by the command</returns>
+        public static async Task<int> ExecuteNonQueryAsync(string connectionString, CommandType commandType, string commandText)
+        {
+            return await ExecuteNonQueryAsync(connectionString, commandType, commandText, 0);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns no resultset) against the database specified in the connection string 
+        /// using the provided parameters
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  int result = await ExecuteNonQueryAsync(connString, CommandType.StoredProcedure, "PublishOrders", new SqlParameter("@prodid", 24));
+        /// </remarks>
+        /// <param name="connectionString">A valid connection string for a SqlConnection</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+        /// <returns>An int representing the number of rows affected by the command</returns>
+        public static async Task<int> ExecuteNonQueryAsync(string connectionString, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
+        {
+            return await ExecuteNonQueryAsync(connectionString, commandType, commandText, 0, commandParameters);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns no resultset and takes no parameters) against the provided SqlConnection. 
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  int result = await ExecuteNonQueryAsync(conn, CommandType.StoredProcedure, "PublishOrders");
+        /// </remarks>
+        /// <param name="connection">A valid SqlConnection</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <returns>An int representing the number of rows affected by the command</returns>
+        public static async Task<int> ExecuteNonQueryAsync(SqlConnection connection, CommandType commandType, string commandText)
+        {
+            return await ExecuteNonQueryAsync(connection, commandType, commandText, 0);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns no resultset) against the specified SqlConnection 
+        /// using the provided parameters.
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  int result = await ExecuteNonQueryAsync(conn, CommandType.StoredProcedure, "PublishOrders", new SqlParameter("@prodid", 24));
+        /// </remarks>
+        /// <param name="connection">A valid SqlConnection</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+        /// <returns>An int representing the number of rows affected by the command</returns>
+        public static async Task<int> ExecuteNonQueryAsync(SqlConnection connection, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
+        {
+            return await ExecuteNonQueryAsync(connection, commandType, commandText, 0, commandParameters);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns no resultset and takes no parameters) against the provided SqlTransaction. 
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  int result = await ExecuteNonQueryAsync(trans, CommandType.StoredProcedure, "PublishOrders");
+        /// </remarks>
+        /// <param name="transaction">A valid SqlTransaction</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <returns>An int representing the number of rows affected by the command</returns>
+        public static async Task<int> ExecuteNonQueryAsyncy(SqlTransaction transaction, CommandType commandType, string commandText)
+        {
+            return await ExecuteNonQueryAsync(transaction, commandType, commandText, 0);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns no resultset) against the specified SqlTransaction
+        /// using the provided parameters.
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  int result = await ExecuteNonQueryAsync(trans, CommandType.StoredProcedure, "GetOrders", new SqlParameter("@prodid", 24));
+        /// </remarks>
+        /// <param name="transaction">A valid SqlTransaction</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+        /// <returns>An int representing the number of rows affected by the command</returns>
+        public static async Task<int> ExecuteNonQueryAsync(SqlTransaction transaction, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
+        {
+            return await ExecuteNonQueryAsync(transaction, commandType, commandText, 0, commandParameters);
+        }
+
+        #endregion ExecuteNonQueryAsync
+
+        #region ExecuteNonQueryAsync With CommandTimeout
+        /// <summary>
+        /// Execute a SqlCommand with default Command Timeout (that returns no resultset and takes no parameters) against the database specified in 
+        /// the connection string
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  int result = await ExecuteNonQueryAsync(connString, CommandType.StoredProcedure, "PublishOrders");
+        /// </remarks>
+        /// <param name="connectionString">A valid connection string for a SqlConnection</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
+        /// <returns>An int representing the number of rows affected by the command</returns>       
+        public static async Task<int> ExecuteNonQueryAsync(string connectionString, CommandType commandType, string commandText, int commandTimeout)
+        {
+            // Pass through the call providing null for the set of SqlParameters
+            return await ExecuteNonQueryAsync(connectionString, commandType, commandText, commandTimeout, (SqlParameter[])null);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns no resultset) against the database specified in the connection string 
+        /// using the provided parameters
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  int result = await ExecuteNonQueryAsync(connString, CommandType.StoredProcedure, "PublishOrders", new SqlParameter("@prodid", 24));
+        /// </remarks>
+        /// <param name="connectionString">A valid connection string for a SqlConnection</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
+        /// <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+        /// <returns>An int representing the number of rows affected by the command</returns>
+        public static async Task<int> ExecuteNonQueryAsync(string connectionString, CommandType commandType, string commandText, int commandTimeout, params SqlParameter[] commandParameters)
+        {
+            if (connectionString == null || connectionString.Length == 0) throw new ArgumentNullException("connectionString");
+
+            // Create & open a SqlConnection, and dispose of it after we are done
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                await connection.OpenAsync();
+
+                // Call the overload that takes a connection in place of the connection string
+                return await ExecuteNonQueryAsync(connection, commandType, commandText, commandTimeout, commandParameters);
+            }
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns no resultset and takes no parameters) against the provided SqlConnection. 
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  int result = await ExecuteNonQueryAsync(conn, CommandType.StoredProcedure, "PublishOrders");
+        /// </remarks>
+        /// <param name="connection">A valid SqlConnection</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param> 
+        /// <returns>An int representing the number of rows affected by the command</returns>
+        public static async Task<int> ExecuteNonQueryAsync(SqlConnection connection, CommandType commandType, string commandText, int commandTimeout)
+        {
+            // Pass through the call providing null for the set of SqlParameters
+            return await ExecuteNonQueryAsync(connection, commandType, commandText, commandTimeout, (SqlParameter[])null);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns no resultset) against the specified SqlConnection 
+        /// using the provided parameters.
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  int result = await ExecuteNonQueryAsync(conn, CommandType.StoredProcedure, "PublishOrders", new SqlParameter("@prodid", 24));
+        /// </remarks>
+        /// <param name="connection">A valid SqlConnection</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
+        /// <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+        /// <returns>An int representing the number of rows affected by the command</returns>
+        public static async Task<int> ExecuteNonQueryAsync(SqlConnection connection, CommandType commandType, string commandText, int commandTimeout, params SqlParameter[] commandParameters)
+        {
+            if (connection == null) throw new ArgumentNullException("connection");
+
+            // Create a command and prepare it for execution
+            SqlCommand cmd = new SqlCommand();
+            bool mustCloseConnection =  await PrepareCommandAsync(cmd, connection, (SqlTransaction)null, commandType, commandText, commandTimeout, commandParameters);
+
+            // Finally, execute the command
+            int retval = await cmd.ExecuteNonQueryAsync();
+            // Detach the SqlParameters from the command object, so they can be used again
+            cmd.Parameters.Clear();
+            if (mustCloseConnection)
+                connection.Close();
+            return retval;
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns no resultset and takes no parameters) against the provided SqlTransaction. 
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  int result = await ExecuteNonQueryAsync(trans, CommandType.StoredProcedure, "PublishOrders");
+        /// </remarks>
+        /// <param name="transaction">A valid SqlTransaction</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
+        /// <returns>An int representing the number of rows affected by the command</returns>
+        public static async Task<int> ExecuteNonQueryAsync(SqlTransaction transaction, CommandType commandType, string commandText, int commandTimeout)
+        {
+            // Pass through the call providing null for the set of SqlParameters
+            return await ExecuteNonQueryAsync(transaction, commandType, commandText, commandTimeout, (SqlParameter[])null);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns no resultset) against the specified SqlTransaction
+        /// using the provided parameters.
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  int result = await ExecuteNonQueryAsync(trans, CommandType.StoredProcedure, "GetOrders", new SqlParameter("@prodid", 24));
+        /// </remarks>
+        /// <param name="transaction">A valid SqlTransaction</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
+        /// <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+        /// <returns>An int representing the number of rows affected by the command</returns>
+        public static async Task<int> ExecuteNonQueryAsync(SqlTransaction transaction, CommandType commandType, string commandText, int commandTimeout, params SqlParameter[] commandParameters)
+        {
+            if (transaction == null) throw new ArgumentNullException("transaction");
+            if (transaction != null && transaction.Connection == null) throw new ArgumentException("The transaction was rollbacked or commited, please provide an open transaction.", "transaction");
+
+            // Create a command and prepare it for execution
+            SqlCommand cmd = new SqlCommand();
+            bool mustCloseConnection = await PrepareCommandAsync(cmd, transaction.Connection, transaction, commandType, commandText, commandTimeout, commandParameters);
+
+            // Finally, execute the command
+            int retval = await cmd.ExecuteNonQueryAsync();
+
+            // Detach the SqlParameters from the command object, so they can be used again
+            cmd.Parameters.Clear();
+            return retval;
+        }
+        #endregion ExecuteNonQueryAsync With CommandTimeout
 
         #region ExecuteDataset
 
@@ -1449,8 +1764,8 @@ namespace NCI.Data
                 // Detach the SqlParameters from the command object, so they can be used again.
                 // HACK: There is a problem here, the output parameter values are fletched 
                 // when the reader is closed, so if the parameters are detached from the command
-                // then the SqlReader can�t set its values. 
-                // When this happen, the parameters can�t be used again in other command.
+                // then the SqlReader can´t set its values. 
+                // When this happen, the parameters can´t be used again in other command.
                 bool canClear = true;
                 foreach (SqlParameter commandParameter in cmd.Parameters)
                 {
@@ -1607,6 +1922,337 @@ namespace NCI.Data
         }
 
         #endregion ExecuteReader With CommandTimeout
+
+        #region ExecuteReaderAsync
+
+        /// <summary>
+        /// Create and prepare a SqlCommand, and call ExecuteReader with the appropriate CommandBehavior.
+        /// </summary>
+        /// <remarks>
+        /// If we created and opened the connection, we want the connection to be closed when the DataReader is closed.
+        /// 
+        /// If the caller provided the connection, we want to leave it to them to manage.
+        /// </remarks>
+        /// <param name="connection">A valid SqlConnection, on which to execute this command</param>
+        /// <param name="transaction">A valid SqlTransaction, or 'null'</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandParameters">An array of SqlParameters to be associated with the command or 'null' if no parameters are required</param>
+        /// <param name="connectionOwnership">Indicates whether the connection parameter was provided by the caller, or created by SqlHelper</param>
+        /// <returns>SqlDataReader containing the results of the command</returns>
+        private static async Task<SqlDataReader> ExecuteReaderAsync(SqlConnection connection, SqlTransaction transaction, CommandType commandType, string commandText, SqlParameter[] commandParameters, SqlConnectionOwnership connectionOwnership)
+        {
+            return await ExecuteReaderAsync(connection, transaction, commandType, commandText, 0, commandParameters, connectionOwnership);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns a resultset and takes no parameters) against the database specified in 
+        /// the connection string. 
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  SqlDataReader dr = await ExecuteReaderAsync(connString, CommandType.StoredProcedure, "GetOrders");
+        /// </remarks>
+        /// <param name="connectionString">A valid connection string for a SqlConnection</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
+        public static async Task<SqlDataReader> ExecuteReaderAsync(string connectionString, CommandType commandType, string commandText)
+        {
+            return await ExecuteReaderAsync(connectionString, commandType, commandText, 0);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns a resultset) against the database specified in the connection string 
+        /// using the provided parameters.
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  SqlDataReader dr = await ExecuteReaderAsync(connString, CommandType.StoredProcedure, "GetOrders", new SqlParameter("@prodid", 24));
+        /// </remarks>
+        /// <param name="connectionString">A valid connection string for a SqlConnection</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+        /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
+        public static async Task<SqlDataReader> ExecuteReaderAsync(string connectionString, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
+        {
+            return await ExecuteReaderAsync(connectionString, commandType, commandText, 0, commandParameters);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns a resultset and takes no parameters) against the provided SqlConnection. 
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  SqlDataReader dr = await ExecuteReaderAsync(conn, CommandType.StoredProcedure, "GetOrders");
+        /// </remarks>
+        /// <param name="connection">A valid SqlConnection</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
+        public static async Task<SqlDataReader> ExecuteReaderAsync(SqlConnection connection, CommandType commandType, string commandText)
+        {
+            return await ExecuteReaderAsync(connection, commandType, commandText, 0);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns a resultset) against the specified SqlConnection 
+        /// using the provided parameters.
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  SqlDataReader dr = await ExecuteReaderAsync(conn, CommandType.StoredProcedure, "GetOrders", new SqlParameter("@prodid", 24));
+        /// </remarks>
+        /// <param name="connection">A valid SqlConnection</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+        /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
+        public static async Task<SqlDataReader> ExecuteReaderAsync(SqlConnection connection, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
+        {
+            return await ExecuteReaderAsync(connection, commandType, commandText, 0, commandParameters);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns a resultset and takes no parameters) against the provided SqlTransaction. 
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  SqlDataReader dr = await ExecuteReaderAsync(trans, CommandType.StoredProcedure, "GetOrders");
+        /// </remarks>
+        /// <param name="transaction">A valid SqlTransaction</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
+        public static async Task<SqlDataReader> ExecuteReaderAsync(SqlTransaction transaction, CommandType commandType, string commandText)
+        {
+            return await ExecuteReaderAsync(transaction, commandType, commandText, 0);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns a resultset) against the specified SqlTransaction
+        /// using the provided parameters.
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///   SqlDataReader dr = await ExecuteReaderAsync(trans, CommandType.StoredProcedure, "GetOrders", new SqlParameter("@prodid", 24));
+        /// </remarks>
+        /// <param name="transaction">A valid SqlTransaction</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+        /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
+        public static async Task<SqlDataReader> ExecuteReaderAsync(SqlTransaction transaction, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
+        {
+            return await ExecuteReaderAsync(transaction, commandType, commandText, 0, commandParameters);
+        }
+
+        #endregion ExecuteReaderAsync
+
+        #region ExecuteReaderAsync With CommandTimeout
+
+        /// <summary>
+        /// Create and prepare a SqlCommand, and call ExecuteReader with the appropriate CommandBehavior.
+        /// </summary>
+        /// <remarks>
+        /// If we created and opened the connection, we want the connection to be closed when the DataReader is closed.
+        /// 
+        /// If the caller provided the connection, we want to leave it to them to manage.
+        /// </remarks>
+        /// <param name="connection">A valid SqlConnection, on which to execute this command</param>
+        /// <param name="transaction">A valid SqlTransaction, or 'null'</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
+        /// <param name="commandParameters">An array of SqlParameters to be associated with the command or 'null' if no parameters are required</param>
+        /// <param name="connectionOwnership">Indicates whether the connection parameter was provided by the caller, or created by SqlHelper</param>
+        /// <returns>SqlDataReader containing the results of the command</returns>
+        private static async Task<SqlDataReader> ExecuteReaderAsync(SqlConnection connection, SqlTransaction transaction, CommandType commandType, string commandText, int commandTimeout, SqlParameter[] commandParameters, SqlConnectionOwnership connectionOwnership)
+        {
+            if (connection == null) throw new ArgumentNullException("connection");
+
+            bool mustCloseConnection = false;
+            // Create a command and prepare it for execution
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                mustCloseConnection = await PrepareCommandAsync(cmd, connection, transaction, commandType, commandText, commandTimeout, commandParameters);
+
+                // Create a reader
+                SqlDataReader dataReader;
+
+                // Call ExecuteReader with the appropriate CommandBehavior
+                if (connectionOwnership == SqlConnectionOwnership.External)
+                {
+                    dataReader = await cmd.ExecuteReaderAsync();
+                }
+                else
+                {
+                    dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+                }
+
+                // Detach the SqlParameters from the command object, so they can be used again.
+                // HACK: There is a problem here, the output parameter values are fletched 
+                // when the reader is closed, so if the parameters are detached from the command
+                // then the SqlReader can´t set its values. 
+                // When this happen, the parameters can´t be used again in other command.
+                bool canClear = true;
+                foreach (SqlParameter commandParameter in cmd.Parameters)
+                {
+                    if (commandParameter.Direction != ParameterDirection.Input)
+                        canClear = false;
+                }
+
+                if (canClear)
+                {
+                    cmd.Parameters.Clear();
+                }
+
+                return dataReader;
+            }
+            catch
+            {
+                if (mustCloseConnection)
+                    connection.Close();
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns a resultset and takes no parameters) against the database specified in 
+        /// the connection string. 
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  SqlDataReader dr = await ExecuteReaderAsync(connString, CommandType.StoredProcedure, "GetOrders");
+        /// </remarks>
+        /// <param name="connectionString">A valid connection string for a SqlConnection</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
+        /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
+        public static async Task<SqlDataReader> ExecuteReaderAsync(string connectionString, CommandType commandType, string commandText, int commandTimeout)
+        {
+            // Pass through the call providing null for the set of SqlParameters
+            return await ExecuteReaderAsync(connectionString, commandType, commandText, commandTimeout, (SqlParameter[])null);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns a resultset) against the database specified in the connection string 
+        /// using the provided parameters.
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  SqlDataReader dr = await ExecuteReaderAsync(connString, CommandType.StoredProcedure, "GetOrders", new SqlParameter("@prodid", 24));
+        /// </remarks>
+        /// <param name="connectionString">A valid connection string for a SqlConnection</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
+        /// <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+        /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
+        public static async Task<SqlDataReader> ExecuteReaderAsync(string connectionString, CommandType commandType, string commandText, int commandTimeout, params SqlParameter[] commandParameters)
+        {
+            if (connectionString == null || connectionString.Length == 0) throw new ArgumentNullException("connectionString");
+            SqlConnection connection = null;
+            try
+            {
+                connection = new SqlConnection(connectionString);
+                await connection.OpenAsync();
+
+                // Call the private overload that takes an internally owned connection in place of the connection string
+                return await ExecuteReaderAsync(connection, null, commandType, commandText, commandTimeout, commandParameters, SqlConnectionOwnership.Internal);
+            }
+            catch
+            {
+                // If we fail to return the SqlDatReader, we need to close the connection ourselves
+                if (connection != null) connection.Close();
+                throw;
+            }
+
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns a resultset and takes no parameters) against the provided SqlConnection. 
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  SqlDataReader dr = await ExecuteReaderAsync(conn, CommandType.StoredProcedure, "GetOrders");
+        /// </remarks>
+        /// <param name="connection">A valid SqlConnection</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
+        /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
+        public static async Task<SqlDataReader> ExecuteReaderAsync(SqlConnection connection, CommandType commandType, string commandText, int commandTimeout)
+        {
+            // Pass through the call providing null for the set of SqlParameters
+            return await ExecuteReaderAsync(connection, commandType, commandText, commandTimeout, (SqlParameter[])null);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns a resultset) against the specified SqlConnection 
+        /// using the provided parameters.
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  SqlDataReader dr = await ExecuteReaderAsync(conn, CommandType.StoredProcedure, "GetOrders", new SqlParameter("@prodid", 24));
+        /// </remarks>
+        /// <param name="connection">A valid SqlConnection</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
+        /// <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+        /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
+        public static async Task<SqlDataReader> ExecuteReaderAsync(SqlConnection connection, CommandType commandType, string commandText, int commandTimeout, params SqlParameter[] commandParameters)
+        {
+            // Pass through the call to the private overload using a null transaction value and an externally owned connection
+            return await ExecuteReaderAsync(connection, (SqlTransaction)null, commandType, commandText, commandTimeout, commandParameters, SqlConnectionOwnership.External);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns a resultset and takes no parameters) against the provided SqlTransaction. 
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  SqlDataReader dr = await ExecuteReaderAsync(trans, CommandType.StoredProcedure, "GetOrders");
+        /// </remarks>
+        /// <param name="transaction">A valid SqlTransaction</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
+        /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
+        public static async Task<SqlDataReader> ExecuteReaderAsync(SqlTransaction transaction, CommandType commandType, string commandText, int commandTimeout)
+        {
+            // Pass through the call providing null for the set of SqlParameters
+            return await ExecuteReaderAsync(transaction, commandType, commandText, commandTimeout, (SqlParameter[])null);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns a resultset) against the specified SqlTransaction
+        /// using the provided parameters.
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///   SqlDataReader dr = await ExecuteReaderAsync(trans, CommandType.StoredProcedure, "GetOrders", new SqlParameter("@prodid", 24));
+        /// </remarks>
+        /// <param name="transaction">A valid SqlTransaction</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
+        /// <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+        /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
+        public static async Task<SqlDataReader> ExecuteReaderAsync(SqlTransaction transaction, CommandType commandType, string commandText, int commandTimeout, params SqlParameter[] commandParameters)
+        {
+            if (transaction == null) throw new ArgumentNullException("transaction");
+            if (transaction != null && transaction.Connection == null) throw new ArgumentException("The transaction was rollbacked or commited, please provide an open transaction.", "transaction");
+
+            // Pass through to private overload, indicating that the connection is owned by the caller
+            return await ExecuteReaderAsync(transaction.Connection, transaction, commandType, commandText, commandTimeout, commandParameters, SqlConnectionOwnership.External);
+        }
+
+        #endregion ExecuteReaderAsync With CommandTimeout
 
         #region ExecuteScalar
 
