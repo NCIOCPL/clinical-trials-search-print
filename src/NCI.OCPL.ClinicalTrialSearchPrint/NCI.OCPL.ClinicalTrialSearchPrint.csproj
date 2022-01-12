@@ -104,6 +104,7 @@
   <ItemGroup>
     <Content Include="Web.config" />
     <None Include="packages.config" />
+    <Content Include="VelocityTemplates\PrintResults.vm" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
