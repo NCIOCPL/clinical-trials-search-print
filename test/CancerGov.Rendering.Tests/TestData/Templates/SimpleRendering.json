@@ -1,0 +1,8 @@
+﻿{
+  "total": 3,
+  "data": [
+    { "name": "node 1" },
+    { "name": "node 2" },
+    { "name": "node 3" }
+  ]
+}

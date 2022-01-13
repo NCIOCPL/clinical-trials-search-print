@@ -1,3 +1,5 @@
+root = true
+
 # To learn more about .editorconfig see https://aka.ms/editorconfigdocs
 ###############################
 # Core EditorConfig Options   #
@@ -6,6 +8,7 @@
 [*]
 indent_style = space
 trim_trailing_whitespace = true
+
 # Code files
 [*.{cs,csx,vb,vbx}]
 indent_size = 4

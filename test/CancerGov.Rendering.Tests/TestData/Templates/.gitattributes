@@ -1,0 +1,7 @@
+## Files in this directory are used in string comparisons, so it is
+## essential that line endings be consistent.
+##
+## We will force CR/LF as that is what Visual Studio uses.
+
+*.html  text=true eol=crlf
+*.vm    text=true eol=crlf

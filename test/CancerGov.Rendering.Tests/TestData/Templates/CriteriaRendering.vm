@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Criteria Rendering Test</title>
+</head>
+<body>
+    <h1>Criteria Rendering Test</h1>
+#foreach($item in $PageData.Parameters)
+    - $item.Label: $item.Value<br />
+#end
+</body>
+</html>

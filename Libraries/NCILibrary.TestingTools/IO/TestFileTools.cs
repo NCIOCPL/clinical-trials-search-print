@@ -60,7 +60,7 @@ namespace NCI.Test.IO
         /// <summary>
         /// Gets a test file from the TestData folder as a stream
         /// </summary>
-        /// <param name="testFile">The name of the testfile</param>
+        /// <param name="path">The name of the testfile</param>
         /// <returns></returns>
         public static Stream GetTestFileAsStream(string path)
         {
@@ -70,6 +70,11 @@ namespace NCI.Test.IO
             return contents;
         }
 
+        /// <summary>
+        /// Gets a data file as a JSON value or structure.
+        /// </summary>
+        /// <param name="path">The path to the data file.</param>
+        /// <returns>Either a JSON scalar or object, depending on the file contents.</returns>
         public static JToken GetTestFileAsJSON(Type testClass, string testFile)
         {
             //Get the path to the file.
@@ -101,6 +106,30 @@ namespace NCI.Test.IO
 
             return contents;
         }
+
+        /// <summary>
+        /// Gets a data file as a string.
+        /// </summary>
+        /// <param name="path">The path to the data file.</param>
+        /// <returns>Either a JSON scalar or object, depending on the file contents.</returns>
+        public static string GetTestFileAsString(Type testClass, string testFile)
+        {
+            string path = GetPathToTestFile(testClass, testFile);
+            string data = File.ReadAllText(path);
+            return data;
+        }
+
+        /// <summary>
+        /// Gets a data file as a string.
+        /// </summary>
+        /// <param name="testFile">The path to the data file.</param>
+        /// <returns>Either a JSON scalar or object, depending on the file contents.</returns>
+        public static string GetTestFileAsString(string testFile)
+        {
+            string data = File.ReadAllText(testFile);
+            return data;
+        }
+
 
         /// <summary>
         /// Gets the path to a test file within the testdata folder.
