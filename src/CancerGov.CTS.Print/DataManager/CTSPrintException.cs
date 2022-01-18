@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CancerGov.DataManagers
+namespace CancerGov.CTS.Print.DataManager
 {
     /// <summary>
     /// Abstract base class for all Clinical Trials Search print exceptions.

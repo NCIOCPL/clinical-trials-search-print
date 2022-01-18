@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CancerGov.Rendering.Tests")]
+[assembly: AssemblyTitle("CancerGov.CTS.Print.Test")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CancerGov.Rendering.Tests")]
+[assembly: AssemblyProduct("CancerGov.CTS.Print.Test")]
 [assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("075e03a8-2901-4069-a9bc-0a65b7766970")]
+[assembly: Guid("5ae23d4e-6b10-4f2d-a0c9-d2d48cc08a24")]
 
 // Version information for an assembly consists of the following four values:
 //

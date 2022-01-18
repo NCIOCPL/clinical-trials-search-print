@@ -112,9 +112,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CancerGov.DataManager\CancerGov.DataManager.csproj">
-      <Project>{2b4b8c9a-63d2-4859-a3c3-db54487b20fe}</Project>
-      <Name>CancerGov.DataManager</Name>
+    <ProjectReference Include="..\CancerGov.CTS.Print\CancerGov.CTS.Print.csproj">
+      <Project>{291eaea0-d3ec-47e6-97f6-f4e0f3dc335a}</Project>
+      <Name>CancerGov.CTS.Print</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

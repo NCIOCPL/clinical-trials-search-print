@@ -16,7 +16,9 @@ using Common.Logging;
 //using CancerGov.Common.ErrorHandling;
 using NCI.Web.CDE.Application;
 
-namespace CancerGov.DataManagers
+using CancerGov.CTS.Print.Models;
+
+namespace CancerGov.CTS.Print.DataManager
 {
     public class PrintCacheManager
     {
@@ -44,7 +46,7 @@ namespace CancerGov.DataManagers
         /// <param name="isLive"></param>
         /// <returns>A guid.</returns>
         //public static Guid SavePrintResult(string content, IEnumerable<String> trialIDs, CTSSearchParams searchParams, bool isLive)
-        public Guid Save(string content)
+        public Guid Save(string[] trialIds, SearchCriteria searchParams, string content)
         {
             throw new NotImplementedException();
             //DataTable dt = new DataTable();
@@ -62,8 +64,8 @@ namespace CancerGov.DataManagers
             //    parameters[0].Direction = ParameterDirection.Output;
             //    parameters[1].Value = content;
             //    parameters[2].Value = new JavaScriptSerializer().Serialize(searchParams);
-            //    parameters[3].Value = isLive;
-            //    parameters[4].Value = CreatePrintIdDataTable(trialIDs);
+            //    parameters[3].Value = 1; // Legacy argument. The "preview" site is no longer used.
+            //    parameters[4].Value = CreatePrintIdDataTable(trialIds);
 
             //    try
             //    {
@@ -72,35 +74,35 @@ namespace CancerGov.DataManagers
             //    }
             //    catch (SqlException ex)
             //    {
-            //         CancerGovError.LogError("Unable to save data. Search Params: " + searchParams + "isLive: " + isLive, 2, ex);
+            //        log.Error("Unable to save data. Search Params: " + searchParams + "isLive: " + isLive, 2, ex);
             //    }
 
-            //    return printResultGuid;       
+            //    return printResultGuid;
             //}
         }
 
-        //private static DataTable CreatePrintIdDataTable(IEnumerable<String> trialIDs)
-        //{
-        //    // This datatable must be structured like the datatable in the stored proc, 
-        //    // in order to be passed in correctly as a parameter.
-        //    DataTable dt = new DataTable();
+        private static DataTable CreatePrintIdDataTable(IEnumerable<String> trialIDs)
+        {
+            // This datatable must be structured like the datatable in the stored proc, 
+            // in order to be passed in correctly as a parameter.
+            DataTable dt = new DataTable();
 
-        //    // Second column, "trialid", is an varchar(124)
-        //    DataColumn dc = new DataColumn();
-        //    dc.DataType = System.Type.GetType("System.String");
-        //    dc.MaxLength = 124;
-        //    dc.ColumnName = "trialid";
-        //    dt.Columns.Add(dc);
+            // Second column, "trialid", is an varchar(124)
+            DataColumn dc = new DataColumn();
+            dc.DataType = System.Type.GetType("System.String");
+            dc.MaxLength = 124;
+            dc.ColumnName = "trialid";
+            dt.Columns.Add(dc);
 
-        //    foreach (var id in trialIDs)
-        //    {
-        //        DataRow row = dt.NewRow();
-        //        row["trialid"] = id;
-        //        dt.Rows.Add(row);
-        //    }
+            foreach (var id in trialIDs)
+            {
+                DataRow row = dt.NewRow();
+                row["trialid"] = id;
+                dt.Rows.Add(row);
+            }
 
-        //    return dt;
-        //}
+            return dt;
+        }
 
         /// <summary>
         /// Retrieves cached CTS print HTML from the database.

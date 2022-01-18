@@ -7,7 +7,7 @@ using System.Web;
 
 using Common.Logging;
 
-using CancerGov.DataManagers;
+using CancerGov.CTS.Print.DataManager;
 
 namespace NCI.OCPL.ClinicalTrialSearchPrint
 {

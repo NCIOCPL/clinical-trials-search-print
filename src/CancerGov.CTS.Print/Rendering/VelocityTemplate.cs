@@ -6,7 +6,7 @@ using Common.Logging;
 using NVelocity;
 using NVelocity.App;
 
-namespace CancerGov.Rendering
+namespace CancerGov.CTS.Print.Rendering
 {
     public class VelocityTemplate
     {

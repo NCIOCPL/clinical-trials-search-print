@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 using Xunit;
 
-namespace CancerGov.Rendering.Tests
+using CancerGov.CTS.Print.Models;
+
+namespace CancerGov.CTS.Print.Test.Models.Tests
 {
     public class SearchCriteria_HasCriteria
     {

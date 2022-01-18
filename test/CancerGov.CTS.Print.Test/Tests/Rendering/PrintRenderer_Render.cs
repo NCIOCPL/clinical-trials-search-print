@@ -10,7 +10,9 @@ using Xunit;
 
 using NCI.Test.IO;
 
-namespace CancerGov.Rendering.Tests
+using CancerGov.CTS.Print.Models;
+
+namespace CancerGov.CTS.Print.Rendering.Tests
 {
     public class PrintRenderer_Render
     {

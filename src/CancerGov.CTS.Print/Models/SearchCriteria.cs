@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CancerGov.Rendering
+namespace CancerGov.CTS.Print.Models
 {
     /// <summary>
     /// A single search criterion.

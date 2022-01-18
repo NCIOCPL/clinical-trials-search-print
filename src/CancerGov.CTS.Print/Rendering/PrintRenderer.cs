@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using Common.Logging;
 using Newtonsoft.Json.Linq;
 
-namespace CancerGov.Rendering
+using CancerGov.CTS.Print.Models;
+
+namespace CancerGov.CTS.Print.Rendering
 {
     public class PrintRenderer
     {

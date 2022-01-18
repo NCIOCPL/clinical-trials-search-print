@@ -2,7 +2,7 @@
 
 using Xunit;
 
-namespace CancerGov.Rendering.Tests
+namespace CancerGov.CTS.Print.Rendering.Tests
 {
     public class PrintRenderer_Instantiation
     {
