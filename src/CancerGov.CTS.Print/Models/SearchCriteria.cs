@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using Newtonsoft.Json;
 
 namespace CancerGov.CTS.Print.Models
 {
@@ -60,6 +59,15 @@ namespace CancerGov.CTS.Print.Models
         public void Add(string label, string value)
         {
             criteriaList.Add (new Criterion (label, value));
+        }
+
+        /// <summary>
+        /// Creates the JSON representation of the criteria list.
+        /// </summary>
+        /// <returns>A JSON array containing the list of criteria.</returns>
+        public string ToJson()
+        {
+            return JsonConvert.SerializeObject(criteriaList);
         }
     }
 }

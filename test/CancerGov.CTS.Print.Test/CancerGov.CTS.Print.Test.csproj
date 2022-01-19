@@ -71,6 +71,7 @@
     <Compile Include="Tests\Models\SearchCriteria_CriteriaList.cs" />
     <Compile Include="Tests\Models\SearchCriteria_HasCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\Models\SearchCriteria_ToJson.cs" />
     <Compile Include="Tests\Rendering\PrintRenderer_Instantiation.cs" />
     <Compile Include="Tests\Rendering\PrintRenderer_Render.cs" />
   </ItemGroup>

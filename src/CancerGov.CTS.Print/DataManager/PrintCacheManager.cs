@@ -1,20 +1,13 @@
-﻿using System.Web;
-using System;
-using System.Collections;
-//using System.Web.Script.Serialization;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-//using NCI.Util;
 using NCI.Data;
 using NCI.DataManager;
 using Common.Logging;
-//using CancerGov.Common.ErrorHandling;
-using NCI.Web.CDE.Application;
 
 using CancerGov.CTS.Print.Models;
 
@@ -48,37 +41,38 @@ namespace CancerGov.CTS.Print.DataManager
         //public static Guid SavePrintResult(string content, IEnumerable<String> trialIDs, CTSSearchParams searchParams, bool isLive)
         public Guid Save(string[] trialIds, SearchCriteria searchParams, string content)
         {
-            throw new NotImplementedException();
-            //DataTable dt = new DataTable();
-            //using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString))
-            //{
-            //    Guid printResultGuid = Guid.Empty;
+            DataTable dt = new DataTable();
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString))
+            {
+                Guid printResultGuid = Guid.Empty;
 
-            //    SqlParameter[] parameters = {
-            //        new SqlParameter("@printid", SqlDbType.UniqueIdentifier),
-            //        new SqlParameter("@content", SqlDbType.NVarChar, content.Length),
-            //        new SqlParameter("@searchparams", SqlDbType.NVarChar),
-            //        new SqlParameter("@isLive", SqlDbType.Bit),
-            //        new SqlParameter("@trialids", SqlDbType.Structured)
-            //    };
-            //    parameters[0].Direction = ParameterDirection.Output;
-            //    parameters[1].Value = content;
-            //    parameters[2].Value = new JavaScriptSerializer().Serialize(searchParams);
-            //    parameters[3].Value = 1; // Legacy argument. The "preview" site is no longer used.
-            //    parameters[4].Value = CreatePrintIdDataTable(trialIds);
+                // Do something here to turn searchParams into a string.  Maybe a really nifty ToString() implementation.....
 
-            //    try
-            //    {
-            //        SqlHelper.ExecuteNonQuery(conn, CommandType.StoredProcedure, "dbo.ct_insertPrintresultcache", parameters);
-            //        printResultGuid = (Guid)parameters[0].Value;
-            //    }
-            //    catch (SqlException ex)
-            //    {
-            //        log.Error("Unable to save data. Search Params: " + searchParams + "isLive: " + isLive, 2, ex);
-            //    }
+                SqlParameter[] parameters = {
+                    new SqlParameter("@printid", SqlDbType.UniqueIdentifier),
+                    new SqlParameter("@content", SqlDbType.NVarChar, content.Length),
+                    new SqlParameter("@searchparams", SqlDbType.NVarChar),
+                    new SqlParameter("@isLive", SqlDbType.Bit),
+                    new SqlParameter("@trialids", SqlDbType.Structured)
+                };
+                parameters[0].Direction = ParameterDirection.Output;
+                parameters[1].Value = content;
+                parameters[2].Value = searchParams.ToJson();
+                parameters[3].Value = 1; // Legacy argument. The "preview" site is no longer used.
+                parameters[4].Value = CreatePrintIdDataTable(trialIds);
 
-            //    return printResultGuid;
-            //}
+                try
+                {
+                    SqlHelper.ExecuteNonQuery(conn, CommandType.StoredProcedure, "dbo.ct_insertPrintresultcache", parameters);
+                    printResultGuid = (Guid)parameters[0].Value;
+                }
+                catch (SqlException ex)
+                {
+                    log.Error("Unable to save data. Search Params: " + searchParams, ex);
+                }
+
+                return printResultGuid;
+            }
         }
 
         private static DataTable CreatePrintIdDataTable(IEnumerable<String> trialIDs)
