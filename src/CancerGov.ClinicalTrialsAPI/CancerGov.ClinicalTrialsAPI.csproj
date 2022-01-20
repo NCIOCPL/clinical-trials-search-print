@@ -41,6 +41,7 @@
       <HintPath>..\..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -52,6 +53,7 @@
   <ItemGroup>
     <Compile Include="APIServerErrorException.cs" />
     <Compile Include="ClinicalTrialsAPIClient.cs" />
+    <Compile Include="Configuration\ClinicalTrialSearchAPISection.cs" />
     <Compile Include="IClinicalTrialsAPIClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
