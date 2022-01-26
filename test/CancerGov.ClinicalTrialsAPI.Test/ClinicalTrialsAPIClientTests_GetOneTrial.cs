@@ -3,6 +3,7 @@ using System.IO;
 using System.Net.Http;
 using System.Net;
 
+using Moq;
 using Newtonsoft.Json.Linq;
 using RichardSzalay.MockHttp;
 using Xunit;
@@ -21,6 +22,9 @@ namespace CancerGov.ClinicalTrialsAPI.Test
         [Fact]
         async public void RequestStructure()
         {
+            Mock<IClinicalTrialSearchAPISection> mockConfig = new Mock<IClinicalTrialSearchAPISection>();
+            mockConfig.SetupGet(x => x.APIKey).Returns(API_KEY);
+
             MockHttpMessageHandler mockHandler = new MockHttpMessageHandler();
             ByteArrayContent content = HttpClientMockHelper.CreateResponseBody(JSON_CONTENT, "{\"unimportant\":\"JSON value\"}");
 
@@ -34,8 +38,9 @@ namespace CancerGov.ClinicalTrialsAPI.Test
                 .Respond(HttpStatusCode.OK, content);
 
             HttpClient mockedClient = new HttpClient(mockHandler);
+            mockedClient.BaseAddress = new Uri(BASE_URL);
 
-            ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient(mockedClient, BASE_URL, API_KEY);
+            ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient(mockedClient, mockConfig.Object);
             await client.GetOneTrial("NCT1234");
 
             mockHandler.VerifyNoOutstandingExpectation();
@@ -52,6 +57,9 @@ namespace CancerGov.ClinicalTrialsAPI.Test
         [InlineData(HttpStatusCode.GatewayTimeout)] // 504
         async public void ServerError(HttpStatusCode status)
         {
+            Mock<IClinicalTrialSearchAPISection> mockConfig = new Mock<IClinicalTrialSearchAPISection>();
+            mockConfig.SetupGet(x => x.APIKey).Returns(API_KEY);
+
             MockHttpMessageHandler mockHandler = new MockHttpMessageHandler();
             ByteArrayContent content = HttpClientMockHelper.CreateResponseBody(JSON_CONTENT, "{\"unimportant\":\"JSON value\"}");
 
@@ -60,8 +68,9 @@ namespace CancerGov.ClinicalTrialsAPI.Test
                 .Respond(status, content);
 
             HttpClient mockedClient = new HttpClient(mockHandler);
+            mockedClient.BaseAddress = new Uri(BASE_URL);
 
-            ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient(mockedClient, BASE_URL, API_KEY);
+            ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient(mockedClient, mockConfig.Object);
 
             await Assert.ThrowsAsync<APIServerErrorException>(
                 ()=> client.GetOneTrial("NCT1234")
@@ -78,9 +87,13 @@ namespace CancerGov.ClinicalTrialsAPI.Test
             string trialFilePath = TestFileTools.GetPathToTestFile(typeof(ClinicalTrialsAPIClientTests_GetOneTrial), Path.Combine(new string[] { "TrialExamples", trialID + ".json" }));
             JToken expected = TestFileTools.GetTestFileAsJSON(typeof(ClinicalTrialsAPIClientTests_GetOneTrial), Path.Combine(new string[] { "TrialExamples", trialID + ".json" }));
 
-            HttpClient mockedClient = HttpClientMockHelper.GetClientMockForURLWithFileResponse(String.Format("{0}trials/{1}", BASE_URL, trialID), trialFilePath);
+            Mock<IClinicalTrialSearchAPISection> mockConfig = new Mock<IClinicalTrialSearchAPISection>();
+            mockConfig.SetupGet(x => x.APIKey).Returns(API_KEY);
 
-            ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient(mockedClient, BASE_URL, API_KEY);
+            HttpClient mockedClient = HttpClientMockHelper.GetClientMockForURLWithFileResponse(String.Format("{0}trials/{1}", BASE_URL, trialID), trialFilePath);
+            mockedClient.BaseAddress = new Uri(BASE_URL);
+
+            ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient(mockedClient, mockConfig.Object);
 
             JObject actual= await client.GetOneTrial(trialID);
 
@@ -96,9 +109,13 @@ namespace CancerGov.ClinicalTrialsAPI.Test
 
             string trialFilePath = TestFileTools.GetPathToTestFile(typeof(ClinicalTrialsAPIClientTests_GetOneTrial), Path.Combine(new string[] { "TrialExamples", "NotFound-GetOne.json" }));
 
-            HttpClient mockedClient = HttpClientMockHelper.GetClientMockForURLWithFileResponse(String.Format("{0}trials/{1}", BASE_URL, trialID), trialFilePath, HttpStatusCode.NotFound);
+            Mock<IClinicalTrialSearchAPISection> mockConfig = new Mock<IClinicalTrialSearchAPISection>();
+            mockConfig.SetupGet(x => x.APIKey).Returns(API_KEY);
 
-            ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient(mockedClient, BASE_URL, API_KEY);
+            HttpClient mockedClient = HttpClientMockHelper.GetClientMockForURLWithFileResponse(String.Format("{0}trials/{1}", BASE_URL, trialID), trialFilePath, HttpStatusCode.NotFound);
+            mockedClient.BaseAddress = new Uri(BASE_URL);
+
+            ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient(mockedClient, mockConfig.Object);
 
             JObject actual = await client.GetOneTrial(trialID);
 

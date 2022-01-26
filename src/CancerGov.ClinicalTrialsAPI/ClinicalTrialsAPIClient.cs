@@ -26,41 +26,31 @@ namespace CancerGov.ClinicalTrialsAPI
 
         private HttpClient _client = null;
 
+        private IClinicalTrialSearchAPISection _config;
+
         /// <summary>
         /// Creates a new instance of a Clinicaltrials API client.
         /// </summary>
         /// <param name="client">An instance of HttpClient for making the actual HTTP calls.
         /// </param>
-        /// <param name="baseAddress">The base address of the API. (e.g. "https://clinicaltrialsapi.cancer.gov/api/v2/")</param>
-        /// <param name="apiKey">The API key</param>
+        /// <param name="config">An instance of IClinicalTrialSearchAPISection</param>
         /// <remarks>The trials API always gzips the response, regardless of the accepted encodings. As a result, the HttpClient instance must be constructed with an
         /// HttpClientHandler which has the AutomaticDecompression property set to allow gzip. Anticipating future changes, deflate is also required.
         /// 
         /// The classic .Net framework does not support brotli compression.
         /// </remarks>
-        public ClinicalTrialsAPIClient(HttpClient client, string baseAddress, string apiKey)
+        public ClinicalTrialsAPIClient(HttpClient client, IClinicalTrialSearchAPISection config)
         {
             if (client == null)
                 throw new ArgumentNullException(nameof(client), ARGUMENT_NOT_NULL_MSG);
-            if (String.IsNullOrWhiteSpace(baseAddress))
-                throw new ArgumentException(BASE_ADDRESS_REQUIRED_MSG, nameof(baseAddress));
-            if (String.IsNullOrWhiteSpace(apiKey))
-                throw new ArgumentException(ARGUMENT_API_KEY_MSG, nameof(apiKey));
+            if (config == null)
+                throw new ArgumentNullException(nameof(config), ARGUMENT_NOT_NULL_MSG);
 
-            baseAddress = baseAddress.Trim();
-            if (!baseAddress.EndsWith("/"))
-                baseAddress += '/';
-
-            Uri baseURI = new Uri(baseAddress);
-            if (!(baseURI.IsAbsoluteUri && baseURI.IsWellFormedOriginalString()))
-                throw new ArgumentException(INVALID_BASE_URL_MSG, nameof(baseAddress));
-
-            client.BaseAddress = baseURI;
-            client.DefaultRequestHeaders.Add("x-api-key", apiKey);
-            client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("gzip"));
-            client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("deflate"));
+            if(client.BaseAddress == null || String.IsNullOrWhiteSpace(client.BaseAddress.ToString()))
+                throw new ArgumentException(BASE_ADDRESS_REQUIRED_MSG, nameof(client));
 
             this._client = client;
+            this._config = config;
         }
 
         /// <summary>
@@ -154,9 +144,12 @@ namespace CancerGov.ClinicalTrialsAPI
         /// <returns>HTTP response content</returns>
         async protected Task<HttpContent> ReturnGetRespContent(String path, String param)
         {
+            string apiKey = _config.APIKey;
+
             //NOTE: When using HttpClient.BaseAddress as we are, the path must not have a preceeding slash
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, path + "/" + param);
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(JSON_CONTENT));
+            request.Headers.Add("x-api-key", apiKey);
 
             HttpContent content = null;
             HttpResponseMessage response = await _client.SendAsync(request);
@@ -195,9 +188,12 @@ namespace CancerGov.ClinicalTrialsAPI
         /// <returns>HTTP response content</returns>
         async protected Task<HttpContent> ReturnPostRespContent(String path, JObject requestBody)
         {
+            string apiKey = _config.APIKey;
+
             //NOTE: When using HttpClient.BaseAddress as we are, the path must not have a preceeding slash
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, path);
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(JSON_CONTENT));
+            request.Headers.Add("x-api-key", apiKey);
 
             request.Content = new StringContent(requestBody.ToString(), Encoding.UTF8);
 

@@ -54,6 +54,7 @@
     <Compile Include="APIServerErrorException.cs" />
     <Compile Include="ClinicalTrialsAPIClient.cs" />
     <Compile Include="Configuration\ClinicalTrialSearchAPISection.cs" />
+    <Compile Include="Configuration\IClinicalTrialSearchAPISection.cs" />
     <Compile Include="IClinicalTrialsAPIClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

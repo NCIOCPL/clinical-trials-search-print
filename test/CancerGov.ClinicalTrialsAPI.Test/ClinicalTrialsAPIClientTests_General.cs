@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 
+using Moq;
 using Xunit;
 
 namespace CancerGov.ClinicalTrialsAPI.Test
@@ -14,9 +11,11 @@ namespace CancerGov.ClinicalTrialsAPI.Test
         [Fact]
         public void NoHttpClient()
         {
+            Mock<IClinicalTrialSearchAPISection> mockConfig = new Mock<IClinicalTrialSearchAPISection>();  
+
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>
             (
-                () => new ClinicalTrialsAPIClient(null, "https://www.example.com/", "some key")
+                () => new ClinicalTrialsAPIClient(null, mockConfig.Object)
             );
 
             Assert.Equal("client", ex.ParamName);
@@ -24,37 +23,47 @@ namespace CancerGov.ClinicalTrialsAPI.Test
         }
 
 
-        [Theory]
-        [InlineData("")]
-        [InlineData(null)]
-        public void NoBaseAddress(string baseAddress)
+        [Fact]
+        public void NoConfig()
         {
+            HttpClient dummyClient = new HttpClient();
+
+            ArgumentNullException ex = Assert.Throws<ArgumentNullException>
+            (
+                () => new ClinicalTrialsAPIClient(dummyClient, null)
+            );
+
+            Assert.Equal("config", ex.ParamName);
+            Assert.StartsWith(ClinicalTrialsAPIClient.ARGUMENT_NOT_NULL_MSG, ex.Message);
+        }
+
+        [Fact]
+        public void BaseAddressNotSet()
+        {
+            Mock<IClinicalTrialSearchAPISection> mockConfig = new Mock<IClinicalTrialSearchAPISection>();
+
             HttpClient dummyClient = new HttpClient();
 
             ArgumentException ex = Assert.Throws<ArgumentException>
             (
-                () => new ClinicalTrialsAPIClient(dummyClient, baseAddress, "some key")
+                () => new ClinicalTrialsAPIClient(dummyClient, mockConfig.Object)
             );
 
-            Assert.Equal("baseAddress", ex.ParamName);
+            Assert.Equal("client", ex.ParamName);
             Assert.StartsWith(ClinicalTrialsAPIClient.BASE_ADDRESS_REQUIRED_MSG, ex.Message);
         }
 
-
-        [Theory]
-        [InlineData("")]
-        [InlineData(null)]
-        public void NoBaseAPIKey(string apiKey)
+        [Fact]
+        public void SuccessfulInstantiation()
         {
+            Mock<IClinicalTrialSearchAPISection> mockConfig = new Mock<IClinicalTrialSearchAPISection>();
+
             HttpClient dummyClient = new HttpClient();
+            dummyClient.BaseAddress = new Uri("https://some.server/some/path/");
 
-            ArgumentException ex = Assert.Throws<ArgumentException>
-            (
-                () => new ClinicalTrialsAPIClient(dummyClient, "https://www.example.com/", apiKey)
-            );
+            ClinicalTrialsAPIClient apiClient = new ClinicalTrialsAPIClient(dummyClient, mockConfig.Object);
 
-            Assert.Equal("apiKey", ex.ParamName);
-            Assert.StartsWith(ClinicalTrialsAPIClient.ARGUMENT_API_KEY_MSG, ex.Message);
+            Assert.NotNull(apiClient);
         }
     }
 }

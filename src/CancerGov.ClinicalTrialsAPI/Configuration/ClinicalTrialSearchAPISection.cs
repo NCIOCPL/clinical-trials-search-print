@@ -9,7 +9,7 @@ using Common.Logging;
 
 namespace CancerGov.ClinicalTrialsAPI
 {
-    public class ClinicalTrialSearchAPISection : ConfigurationSection
+    public class ClinicalTrialSearchAPISection : ConfigurationSection, IClinicalTrialSearchAPISection
     {
         static ILog log = LogManager.GetLogger(typeof(ClinicalTrialSearchAPISection));
 
@@ -35,7 +35,7 @@ namespace CancerGov.ClinicalTrialsAPI
             get
             {
                 string keyVariable = APIKeyVariableName;
-                if(String.IsNullOrWhiteSpace(keyVariable))
+                if (String.IsNullOrWhiteSpace(keyVariable))
                 {
                     string configMsg = $"Section: {CONFIG_SECTION_NAME}, ClinicalTrialsAPIKey_VAR property is not set.";
 
@@ -44,7 +44,7 @@ namespace CancerGov.ClinicalTrialsAPI
                 }
 
                 string key = Environment.GetEnvironmentVariable(keyVariable);
-                if(String.IsNullOrWhiteSpace(key))
+                if (String.IsNullOrWhiteSpace(key))
                 {
                     string configMsg = $"API key environment variable '{keyVariable}' is not set.";
 

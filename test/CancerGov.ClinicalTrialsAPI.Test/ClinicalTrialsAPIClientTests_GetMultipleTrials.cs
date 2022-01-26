@@ -2,15 +2,14 @@
 using System.IO;
 using System.Net.Http;
 using System.Net;
-using System.Text;
 
+using Moq;
 using Newtonsoft.Json.Linq;
 using RichardSzalay.MockHttp;
 using Xunit;
 
 using NCI.Test.IO;
 using NCI.Test.Net;
-using System.Threading.Tasks;
 
 namespace CancerGov.ClinicalTrialsAPI.Test
 {
@@ -32,6 +31,9 @@ namespace CancerGov.ClinicalTrialsAPI.Test
                 }
             ");
 
+            Mock<IClinicalTrialSearchAPISection> mockConfig = new Mock<IClinicalTrialSearchAPISection>();
+            mockConfig.SetupGet(x => x.APIKey).Returns(API_KEY);
+
             MockHttpMessageHandler mockHandler = new MockHttpMessageHandler();
             ByteArrayContent content = HttpClientMockHelper.CreateResponseBody(JSON_CONTENT, "{\"unimportant\":\"JSON value\"}");
 
@@ -51,8 +53,9 @@ namespace CancerGov.ClinicalTrialsAPI.Test
                 .Respond(HttpStatusCode.OK, content);
 
             HttpClient mockedClient = new HttpClient(mockHandler);
+            mockedClient.BaseAddress = new Uri(BASE_URL);
 
-            ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient(mockedClient, BASE_URL, API_KEY);
+            ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient(mockedClient, mockConfig.Object);
             await client.GetMultipleTrials(trialIDs);
 
             mockHandler.VerifyNoOutstandingExpectation();
@@ -72,6 +75,9 @@ namespace CancerGov.ClinicalTrialsAPI.Test
         {
             string[] trialIDs = { "NCI-2014-01507", "NCI-2015-00054", "NCI-2013-00875" };
 
+            Mock<IClinicalTrialSearchAPISection> mockConfig = new Mock<IClinicalTrialSearchAPISection>();
+            mockConfig.SetupGet(x => x.APIKey).Returns(API_KEY);
+
             MockHttpMessageHandler mockHandler = new MockHttpMessageHandler();
             ByteArrayContent content = HttpClientMockHelper.CreateResponseBody(JSON_CONTENT, "{\"unimportant\":\"JSON value\"}");
 
@@ -80,8 +86,9 @@ namespace CancerGov.ClinicalTrialsAPI.Test
                 .Respond(status, content);
 
             HttpClient mockedClient = new HttpClient(mockHandler);
+            mockedClient.BaseAddress = new Uri(BASE_URL);
 
-            ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient(mockedClient, BASE_URL, API_KEY);
+            ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient(mockedClient, mockConfig.Object);
 
             await Assert.ThrowsAsync<APIServerErrorException>(
                 () => client.GetMultipleTrials(trialIDs)
@@ -97,6 +104,9 @@ namespace CancerGov.ClinicalTrialsAPI.Test
         {
             string[] trialIDs = { "NCI-2014-01507", "NCI-2015-00054", "NCI-2013-00875" };
 
+
+            Mock<IClinicalTrialSearchAPISection> mockConfig = new Mock<IClinicalTrialSearchAPISection>();
+            mockConfig.SetupGet(x => x.APIKey).Returns(API_KEY);
 
             MockHttpMessageHandler mockHandler = new MockHttpMessageHandler();
             ByteArrayContent content = HttpClientMockHelper.CreateResponseBody(JSON_CONTENT, "{\"unimportant\":\"JSON value\"}");
@@ -119,8 +129,9 @@ namespace CancerGov.ClinicalTrialsAPI.Test
                 .Respond(HttpStatusCode.OK, content);
 
             HttpClient mockedClient = new HttpClient(mockHandler);
+            mockedClient.BaseAddress = new Uri(BASE_URL);
 
-            ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient(mockedClient, BASE_URL, API_KEY);
+            ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient(mockedClient, mockConfig.Object);
             await client.GetMultipleTrials(trialIDs, size, from);
 
             mockHandler.VerifyNoOutstandingExpectation();
@@ -131,12 +142,16 @@ namespace CancerGov.ClinicalTrialsAPI.Test
         {
             string[] trialIDs = { "NCI-2014-01507", "NCI-2015-00054", "NCI-2013-00875" };
 
+            Mock<IClinicalTrialSearchAPISection> mockConfig = new Mock<IClinicalTrialSearchAPISection>();
+            mockConfig.SetupGet(x => x.APIKey).Returns(API_KEY);
+
             string trialFilePath = TestFileTools.GetPathToTestFile(typeof(ClinicalTrialsAPIClientTests_GetOneTrial), Path.Combine(new string[] { "TrialExamples", "MultipleTrials.json" }));
             JToken expected = TestFileTools.GetTestFileAsJSON(typeof(ClinicalTrialsAPIClientTests_GetOneTrial), Path.Combine(new string[] { "TrialExamples", "MultipleTrials.json" }));
 
             HttpClient mockedClient = HttpClientMockHelper.GetClientMockForURLWithFileResponse($"{BASE_URL}trials", trialFilePath);
+            mockedClient.BaseAddress = new Uri(BASE_URL);
 
-            ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient(mockedClient, BASE_URL, API_KEY);
+            ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient(mockedClient, mockConfig.Object);
 
             JObject actual = await client.GetMultipleTrials(trialIDs);
 
@@ -149,12 +164,16 @@ namespace CancerGov.ClinicalTrialsAPI.Test
         {
             string[] trialIDs = { "NCI-2014-999999", "NCI-2015-999999", "NCI-2013-999999" };
 
+            Mock<IClinicalTrialSearchAPISection> mockConfig = new Mock<IClinicalTrialSearchAPISection>();
+            mockConfig.SetupGet(x => x.APIKey).Returns(API_KEY);
+
             string trialFilePath = TestFileTools.GetPathToTestFile(typeof(ClinicalTrialsAPIClientTests_GetOneTrial), Path.Combine(new string[] { "TrialExamples", "NotFound-GetMultiple.json" }));
             JToken expected = TestFileTools.GetTestFileAsJSON(trialFilePath);
 
             HttpClient mockedClient = HttpClientMockHelper.GetClientMockForURLWithFileResponse($"{BASE_URL}trials", trialFilePath, HttpStatusCode.OK);
+            mockedClient.BaseAddress = new Uri(BASE_URL);
 
-            ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient(mockedClient, BASE_URL, API_KEY);
+            ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient(mockedClient, mockConfig.Object);
 
             JObject actual = await client.GetMultipleTrials(trialIDs);
 
