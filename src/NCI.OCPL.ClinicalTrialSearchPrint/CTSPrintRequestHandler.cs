@@ -74,6 +74,7 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint
                 (int StatusCode, string Content) result = await GetCachedContent(request.QueryString["printid"]);
 
                 context.Response.StatusCode = result.StatusCode;
+                context.Response.ContentType = "text/html";
                 context.Response.Write(result.Content);
             }
             // Anything else, return an error.
