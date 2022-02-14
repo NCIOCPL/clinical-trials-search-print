@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using Common.Logging;
@@ -20,9 +21,14 @@ namespace CancerGov.ClinicalTrialsAPI
         public const string ARGUMENT_API_KEY_MSG = "A valid API key is required.";
         public const string INVALID_BASE_URL_MSG = "Must be a valid, absolute URL.";
 
+        public const string DISEASE_LIST_EMPTY_ARGUMENT_LIST = "Must be a list of one or more concept IDs.";
+        public const string DISEASE_LIST_INVALID_CCODES = "Concept IDs must be of the form C#####.";
+
         public const string JSON_CONTENT = "application/json";
 
         static ILog log = LogManager.GetLogger(typeof(ClinicalTrialsAPIClient));
+
+        static readonly Regex CCodeMatcher = new Regex(@"^\s*C\d+\s*$", RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
         private HttpClient _client = null;
 
@@ -46,7 +52,7 @@ namespace CancerGov.ClinicalTrialsAPI
             if (config == null)
                 throw new ArgumentNullException(nameof(config), ARGUMENT_NOT_NULL_MSG);
 
-            if(client.BaseAddress == null || String.IsNullOrWhiteSpace(client.BaseAddress.ToString()))
+            if (client.BaseAddress == null || String.IsNullOrWhiteSpace(client.BaseAddress.ToString()))
                 throw new ArgumentException(BASE_ADDRESS_REQUIRED_MSG, nameof(client));
 
             this._client = client;
@@ -58,7 +64,6 @@ namespace CancerGov.ClinicalTrialsAPI
         /// </summary>
         /// <param name="id">Either the NCI ID or the NCT ID</param>
         /// <returns>JSON object representing the clinical trial</returns>
-
         async public Task<JObject> GetOneTrial(string id)
         {
             if (String.IsNullOrWhiteSpace(id))
@@ -69,8 +74,8 @@ namespace CancerGov.ClinicalTrialsAPI
             JObject rtnTrial = null;
 
             // Get the HTTP response content from GET request
-            HttpContent httpContent = await ReturnGetRespContent("trials", id);
-            if(httpContent != null)
+            HttpContent httpContent = await ReturnGetRespContent("trials", id, null, true);
+            if (httpContent != null)
             {
                 string responseBody = await httpContent.ReadAsStringAsync();
                 rtnTrial = JObject.Parse(responseBody);
@@ -107,27 +112,42 @@ namespace CancerGov.ClinicalTrialsAPI
             return result;
         }
 
-        /// <summary>
-        /// Gets a collection of disease details from the API.
-        /// </summary>
-        /// <param name="diseaseCodes">List of disease concept codes to retrieve.</param>
-        /// <returns>Collection of disease details</returns>
-#pragma warning disable CS1998
-        async public Task<IEnumerable<JObject>> LookupDiseaseCodes(
+        /// <inheritdoc/>
+        async public Task<JObject> LookupDiseaseNames(
             IEnumerable<string> diseaseCodes
         )
         {
-            throw new NotImplementedException();
-        }
-#pragma warning restore
+            if (diseaseCodes == null || diseaseCodes.Count() == 0)
+                throw new ArgumentNullException(nameof(diseaseCodes), DISEASE_LIST_EMPTY_ARGUMENT_LIST);
 
-        /// <summary>
-        /// Gets a collection of interventions from the API.
-        /// </summary>
-        /// <param name="interventionCodes">List of intervention concept codes to retrieve.</param>
-        /// <returns>Collection of intervention details</returns>
+            // The parameter lists on these two exceptions are reversed. That's OK. It's just annoying.
+            if (diseaseCodes.Any(code => !CCodeMatcher.IsMatch(code)))
+                throw new ArgumentException(DISEASE_LIST_INVALID_CCODES, nameof(diseaseCodes));
+
+            // Create a list of query string parameter tuples.
+            var codes = from code in diseaseCodes select ("codes", code);
+            List<(string Name, string value)> queryParams = new List<(string Name, string value)>(codes);
+
+            // Limit the returned fields
+            queryParams.Add(("include", "name"));
+            queryParams.Add(("include", "codes"));
+
+            JObject rtnDiseaseNames = null;
+
+            // Get the HTTP response content from GET request
+            HttpContent httpContent = await ReturnGetRespContent("diseases", null, queryParams, false);
+            if (httpContent != null)
+            {
+                string responseBody = await httpContent.ReadAsStringAsync();
+                rtnDiseaseNames = JObject.Parse(responseBody);
+            }
+
+            return rtnDiseaseNames;
+        }
+
+        /// <inheritdoc/>
 #pragma warning disable CS1998
-        async public Task<IEnumerable<JObject>> LookupInterventionCodes(
+        async public Task<IEnumerable<JObject>> LookupInterventionNames(
             IEnumerable<string> interventionCodes
         )
         {
@@ -140,14 +160,25 @@ namespace CancerGov.ClinicalTrialsAPI
         /// Gets the response content of a GET request.
         /// </summary>
         /// <param name="path">Path for client address</param>
-        /// <param name="param">Param in URL</param>
+        /// <param name="inlineParam">Param in the path. Specify null if there is none.</param>
+        /// <param name="queryParams">A list of tuples containing name value pairs for the query parameters. Specify null or an empty list if there are none.</param>
+        /// <param name="endpointAllows404Response">Set true if the endpoint is one which returns a 404 as a meaningful return, set false if a 404 return is a genuine error.</param>
         /// <returns>HTTP response content</returns>
-        async protected Task<HttpContent> ReturnGetRespContent(String path, String param)
+        async protected Task<HttpContent> ReturnGetRespContent(String path, String inlineParam, IEnumerable<(string Name, string Value)> queryParams, bool endpointAllows404Response)
         {
             string apiKey = _config.APIKey;
 
+            // build up relative URL.
+            if (!String.IsNullOrWhiteSpace(inlineParam))
+                path += $"/{inlineParam}";
+            if (queryParams != null)
+            {
+                var list = from item in queryParams select $"{item.Name.Trim()}={item.Value.Trim()}";
+                path += "?" + String.Join("&", list);
+            }
+
             //NOTE: When using HttpClient.BaseAddress as we are, the path must not have a preceeding slash
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, path + "/" + param);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, path);
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(JSON_CONTENT));
             request.Headers.Add("x-api-key", apiKey);
 
@@ -160,12 +191,15 @@ namespace CancerGov.ClinicalTrialsAPI
             else
             {
                 string errorResponse = null;
-                if(response.Content != null)
+                if (response.Content != null)
                     errorResponse = await response.Content.ReadAsStringAsync();
-                string errorMessage = $"Response: '{errorResponse}' \nAPI path: {this._client.BaseAddress.ToString() + path + "/" + param}";
-                if (response.StatusCode == HttpStatusCode.NotFound)
+                string errorMessage = $"Response: '{errorResponse}' \nAPI path: {this._client.BaseAddress.ToString() + path + "/" + inlineParam}";
+
+                // Some endpoints (e.g. get for a single trial) return a status 404 if nothing is found.
+                // Other endpoints (e.g. diseases and interventions) return an empty JSON structure, in which case a 404 is likely a configuration error.
+                if (response.StatusCode == HttpStatusCode.NotFound && endpointAllows404Response)
                 {
-                    // If trial is not found, log 404 message and return content as null
+                    // Log 404 message and return content as null
                     log.Debug(errorMessage);
                 }
                 else

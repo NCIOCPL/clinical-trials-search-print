@@ -145,8 +145,8 @@ namespace CancerGov.ClinicalTrialsAPI.Test
             Mock<IClinicalTrialSearchAPISection> mockConfig = new Mock<IClinicalTrialSearchAPISection>();
             mockConfig.SetupGet(x => x.APIKey).Returns(API_KEY);
 
-            string trialFilePath = TestFileTools.GetPathToTestFile(typeof(ClinicalTrialsAPIClientTests_GetOneTrial), Path.Combine(new string[] { "TrialExamples", "MultipleTrials.json" }));
-            JToken expected = TestFileTools.GetTestFileAsJSON(typeof(ClinicalTrialsAPIClientTests_GetOneTrial), Path.Combine(new string[] { "TrialExamples", "MultipleTrials.json" }));
+            string trialFilePath = TestFileTools.GetPathToTestFile(typeof(ClinicalTrialsAPIClientTests_GetOneTrial), Path.Combine(new string[] { "Testdata", "TrialExamples", "MultipleTrials.json" }));
+            JToken expected = TestFileTools.GetTestFileAsJSON(typeof(ClinicalTrialsAPIClientTests_GetOneTrial), Path.Combine(new string[] { "Testdata", "TrialExamples", "MultipleTrials.json" }));
 
             HttpClient mockedClient = HttpClientMockHelper.GetClientMockForURLWithFileResponse($"{BASE_URL}trials", trialFilePath);
             mockedClient.BaseAddress = new Uri(BASE_URL);
@@ -167,7 +167,7 @@ namespace CancerGov.ClinicalTrialsAPI.Test
             Mock<IClinicalTrialSearchAPISection> mockConfig = new Mock<IClinicalTrialSearchAPISection>();
             mockConfig.SetupGet(x => x.APIKey).Returns(API_KEY);
 
-            string trialFilePath = TestFileTools.GetPathToTestFile(typeof(ClinicalTrialsAPIClientTests_GetOneTrial), Path.Combine(new string[] { "TrialExamples", "NotFound-GetMultiple.json" }));
+            string trialFilePath = TestFileTools.GetPathToTestFile(typeof(ClinicalTrialsAPIClientTests_GetOneTrial), Path.Combine(new string[] { "Testdata", "TrialExamples", "NotFound-GetMultiple.json" }));
             JToken expected = TestFileTools.GetTestFileAsJSON(trialFilePath);
 
             HttpClient mockedClient = HttpClientMockHelper.GetClientMockForURLWithFileResponse($"{BASE_URL}trials", trialFilePath, HttpStatusCode.OK);

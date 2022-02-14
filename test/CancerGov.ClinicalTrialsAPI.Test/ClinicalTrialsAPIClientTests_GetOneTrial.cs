@@ -84,8 +84,8 @@ namespace CancerGov.ClinicalTrialsAPI.Test
         {
             string trialID = "NCT02194738";
 
-            string trialFilePath = TestFileTools.GetPathToTestFile(typeof(ClinicalTrialsAPIClientTests_GetOneTrial), Path.Combine(new string[] { "TrialExamples", trialID + ".json" }));
-            JToken expected = TestFileTools.GetTestFileAsJSON(typeof(ClinicalTrialsAPIClientTests_GetOneTrial), Path.Combine(new string[] { "TrialExamples", trialID + ".json" }));
+            string trialFilePath = TestFileTools.GetPathToTestFile(typeof(ClinicalTrialsAPIClientTests_GetOneTrial), Path.Combine(new string[] { "Testdata", "TrialExamples", trialID + ".json" }));
+            JToken expected = TestFileTools.GetTestFileAsJSON(typeof(ClinicalTrialsAPIClientTests_GetOneTrial), Path.Combine(new string[] { "Testdata", "TrialExamples", trialID + ".json" }));
 
             Mock<IClinicalTrialSearchAPISection> mockConfig = new Mock<IClinicalTrialSearchAPISection>();
             mockConfig.SetupGet(x => x.APIKey).Returns(API_KEY);
@@ -107,7 +107,7 @@ namespace CancerGov.ClinicalTrialsAPI.Test
         {
             string trialID = "NCT0999999999";
 
-            string trialFilePath = TestFileTools.GetPathToTestFile(typeof(ClinicalTrialsAPIClientTests_GetOneTrial), Path.Combine(new string[] { "TrialExamples", "NotFound-GetOne.json" }));
+            string trialFilePath = TestFileTools.GetPathToTestFile(typeof(ClinicalTrialsAPIClientTests_GetOneTrial), Path.Combine(new string[] { "Testdata", "TrialExamples", "NotFound-GetOne.json" }));
 
             Mock<IClinicalTrialSearchAPISection> mockConfig = new Mock<IClinicalTrialSearchAPISection>();
             mockConfig.SetupGet(x => x.APIKey).Returns(API_KEY);

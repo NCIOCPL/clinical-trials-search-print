@@ -87,13 +87,26 @@
     <Compile Include="ClinicalTrialsAPIClientTests_General.cs" />
     <Compile Include="ClinicalTrialsAPIClientTests_GetMultipleTrials.cs" />
     <Compile Include="ClinicalTrialsAPIClientTests_GetOneTrial.cs" />
+    <Compile Include="ClinicalTrialsAPIClientTests_LookupDiseaseNames.cs" />
     <Compile Include="ClinicalTrialSearchAPISection_Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Testdata\LookupDiseaseNames\LookupDiseaseNames_Multiple.cs" />
+    <Compile Include="Testdata\LookupDiseaseNames\LookupDiseaseNames_Single.cs" />
+    <Compile Include="Testdata\LookupDiseaseNames\LookupDiseaseNames_Base.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <Content Include="TrialExamples\**">
+    <Content Include="Testdata\TrialExamples\MultipleTrials.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Testdata\TrialExamples\NCT02194738.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Testdata\TrialExamples\NotFound-GetMultiple.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Testdata\TrialExamples\NotFound-GetOne.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -110,6 +123,7 @@
       <Name>CancerGov.ClinicalTrialsAPI</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

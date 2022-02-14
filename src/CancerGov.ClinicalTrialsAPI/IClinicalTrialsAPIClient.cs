@@ -26,17 +26,17 @@ namespace CancerGov.ClinicalTrialsAPI
         Task<JObject> GetMultipleTrials(IEnumerable<string> trialIDs, int size = 10, int from = 0);
 
         /// <summary>
-        /// Gets a collection of disease details from the API.
+        /// Gets a collection of disease names from the API.
         /// </summary>
         /// <param name="diseaseCodes">List of disease concept codes to retrieve.</param>
-        /// <returns>Collection of disease details</returns>
-        Task<IEnumerable<JObject>> LookupDiseaseCodes(IEnumerable<string> diseaseCodes);
+        /// <returns>A JSON array containing a collection of disease names and codes</returns>
+        Task<JObject> LookupDiseaseNames(IEnumerable<string> diseaseCodes);
 
         /// <summary>
-        /// Gets a collection of interventions from the API.
+        /// Gets a collection of intervention names from the API.
         /// </summary>
         /// <param name="interventionCodes">List of intervention concept codes to retrieve.</param>
         /// <returns>Collection of intervention details</returns>
-        Task<IEnumerable<JObject>> LookupInterventionCodes(IEnumerable<string> interventionCodes);
+        Task<IEnumerable<JObject>> LookupInterventionNames(IEnumerable<string> interventionCodes);
     }
 }
