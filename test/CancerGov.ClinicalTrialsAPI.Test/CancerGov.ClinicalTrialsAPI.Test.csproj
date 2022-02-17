@@ -88,11 +88,15 @@
     <Compile Include="ClinicalTrialsAPIClientTests_GetMultipleTrials.cs" />
     <Compile Include="ClinicalTrialsAPIClientTests_GetOneTrial.cs" />
     <Compile Include="ClinicalTrialsAPIClientTests_LookupDiseaseNames.cs" />
+    <Compile Include="ClinicalTrialsAPIClientTests_LookupInterventionNames.cs" />
     <Compile Include="ClinicalTrialSearchAPISection_Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Testdata\LookupDiseaseNames\LookupDiseaseNames_Multiple.cs" />
     <Compile Include="Testdata\LookupDiseaseNames\LookupDiseaseNames_Single.cs" />
     <Compile Include="Testdata\LookupDiseaseNames\LookupDiseaseNames_Base.cs" />
+    <Compile Include="Testdata\LookupInterventionNames\LookupInterventionNames_Base.cs" />
+    <Compile Include="Testdata\LookupInterventionNames\LookupInterventionNames_Multiple.cs" />
+    <Compile Include="Testdata\LookupInterventionNames\LookupInterventionNames_Single.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

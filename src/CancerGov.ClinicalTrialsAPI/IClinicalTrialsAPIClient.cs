@@ -37,6 +37,6 @@ namespace CancerGov.ClinicalTrialsAPI
         /// </summary>
         /// <param name="interventionCodes">List of intervention concept codes to retrieve.</param>
         /// <returns>Collection of intervention details</returns>
-        Task<IEnumerable<JObject>> LookupInterventionNames(IEnumerable<string> interventionCodes);
+        Task<JObject> LookupInterventionNames(IEnumerable<string> interventionCodes);
     }
 }

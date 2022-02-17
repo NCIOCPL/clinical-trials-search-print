@@ -9,7 +9,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using Common.Logging;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace CancerGov.ClinicalTrialsAPI
@@ -22,7 +21,10 @@ namespace CancerGov.ClinicalTrialsAPI
         public const string INVALID_BASE_URL_MSG = "Must be a valid, absolute URL.";
 
         public const string DISEASE_LIST_EMPTY_ARGUMENT_LIST = "Must be a list of one or more concept IDs.";
-        public const string DISEASE_LIST_INVALID_CCODES = "Concept IDs must be of the form C#####.";
+        public const string DISEASE_LIST_INVALID_CCODES = "Disease concept IDs must be of the form C#####.";
+
+        public const string INTERVENTION_LIST_EMPTY_ARGUMENT_LIST = "Must be a list of one or more concept IDs.";
+        public const string INTERVENTION_LIST_INVALID_CCODES = "Intervention concept IDs must be of the form C#####.";
 
         public const string JSON_CONTENT = "application/json";
 
@@ -146,14 +148,37 @@ namespace CancerGov.ClinicalTrialsAPI
         }
 
         /// <inheritdoc/>
-#pragma warning disable CS1998
-        async public Task<IEnumerable<JObject>> LookupInterventionNames(
+        async public Task<JObject> LookupInterventionNames(
             IEnumerable<string> interventionCodes
         )
         {
-            throw new NotImplementedException();
+            if (interventionCodes == null || interventionCodes.Count() == 0)
+                throw new ArgumentNullException(nameof(interventionCodes), INTERVENTION_LIST_EMPTY_ARGUMENT_LIST);
+
+            // The parameter lists on these two exceptions are reversed. That's OK. It's just annoying.
+            if (interventionCodes.Any(code => !CCodeMatcher.IsMatch(code)))
+                throw new ArgumentException(INTERVENTION_LIST_INVALID_CCODES, nameof(interventionCodes));
+
+            // Create a list of query string parameter tuples.
+            var codes = from code in interventionCodes select ("codes", code);
+            List<(string Name, string value)> queryParams = new List<(string Name, string value)>(codes);
+
+            // Limit the returned fields
+            queryParams.Add(("include", "name"));
+            queryParams.Add(("include", "codes"));
+
+            JObject rtnInterventionNames = null;
+
+            // Get the HTTP response content from GET request
+            HttpContent httpContent = await ReturnGetRespContent("interventions", null, queryParams, false);
+            if (httpContent != null)
+            {
+                string responseBody = await httpContent.ReadAsStringAsync();
+                rtnInterventionNames = JObject.Parse(responseBody);
+            }
+
+            return rtnInterventionNames;
         }
-#pragma warning restore
 
 
         /// <summary>
