@@ -100,10 +100,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CTS.Print-js\BasicCTSPrintPage.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Global.asax" />
     <Content Include="index.htm" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CTS.Print-styles\BasicCTSPrintPage.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CTS.Print-styles\nvcg.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Web.config" />
     <None Include="packages.config" />
     <Content Include="VelocityTemplates\PrintResults.vm">
