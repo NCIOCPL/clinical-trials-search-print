@@ -70,10 +70,6 @@
       <Project>{b75a2778-14f2-472a-80d6-a3128e2ad6b2}</Project>
       <Name>NCILibrary.DataManager</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LegacyCDE.Framework\LegacyCDE.Framework.csproj">
-      <Project>{fe791abd-7c4f-4a61-9ee9-54046c290ded}</Project>
-      <Name>LegacyCDE.Framework</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
