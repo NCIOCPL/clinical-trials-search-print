@@ -1,73 +1,10 @@
-##Begin DrawSearchParamsV2
-## Draws a single set of criteria
-#macro(DrawOneSearchParam $label $field)
-    #if($SearchResults.Parameters.IsFieldSet($field) == true)
-        #set($value = $SearchResults.Parameters.GetFieldAsString($field))
-        #DrawOneSearchParamRow($label $value)
-    #end
-#end
-
-## Draws a single set of criteria
-#macro(DrawOneSearchParamIfEql $label $field $eqlValue)
-    #if($SearchResults.Parameters.IsFieldSet($field) == true && $SearchResults.Parameters.GetFieldAsString($field) == $eqlValue)
-        #set($value = $SearchResults.Parameters.GetFieldAsString($field))
-        #DrawOneSearchParamRow($label $value)
-    #end
-#end
-
-## Draws a single set of criteria
-#macro(DrawOneSearchParamWithLblIfEql $label $field $eqlValue $value)
-    #if($SearchResults.Parameters.IsFieldSet($field) == true && $SearchResults.Parameters.GetFieldAsString($field) == $eqlValue)
-        #DrawOneSearchParamRow($label $value)
-    #end
-#end
-
-#macro(DrawOneSearchParamRow $label $value)
-    <tr>
-        <td class="hdrlft"><strong>${label}:</strong></td>
-        <td>$value</td>
-    </tr>
-#end
-
-#macro(DrawLocationSearchParam)
-    #set($locParam = $SearchResults.Parameters.LocationParams)
-
-    #if($SearchResults.Parameters.Location == "Hospital")
-        #if($locParam.IsFieldSet("Hospital") == true)
-            #set($value = $locParam.GetFieldAsString("Hospital"))
-            #DrawOneSearchParamRow("At Hospital/Institution" $value)
-        #end
-    #elseif($SearchResults.Parameters.Location == "CountryCityState")
-        #if($locParam.IsFieldSet("Country") == true)
-            #set($value = $locParam.GetFieldAsString("Country"))
-            #DrawOneSearchParamRow("Country" $value)
-        #end
-        #if($locParam.IsFieldSet("State") == true)
-            #set($value = $locParam.GetFieldAsString("State"))
-            #DrawOneSearchParamRow("State" $value)
-        #end
-        #if($locParam.IsFieldSet("City") == true)
-            #set($value = $locParam.GetFieldAsString("City"))
-            #DrawOneSearchParamRow("City" $value)
-        #end
-    #elseif($SearchResults.Parameters.Location == "Zip")
-        #set($zip = $locParam.GetFieldAsString("ZipCode"))
-        #set($zipProx = $locParam.GetFieldAsString("ZipRadius"))
-        #set($value = "within $zipProx miles of $zip")
-        #DrawOneSearchParamRow("Near ZIP Code" $value)
-    #elseif($SearchResults.Parameters.Location == "AtNIH")
-        #DrawOneSearchParamRow("At NIH" 'Only show trials at the NIH Clinical Center (Bethesda, MD)')
-    #end
-#end
-
-## Gigantic macro used to draw "you searched for" labels on results page
-## TODO: clean up, separate into baked .inc file, reuse on view page?
+##Begin DrawSearchParams
+## Draws the "you searched for" labels on results page
 ## This should only be called by places that are checking if we have criteria to display.
-#macro(DrawSearchParamsV2 $SearchResults)
+#macro(DrawSearchParams $PageData)
 
     <a href="#" class="ctscb" id="ctscb">Show Search Criteria</a>
     <div class="search-criteria-box" aria-expanded="false" aria-labelledby="ctscb">
-
       <div class="clinicaltrials-results-criteria-display">
         <h3>Your Search Criteria</h3>
         <table class="table no-auto-enlarge" style="width: 100%;">
@@ -78,132 +15,88 @@
                 </tr>
             </thead>
             <tbody>
-                #DrawOneSearchParam("Primary Cancer Type/Condition" "MainType")
-                #DrawOneSearchParam("Subtype" "SubTypes")
-                #DrawOneSearchParam("Stage" "Stages")
-                #DrawOneSearchParam("Side Effects / Biomarkers / Participant Attributes" "Findings")
-                #DrawOneSearchParam("Age" "Age")
-                #DrawOneSearchParam("Keywords/Phrases" "Phrase")
-                #DrawOneSearchParamWithLblIfEql("Veterans Affairs Facilities" "IsVAOnly" "True" "Results limited to trials at Veterans Affairs facilities")
-                #DrawOneSearchParamWithLblIfEql("Veterans Affairs Facilities" "IsVAOnly" "False" "Match all trial sites")
-                ##We need to add IsFieldSet checks that delve into the location parameters
-                ##in order to handle these.
-                #DrawLocationSearchParam()
-                #DrawOneSearchParamWithLblIfEql("Healthy Volunteers" "HealthyVolunteers" "Only Accepting Healthy Volunteers" "Results limited to trials accepting healthy volunteers")
-                #DrawOneSearchParamWithLblIfEql("Healthy Volunteers" "HealthyVolunteers" "Not Accepting Healthy Volunteers" "Results limited to trials not accepting healthy volunteers")
-                #DrawOneSearchParamWithLblIfEql("Healthy Volunteers" "HealthyVolunteers" "Accepting All Volunteers" "Accepting all volunteers")
-                #DrawOneSearchParam("Trial Type" "TrialTypes")
-                #DrawOneSearchParam("Drug/Drug Family" "Drugs")
-                #DrawOneSearchParam("Other Treatments" "OtherTreatments")
-                #DrawOneSearchParam("Trial Phase" "TrialPhases")
-                #DrawOneSearchParam("Trial ID" "TrialIDs")
-                #DrawOneSearchParam("Trial Investigators" "Investigator")
-                #DrawOneSearchParam("Lead Organization" "LeadOrg")
+                #foreach($criterion in $PageData.Criteria)
+                #each
+                    <tr>
+                        <td class="hdrlft"><strong>${criterion.Label}:</strong></td>
+                        <td>$criterion.Value</td>
+                    </tr>
+                #end
             </tbody>
         </table>
       </div>
-
     </div>
-
 #end##
-
-##End DrawSearchParamsV2
-
+##
+##End DrawSearchParams
+##
 ##Begin Common Location Drawing
 ###############################
 ## Draws a Single Location Item
-#macro(DrawLocationV2 $loc $showStatus $showCityState)
+#macro(DrawLocation $loc $showStatus $showCityState)
 <div itemprop="location" itemscope="" itemtype="http://schema.org/Place" class="locationBlock">
-  <strong itemprop="name">$loc.Name</strong>
+  <strong itemprop="name">$loc.org_name</strong>
   #if($showStatus)
-  <br>Status: $SearchResults.TrialTools.GetFormattedString($loc.RecruitmentStatus)##
+  <br>Status: $PageData.TrialTools.GetNormalizedString($loc.recruitment_status)##
   #end
   #if($showCityState)##
   <br>
   <span itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">
-    <meta itemprop="addressCountry" content="$loc.Country" />
-    <span itemprop="addressLocality">$loc.City</span>##
-#if (!$Tools.IsNullOrWhitespace($loc.StateOrProvince))##
-, <span itemprop="addressRegion">$loc.StateOrProvince</span>
+    <meta itemprop="addressCountry" content="$loc.org_country" />
+    <span itemprop="addressLocality">$loc.org_city</span>##
+#if (!$Tools.IsNullOrWhitespace($loc.org_state_or_province))##
+, <span itemprop="addressRegion">$loc.org_state_or_province</span>
 #end##
 #end##
-#if (!$Tools.IsNullOrWhitespace($loc.ContactName))##
-<br>Contact: $loc.ContactName
+#if (!$Tools.IsNullOrWhitespace($loc.contact_name))##
+<br>Contact: $loc.contact_name
 #else
 <br>Name Not Available
 #end
-#if (!$Tools.IsNullOrWhitespace($loc.ContactPhone))##
-<br>Phone: $loc.ContactPhone
+#if (!$Tools.IsNullOrWhitespace($loc.contact_phone))##
+<br>Phone: $loc.contact_phone
 #end
-#if (!$Tools.IsNullOrWhitespace($loc.ContactEmail))
-<br>Email: <a href="mailto:$loc.ContactEmail">$loc.ContactEmail</a>
+#if (!$Tools.IsNullOrWhitespace($loc.contact_email))
+<br>Email: <a href="mailto:$loc.contact_email">$loc.contact_email</a>
 #end
   </span>
 </div>
 #end
-
-############
-## Macro to draw study sites for use with the UX filtering.
-#macro(DrawSitesForUXFilter $sites)
-  #set ($sortedLocations = $SearchResults.TrialTools.GetSortedSites($sites))
-  #set ($allLocations = $SearchResults.TrialTools.GetGroupedSites($sortedLocations)) 
-
-  ## Groups should be U.S.A., Canada, or Other
-  #foreach($group in $allLocations)
-  #each
-    <div data-basiccts-countrygroup="$group.key">
-      #foreach($subgroup in $group.value)
-      #each
-        <div data-basiccts-psunitgroup="$subgroup.key">
-          <h4>$subgroup.key</h4>
-            #foreach($citygroup in $subgroup.value)
-            #each
-              <h5 class="locationCity">$citygroup.key</h5>
-              #foreach($loc in $citygroup.value)
-              #each
-                #DrawLocationV2($loc true false)
-              #end                
-            #end            
-        </div>
-      #end
-    </div>
-  #end
-#end
-
+##
 #############
 ## Macro to draw study sites for use by "Locations Near You" and The Print version
 #macro(DrawSitesForNormal $sites $showStatus)
-  #set ($sortedLocations = $SearchResults.TrialTools.GetSortedSites($sites))
-  #set ($allLocations = $SearchResults.TrialTools.GetGroupedSites($sortedLocations)) 
+  #set ($sortedLocations = $PageData.TrialTools.GetSortedSites($sites))
+  #set ($allLocations = $PageData.TrialTools.GetGroupedSites($sortedLocations))
 
   ## Groups should be U.S.A., Canada, or Other
   #foreach($group in $allLocations)
   #each
     <h3 class="locationCountryLabel">$group.key</h3>
     #foreach($subgroup in $group.value)
-    #each      
+    #each
       <h4>$subgroup.key</h4>
         #foreach($citygroup in $subgroup.value)
         #each
           <h5 class="locationCity">$citygroup.key</h5>
             #foreach($loc in $citygroup.value)
             #each
-                #DrawLocationV2($loc $showStatus false)
-            #end          
-        #end                  
+                #DrawLocation($loc $showStatus false)
+            #end
+        #end
     #end
   #end
 #end
-
+##
 ##End Common Location Drawing
-
-#macro(DrawResultsTextV2)##					
-	#foreach($trial in $resultSet) 
+##
+#macro(DrawResultsTextV2)##
+	#foreach($trial in $resultSet)
 		<div class="trialContainer">
-			<h2 class="hangingIndent">$velocityCount. $trial.BriefTitle</h2>
+			<h2 class="hangingIndent">$velocityCount. $trial.brief_title</h2>
 			##<!-- Check search terms and set them if they are used -->
-			#set($checkURL = $SearchResults.PrintHelper.GetCheckForUpdatesURL($trial.NCIID, $SearchResults.Parameters))
-			<a class="hangingIndent print-check-for-updates" href="$checkURL"><span>Check for Updates</span></a>			
+            #set($checkURL = $Tools.Replace($PageData.LinkTemplate, "<TRIAL_ID>", $trial.nci_id.Value()))
+			<a class="hangingIndent print-check-for-updates" href="$checkURL"><span>Check for Updates</span></a>
 			<table class="trialDataTable">
 				<tr class="trialDataHeaderRow">
 					<td>Phase</td>
@@ -213,26 +106,26 @@
 					<td>Trial IDs</td>
 				</tr>
 				<tr>
-					<td>$SearchResults.TrialTools.GetPhase($trial)</td>
-					<td>$SearchResults.TrialTools.GetTrialType($trial)</td>
-					<td>$trial.CurrentTrialStatus</td>
-					<td>$trial.EligibilityInfo.StructuredCriteria.MinAgeInt 
-						#if($trial.EligibilityInfo.StructuredCriteria.MaxAgeInt == 999)
+					<td>$PageData.TrialTools.GetPhase($trial)</td>
+					<td>$PageData.TrialTools.GetTrialType($trial)</td>
+					<td>$trial.current_trial_status</td>
+					<td>$trial.eligibility.structured.min_age_number
+						#if($trial.eligibility.structured.max_age_number == 999)
 							and over
 						#else
-							to $trial.EligibilityInfo.StructuredCriteria.MaxAgeInt years
+							to $trial.eligibility.structured.max_age_number years
 						#end
-						
+
 						</td>
 					<td class="trialIDCell">
-						<span class = "dataTableIDLabel">Primary ID</span> $trial.ProtocolID<br>
-						<span class = "dataTableIDLabel">Secondary IDs</span> $SearchResults.TrialTools.GetSecondaryIDsString($trial)<br>
-						<span class = "dataTableIDLabel">Clinicaltrials.gov ID</span> <a class="nctIdLink" href="http://clinicaltrials.gov/show/$trial.NCTID" target="_blank">$trial.NCTID</a><br>
+						<span class = "dataTableIDLabel">Primary ID</span> $trial.protocol_id<br>
+						<span class = "dataTableIDLabel">Secondary IDs</span> $PageData.TrialTools.GetSecondaryIDsString($trial)<br>
+						<span class = "dataTableIDLabel">Clinicaltrials.gov ID</span> <a class="nctIdLink" href="http://clinicaltrials.gov/show/$trial.nct_id" target="_blank">$trial.nct_id</a><br>
 					</td>
 			</table>
 
 			<h3>Description</h3>
-			<div>$trial.BriefSummary</div>
+			<div>$trial.brief_summary</div>
 
 			<h3 class="printHeading">Eligibility Criteria</h3>
 
@@ -242,9 +135,9 @@
 			## This seems necessary because velocity sucks
 			#set($inclusionBool = false)
 			#set($exclusionBool = false)
-			#foreach($criterion in $trial.EligibilityInfo.UnstructuredCriteria)								
+			#foreach($criterion in $trial.eligibility.unstructured)
 				#each
-					#if($criterion.IsInclusionCriterion == true)
+					#if($criterion.inclusion_indicator == true)
 						#set($trash = $inclusionCriteria.add($criterion))
 						#if($inclusionBool == false)
 							#set($inclusionBool = true)
@@ -260,12 +153,12 @@
 				<h4>Inclusion Criteria</h4>
 				#foreach($include in $inclusionCriteria)
 					#each
-					<li>$include.Description</li>
+					<li>$include.description</li>
 					#before
 						<div>
 							<ul>
 					#after
-							</ul> 
+							</ul>
 						</div>
 				#end
 			#end
@@ -273,7 +166,7 @@
 				<h4>Exclusion Criteria</h4>
 				#foreach($criterion in $exclusionCriteria)
 					#each
-						<li>$criterion.Description</li>
+						<li>$criterion.description</li>
 					#before
 						<div>
 							<ul>
@@ -283,29 +176,29 @@
 				#end
 			#end
 
-			#if(!$Tools.IsNullOrWhitespace($trial.DetailedDescription))
+			#if(!$Tools.IsNullOrWhitespace($trial.detail_description))
 				<h3 class="printHeading">Trial Objectives and Outlines</h3>
-				<div id="trialObjectives">$SearchResults.TrialTools.GetPrettyDescription($trial)</div>	
+				<div id="trialObjectives">$PageData.TrialTools.GetPrettyDescription($trial)</div>
 			#end
 
-			#if($trial.LeadOrganizationName || $trial.PrincipalInvestigator)
+			#if(!$Tools.IsNullOrWhitespace($trial.lead_org) || !$Tools.IsNullOrWhitespace($trial.principal_investigator))
 				<h3 class="printHeading">Lead Organization</h3>
-				#if($trial.LeadOrganizationName)
-					<div>$trial.LeadOrganizationName</div>
+				#if(!$Tools.IsNullOrWhitespace($trial.lead_org))
+					<div>$trial.lead_org</div>
 				#end
-				#if($trial.PrincipalInvestigator)
-					<div>Principal Investigator: $trial.PrincipalInvestigator</div>
+				#if(!$Tools.IsNullOrWhitespace($trial.principal_investigator))
+					<div>Principal Investigator: $trial.principal_investigator</div>
 				#end
 			#end
 			<h3 class="printHeading">Locations & Contacts</h3>
 			<div class="locationNoteBlock">
-				<span>Note:</span> Information about participating sites on pharmaceutical industry trials may be incomplete, so please look up the <a class="nctIdLink" href="http://clinicaltrials.gov/show/$trial.NCTID" target="_blank">NCT number</a> on ClinicalTrials.gov
+				<span>Note:</span> Information about participating sites on pharmaceutical industry trials may be incomplete, so please look up the <a class="nctIdLink" href="http://clinicaltrials.gov/show/$trial.nct_id" target="_blank">NCT number</a> on ClinicalTrials.gov
 			</div>
 			<div>
-				#if (($SearchResults.Parameters.IsVAOnly && $SearchResults.Parameters.Location != "Hospital") || ($SearchResults.Parameters.Location == "CountryCityState" || $SearchResults.Parameters.Location == "Zip" || $SearchResults.Parameters.Location == "AtNIH"))##
-					#set($locationsToPrint = $SearchResults.TrialTools.GetFilteredLocations($trial, $SearchResults.Parameters))
+				#if (($PageData.LocationData.IsVAOnly && $PageData.LocationData.LocationType != "Hospital") || ($PageData.LocationData.LocationType == "CountryCityState" || $PageData.LocationData.LocationType == "Zip" || $PageData.LocationData.LocationType == "AtNIH"))##
+					#set($locationsToPrint = $PageData.TrialTools.GetFilteredLocations($trial.sites, $PageData.LocationData))
 				#else
-					#set($locationsToPrint =  $trial.Sites)
+					#set($locationsToPrint =  $trial.sites)
 				#end
 				#DrawSitesForNormal($locationsToPrint false)
 			</div>
@@ -315,13 +208,13 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head> 
+<head>
 	 <meta name="robots" content="noindex">
 	 <title>Clinical Trial Search Results</title>
 	 <script src="//assets.adobedtm.com/f1bfa9f7170c81b1a9a9ecdcc6c5215ee0b03c84/satelliteLib-5b3dcf1f2676c378b518a1583ef5355acd83cd3d.js"></script>
 	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	 <script src="/CTS.Print-js/BasicCTSPrintPage.js" type="text/javascript"></script>
-	 
+
 	 <link rel="stylesheet" id="gFonts" href="https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700,700i" />
 	 <link href="/CTS.Print-styles/nvcg.css" rel="stylesheet" />
 	 <link href="/CTS.Print-styles/BasicCTSPrintPage.css" rel="stylesheet" />
@@ -334,26 +227,26 @@
 		<div id="cgvBody">
 			<div id="bodyHeading">
 				<div id="headingWrapper">
-					<h1 id="ctPrintBodyHeading">Your Clinical Trials Search Results</h1>			
-					<div id="bodyHeadingLinks">					
-						<a id="printPage" href="javascript:window.print();">Print</a> | 
-						<a id="ctl10_EmailResults" href="${generatePrintURL}" target="_blank">E-Mail These Results</a> | 
-						<a id="newSearch" href="$SearchResults.Control.SearchFormUrl">New Search</a>					
+					<h1 id="ctPrintBodyHeading">Your Clinical Trials Search Results</h1>
+					<div id="bodyHeadingLinks">
+						<a id="printPage" href="javascript:window.print();">Print</a> |
+						<a id="ctl10_EmailResults" href="${generatePrintURL}" target="_blank">E-Mail These Results</a> |
+						<a id="newSearch" href="$PageData.NewSearchLink">New Search</a>
 					</div>
 				</div>
 			</div>
 				<div id="clinical-trials-print">
 
-					#set($resultSet =  $SearchResults.Results)
+					#set($resultSet =  $PageData.Results)
 
-	        		#if($SearchResults.Parameters.IsEmpty() == false)
-						#DrawSearchParamsV2($SearchResults)
+	        		#if($PageData.Criteria.Count != 0)
+						#DrawSearchParams($PageData)
 					#end##
 
-					<p class="printIntroText">Here are the trials you selected from your search on $SearchResults.SearchDate.</p>
+                    <p class="printIntroText">Here are the trials you selected from your search on $Tools.GetDate("M/d/yyyy").</p>
 					<p class="printIntroText">You will be able to access this page for approximately 90 days. Since trial information is updated regularly, you should check for updates to see the most current information on any of the trials below.</p>
-					
-									   
+
+
 				<div>
 					#DrawResultsTextV2()
 				</div>

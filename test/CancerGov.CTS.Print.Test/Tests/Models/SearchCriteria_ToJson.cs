@@ -13,7 +13,7 @@ namespace CancerGov.CTS.Print.Test.Tests.Models
         {
             JToken expected = JToken.Parse("[]");
 
-            var criteria = new SearchCriteria();
+            var criteria = SearchCriteriaFactory.Create(null);
             string json = criteria.ToJson();
             JToken actual = JToken.Parse(json);
 
@@ -28,7 +28,7 @@ namespace CancerGov.CTS.Print.Test.Tests.Models
                 {""Label"":""Label 1"",""Value"":""Value 1""}
             ]");
 
-            var criteria = new SearchCriteria();
+            var criteria = SearchCriteriaFactory.Create(null);
             criteria.Add("Label 1", "Value 1");
             string json = criteria.ToJson();
             JToken actual = JToken.Parse(json);
@@ -46,7 +46,7 @@ namespace CancerGov.CTS.Print.Test.Tests.Models
                 {""Label"":""Label 3"",""Value"":""Value 3""}
             ]");
 
-            var criteria = new SearchCriteria();
+            var criteria = SearchCriteriaFactory.Create(null);
             criteria.Add("Label 1", "Value 1");
             criteria.Add("Label 2", "Value 2");
             criteria.Add("Label 3", "Value 3");

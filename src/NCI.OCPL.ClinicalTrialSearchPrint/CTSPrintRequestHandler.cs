@@ -18,8 +18,13 @@ using CancerGov.CTS.Print.Rendering;
 
 namespace NCI.OCPL.ClinicalTrialSearchPrint
 {
+    // Handles all requests for the CTS.Print service.
     public class CTSPrintRequestHandler : HttpTaskAsyncHandler
     {
+        public static string MISSING_FIELD_MESSAGE { get; } = "Field is empty or not found";
+
+        public static string MUST_BE_RELATIVE_LINK_MESSAGE { get; } = "Must be an absolute path.";
+
         static ILog log = LogManager.GetLogger(typeof(PrintCacheManager));
 
         // A single instance of HttpClient is intended to be shared by all requests within
@@ -134,7 +139,7 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint
             string contentType = "application/json";
             string responseBody = String.Empty;
 
-            JToken requestBody;
+            JObject requestBody;
             try
             {
                 requestBody = GetRequestBody(request.InputStream);
@@ -155,12 +160,21 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint
             {
                 (trialIDs, linkTemplate, newSearchLink, searchCriteria) = GetFields(requestBody);
             }
-            catch (MissingFieldException ex)
+            catch (ArgumentException ex)
             {
-                string errorMsg = $"Field '{ex.FieldName}' not found.";
-                log.Debug(errorMsg);
+                string errorMsg;
+
+                // Handle fields which are completely missing. (MissingFieldException is a subclass of ArgumentException.)
+                if (ex is MissingFieldException)
+                    errorMsg = $"Field '{ex.ParamName}' not found.";
+                // Handle fields with invalid values.
+                else
+                    errorMsg = $"Field '{ex.ParamName}' has an invalid value.";
+
+                log.Debug(errorMsg, ex);
                 return (400, "text/plain", errorMsg);
             }
+
 
             // Get the trial details.
             JObject trialDetails;
@@ -177,8 +191,12 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint
 
             try
             {
-                // TODO: Create the SearchCriteriaFactory to populate the criteria object.
-                SearchCriteria criteria = new SearchCriteria();
+                // Renderable search criteria, not to be confused with the JSON object.
+                SearchCriteria criteria = SearchCriteriaFactory.Create(searchCriteria);
+
+                LocationCriteria locationData = LocationCriteriaFactory.Create(searchCriteria);
+
+                SetLocationStateNames(trialDetails);
 
                 // Get the path to the page template.
                 string template = ConfigurationManager.AppSettings["printTemplate"];
@@ -188,7 +206,7 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint
 
                 // Render the page.
                 var renderer = new PrintRenderer(template);
-                string page = renderer.Render(trialDetails, criteria);
+                string page = renderer.Render(trialDetails, criteria, locationData, linkTemplate, newSearchLink);
 
                 // Save the results.
                 string connString = ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString;
@@ -222,7 +240,7 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint
         /// property will contain the name of the missing field.</exception>
         /// <exception cref="ConfigurationErrorsException">Thrown when the new_search_link field is not included and no default is configured.</exception>
         public (string[] TrialIDs, string LinkTemplate, string NewSearchLink, JObject SearchCriteria)
-            GetFields(JToken requestBody)
+            GetFields(JObject requestBody)
         {
             string[] trialIDs;
             string linkTemplate;
@@ -234,21 +252,28 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint
             // Get trial IDs
             field = requestBody["trial_ids"];
             if (field == null || !field.HasValues)
-                throw new MissingFieldException("trial_ids");
+                throw new MissingFieldException(MISSING_FIELD_MESSAGE, "trial_ids");
 
             trialIDs = field.Values<string>().ToArray();
 
             // Get link template
             field = requestBody["link_template"];
             if (field == null || String.IsNullOrWhiteSpace(field.Value<string>()))
-                throw new MissingFieldException("link_template");
+                throw new MissingFieldException(MISSING_FIELD_MESSAGE, "link_template");
 
-            linkTemplate = field.Value<string>();
+            linkTemplate = field.Value<string>().Trim();
+
+            if (!linkTemplate.StartsWith("/"))
+                throw new ArgumentException(MUST_BE_RELATIVE_LINK_MESSAGE, "link_template");
 
             // Get new search link, or default if missing.
             field = requestBody["new_search_link"];
             if (field != null && !String.IsNullOrWhiteSpace(field.Value<string>()))
-                newSearchLink = field.Value<string>();
+            {
+                newSearchLink = field.Value<string>().Trim();
+                if(!newSearchLink.StartsWith("/"))
+                    throw new ArgumentException(MUST_BE_RELATIVE_LINK_MESSAGE, "new_search_link");
+            }
             else
             {
                 newSearchLink = ConfigurationManager.AppSettings["defaultNewSearchLink"];
@@ -263,6 +288,23 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint
                 searchCriteria = field.Value<JObject>();
 
             return (trialIDs, linkTemplate, newSearchLink, searchCriteria);
+        }
+
+        /// <summary>
+        /// Alters all trial sites to replace the 'org_state_or_province' property's state abbreviation with its actual name.
+        /// </summary>
+        /// <param name="trials">The JSON data structure returned by a successful call to the Clinical Trials API.</param>
+        public void SetLocationStateNames(JObject trialData)
+        {
+            foreach (JToken trial in trialData["data"])
+            {
+                foreach(JToken site in trial["sites"])
+                {
+                    string code = site["org_state_or_province"]?.Value<string>();
+                    if (!String.IsNullOrWhiteSpace(code))
+                        site["org_state_or_province"] = StateNameHelper.GetStateName(code);
+                }
+            }
         }
 
         /// <summary>

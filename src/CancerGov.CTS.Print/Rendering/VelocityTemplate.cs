@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Web;
+
 using Common.Logging;
+using Newtonsoft.Json.Linq;
 using NVelocity;
 using NVelocity.App;
 
@@ -13,26 +13,6 @@ namespace CancerGov.CTS.Print.Rendering
         static ILog log = LogManager.GetLogger(typeof(VelocityTemplate));
 
         private static VelocityEngineManager _engineManager = new VelocityEngineManager();
-
-        [Obsolete("Use MergeTemplateWithResultsByFilepath() instead.")]
-        public static string MergeTemplateWithResults(string template, object obj)
-        {
-            try
-            {
-                Velocity.Init();
-                VelocityContext context = new VelocityContext();
-                context.Put("DynamicSearch", obj);
-                context.Put("Tools", new VelocityTools());
-                StringWriter writer = new StringWriter();
-                Velocity.Evaluate(context, writer, "", template);
-                return writer.GetStringBuilder().ToString();
-            }
-            catch (Exception ex)
-            {
-                log.Error("MergeTemplateWithResults(): Failed when evaluating results template and object.", ex);
-                throw (ex);
-            }
-        }
 
         public static string MergeTemplateWithResultsByFilepath(string filepath, object obj)
         {
@@ -85,7 +65,7 @@ namespace CancerGov.CTS.Print.Rendering
         /// <summary>
         /// Helper Class that is bound to all Velocity Template contexts
         /// </summary>
-        class VelocityTools
+        public class VelocityTools
         {
             /// <summary>
             /// Deterines if the object is null or not.
@@ -97,37 +77,60 @@ namespace CancerGov.CTS.Print.Rendering
                 return obj == null;
             }
 
+            /// <summary>
+            /// Expose String.IsNullOrWhitespace for use in velocity templates.
+            /// </summary>
+            /// <param name="str">The string to check.</param>
+            /// <returns>True if the string is null, the empty string, or contains only whitespace.</returns>
             public bool IsNullOrWhitespace(string str)
             {
                 return String.IsNullOrWhiteSpace(str);
             }
-            public List<string> CreateEmptyStringList()
+
+            /// <summary>
+            /// Override of IsNullOrWhitespace for checking whether JSON values are empty or whitespace.
+            /// </summary>
+            /// <param name="str">The JSON value to check.</param>
+            /// <returns>True if the value is null, or contains either the empty string or white space.</returns>
+            public bool IsNullOrWhitespace(JValue str)
             {
-                return new List<string>();
+                // Velocity is passing JSON objects so we have to extract the underlaying value.
+                // Techincally, this might not be a string; in that case, we'll do the
+                // NullOrWhitspace check on the string form of whatever the heck was passed in.
+                Object value = str?.Value;
+                return value == null || this.IsNullOrWhitespace(value.ToString());
             }
 
-            public string Replace(string str, string pattern1, string pattern2)
+            /// <summary>
+            /// Returns a new string in which all occurences of oldValue are replaced
+            /// with the contents of newValue. This is a wrapper for String.Replace().
+            /// </summary>
+            /// <param name="str">The string to be operated on.</param>
+            /// <param name="oldValue">The substring to be replaced.</param>
+            /// <param name="newValue">The replacement value.</param>
+            /// <returns>A copy of str in which all instances of oldValue have been replaced with newValue.</returns>
+            public string Replace(string str, string oldValue, string newValue)
             {
-                string rtn = str.Replace(pattern1, pattern2);
+                string rtn = str.Replace(oldValue, newValue);
                 return rtn;
             }
 
-            public string Join(string[] strArr)
+            /// <summary>
+            /// Returns the current date.
+            /// </summary>
+            /// <param name="format">Format string using the same specification
+            /// as <see cref="System.DateTime.ToString(string)"/> </param>
+            /// <returns></returns>
+            public string GetDate(string format = null)
             {
-                if(strArr != null) 
-                {
-                   return string.Join("",strArr);
-                }
-                else 
-                { 
-                    return string.Empty;
-                }
+                DateTime now = DateTime.Now;
+
+                if(String.IsNullOrWhiteSpace(format))
+                    return now.ToString();
+                else
+                    return now.ToString(format);
             }
 
-            //public string Enc(string str)
-            //{
-            //    return HttpUtility.HtmlEncode(str);
-            //}
 		}
 
         /// <summary>

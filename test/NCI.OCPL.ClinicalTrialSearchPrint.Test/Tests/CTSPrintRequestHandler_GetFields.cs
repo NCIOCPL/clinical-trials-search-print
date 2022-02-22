@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xunit;
 
@@ -34,7 +33,8 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint.Test
                 () => handler.GetFields(data.RequestData)
             );
 
-            Assert.Equal(expectedField, ex.FieldName);
+            Assert.Equal(expectedField, ex.ParamName);
+            Assert.StartsWith(CTSPrintRequestHandler.MISSING_FIELD_MESSAGE, ex.Message);
         }
 
         public static IEnumerable<object[]> TrialIDsPresent_Data = new[]
@@ -78,7 +78,30 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint.Test
                 () => handler.GetFields(data.RequestData)
             );
 
-            Assert.Equal(expectedField, ex.FieldName);
+            Assert.Equal(expectedField, ex.ParamName);
+            Assert.StartsWith(CTSPrintRequestHandler.MISSING_FIELD_MESSAGE, ex.Message);
+        }
+
+        public static IEnumerable<object[]> LinkTemplateNotServerAbsolute_Data = new[]
+        {
+            new object[] {new CTSPrintRequestHandler_GetFields_LinkTemplate_RelativePath()},
+            new object[] {new CTSPrintRequestHandler_GetFields_LinkTemplate_AbsoluteUrl()},
+        };
+
+        [Theory]
+        [MemberData(nameof(LinkTemplateNotServerAbsolute_Data))]
+        public void LinkTemplateNotServerAbsolute(CTSPrintRequestHandler_GetFields_Base data)
+        {
+            string expectedField = "link_template";
+
+            var handler = new CTSPrintRequestHandler();
+
+            ArgumentException ex = Assert.Throws<ArgumentException>(
+                () => handler.GetFields(data.RequestData)
+            );
+
+            Assert.Equal(expectedField, ex.ParamName);
+            Assert.StartsWith(CTSPrintRequestHandler.MUST_BE_RELATIVE_LINK_MESSAGE, ex.Message);
         }
 
         public static IEnumerable<object[]> LinkTemplatePresent_Data = new[]
@@ -98,6 +121,31 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint.Test
             var actual = handler.GetFields(data.RequestData);
 
             Assert.Equal(data.ExpectedLinkTemplate, actual.LinkTemplate);
+        }
+
+        public static IEnumerable<object[]> NewSearchLinkInvalid_Data = new[]
+        {
+            new object[] {new CTSPrintRequestHandler_GetFields_NewSearchLink_RelativePath()},
+            new object[] {new CTSPrintRequestHandler_GetFields_NewSearchLink_AbsoluteUrl()},
+        };
+
+        /// <summary>
+        /// Correctly report an invalid new search link.
+        /// </summary>
+        [Theory]
+        [MemberData(nameof(NewSearchLinkInvalid_Data))]
+        public void NewSearchLinkInvalid(CTSPrintRequestHandler_GetFields_Base data)
+        {
+            string expectedField = "new_search_link";
+
+            var handler = new CTSPrintRequestHandler();
+
+            ArgumentException ex = Assert.Throws<ArgumentException>(
+                () => handler.GetFields(data.RequestData)
+            );
+
+            Assert.Equal(expectedField, ex.ParamName);
+            Assert.StartsWith(CTSPrintRequestHandler.MUST_BE_RELATIVE_LINK_MESSAGE, ex.Message);
         }
 
         public static IEnumerable<object[]> NewSearchLinkMissing_Data = new[]

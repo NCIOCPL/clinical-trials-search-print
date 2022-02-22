@@ -46,6 +46,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -56,9 +57,15 @@
   <ItemGroup>
     <Compile Include="DataManager\CTSPrintException.cs" />
     <Compile Include="DataManager\PrintCacheManager.cs" />
+    <Compile Include="Models\LocationCriteria.cs" />
+    <Compile Include="Models\LocationCriteriaFactory.cs" />
     <Compile Include="Models\SearchCriteria.cs" />
+    <Compile Include="Models\SearchCriteriaFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rendering\GeoLocation.cs" />
     <Compile Include="Rendering\PrintRenderer.cs" />
+    <Compile Include="Models\StateNameHelper.cs" />
+    <Compile Include="Rendering\TrialVelocityTools.cs" />
     <Compile Include="Rendering\VelocityTemplate.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -18,7 +18,7 @@ namespace CancerGov.CTS.Print.Test.Models.Tests
         [Fact]
         public void InitialState()
         {
-            var criteria = new SearchCriteria();
+            var criteria = SearchCriteriaFactory.Create(null);
 
             IReadOnlyList<Criterion> list = criteria.Criteria;
             Assert.Empty(list);
@@ -31,7 +31,7 @@ namespace CancerGov.CTS.Print.Test.Models.Tests
         [Fact]
         public void ListContents()
         {
-            var criteria = new SearchCriteria();
+            var criteria = SearchCriteriaFactory.Create(null);
             criteria.Add("First label",  "First value");
             criteria.Add("Second label", "Second value");
             criteria.Add("Third label",  "Third value");

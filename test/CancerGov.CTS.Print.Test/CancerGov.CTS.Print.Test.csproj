@@ -68,16 +68,28 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tests\Models\LocationMetadataFactory_Tests.cs" />
+    <Compile Include="Tests\Models\SearchCriteriaFactory_Create.cs" />
     <Compile Include="Tests\Models\SearchCriteria_CriteriaList.cs" />
     <Compile Include="Tests\Models\SearchCriteria_HasCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\Models\SearchCriteria_ToJson.cs" />
+    <Compile Include="Tests\Models\TestObjects\CriteriaList_Base.cs" />
+    <Compile Include="Tests\Models\TestObjects\TrialPhase_StringSelect.cs" />
+    <Compile Include="Tests\Models\TestObjects\TrialPhase_List.cs" />
+    <Compile Include="Tests\Models\TestObjects\TrialPhase_Reversed.cs" />
+    <Compile Include="Tests\Models\TestObjects\TrialTypes_StringSelect.cs" />
+    <Compile Include="Tests\Models\TestObjects\TrialTypes_Reversed.cs" />
+    <Compile Include="Tests\Models\TestObjects\TrialTypes_List.cs" />
     <Compile Include="Tests\Rendering\PrintRenderer_Instantiation.cs" />
     <Compile Include="Tests\Rendering\PrintRenderer_Render.cs" />
+    <Compile Include="Tests\Models\StateNameHelper_GetStateName.cs" />
+    <Compile Include="Tests\Rendering\TrialVelocityTools_GetTrialType.cs" />
+    <Compile Include="Tests\Rendering\TrialVelocityTools_GetPhase.cs" />
+    <Compile Include="Tests\Rendering\TrialVelocityTools_GetSecondaryIDsString.cs" />
+    <Compile Include="Tests\Rendering\VelocityTools_IsNullOrWhitespace.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Tests\DataManager\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="TestData\**">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -98,6 +110,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="TestData\TrialVelocityTools\GetPhase\multiple_phase.json" />
+    <None Include="TestData\TrialVelocityTools\GetPhase\no_phase.json" />
+    <None Include="TestData\TrialVelocityTools\GetPhase\null_phase.json" />
+    <None Include="TestData\TrialVelocityTools\GetPhase\single_phase.json" />
+    <None Include="TestData\TrialVelocityTools\GetSecondaryIDsString\secondary_id_missing_ccrid.json" />
+    <None Include="TestData\TrialVelocityTools\GetSecondaryIDsString\secondary_id_other_ids_missing.json" />
+    <None Include="TestData\TrialVelocityTools\GetSecondaryIDsString\secondary_id_other_ids_multiple.json" />
+    <None Include="TestData\TrialVelocityTools\GetSecondaryIDsString\secondary_id_other_ids_null.json" />
+    <None Include="TestData\TrialVelocityTools\GetSecondaryIDsString\secondary_id_other_ids_single.json" />
+    <None Include="TestData\TrialVelocityTools\GetTrialType\multi_word_type.json" />
+    <None Include="TestData\TrialVelocityTools\GetTrialType\no_type.json" />
+    <None Include="TestData\TrialVelocityTools\GetTrialType\null_type.json" />
+    <None Include="TestData\TrialVelocityTools\GetTrialType\simple_type.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

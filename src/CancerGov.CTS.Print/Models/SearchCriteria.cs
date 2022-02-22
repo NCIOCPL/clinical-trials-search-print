@@ -41,6 +41,11 @@ namespace CancerGov.CTS.Print.Models
         private readonly List<Criterion> criteriaList = new List<Criterion> ();
 
         /// <summary>
+        /// Constructor. Do not use directly, use <seealso cref="SearchCriteriaFactory"/> instead.
+        /// </summary>
+        internal SearchCriteria() { }
+
+        /// <summary>
         /// Presents the collection of criteria as a read-only list in
         /// the same order they were added to the collection.
         /// </summary>

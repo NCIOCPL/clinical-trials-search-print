@@ -18,7 +18,7 @@ namespace CancerGov.CTS.Print.Test.Models.Tests
         [Fact]
         public void InitialState()
         {
-            var criteria = new SearchCriteria();
+            var criteria = SearchCriteriaFactory.Create(null);
 
             Assert.False(criteria.HasCriteria);
         }
@@ -29,7 +29,7 @@ namespace CancerGov.CTS.Print.Test.Models.Tests
         [Fact]
         public void LoadSingle()
         {
-            var criteria = new SearchCriteria();
+            var criteria = SearchCriteriaFactory.Create(null);
             criteria.Add("The label", "The value");
 
             Assert.True(criteria.HasCriteria);
@@ -41,7 +41,7 @@ namespace CancerGov.CTS.Print.Test.Models.Tests
         [Fact]
         public void LoadMultiple()
         {
-            var criteria = new SearchCriteria();
+            var criteria = SearchCriteriaFactory.Create(null);
             criteria.Add("First label",  "First value");
             criteria.Add("Second label", "Second value");
             criteria.Add("Third label",  "Third value");

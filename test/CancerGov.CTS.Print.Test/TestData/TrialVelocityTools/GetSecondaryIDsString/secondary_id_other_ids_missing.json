@@ -1,0 +1,3540 @@
+{
+  "TEST_COMMENT": "Modified from NCT02595866 to remove the 'other_ids' node.",
+
+
+
+  "amendment_date": null,
+  "keywords": null,
+  "dcp_id": null,
+  "interventional_model": "Single Group",
+  "lead_org": "AIDS Malignancy Consortium",
+  "eligibility": {
+    "unstructured": [
+      {
+        "inclusion_indicator": true,
+        "display_order": 1,
+        "description": "Participants must have histologically (via at least a core or ideally, incisional or excisional biopsy) documented CD20 positive or negative diffuse large B-cell lymphoma (DLBCL)"
+      },
+      {
+        "inclusion_indicator": true,
+        "display_order": 2,
+        "description": "Tissue available from the diagnostic biopsy in the form of blocks, tissue cores, or slides available for submission to central pathology is required for all participants enrolled to this study; formalin-fixed paraffin-embedded tissue from diagnostic tissue is acceptable and recommended; submission of the institutional diagnostic slides is also preferred for all participants enrolled in the study"
+      },
+      {
+        "inclusion_indicator": true,
+        "display_order": 3,
+        "description": "Stage II-IV disease; participant will need measurable disease by computed tomography (CT) or positron emission tomography (PET) scans if enrolled in the dose-expansion cohort"
+      },
+      {
+        "inclusion_indicator": true,
+        "display_order": 4,
+        "description": "HIV positive; documentation of HIV-1 infection by means of any one of the following:\r\n* Documentation of HIV diagnosis in the medical record by a licensed health care provider;\r\n* Documentation of receipt of ART (at least three different medications) by a licensed health care provider (documentation may be a record of an antiretroviral therapy (ART) prescription in the participant’s medical record, a written prescription in the name of the participant for ART, or pill bottles for ART with a label showing the participant’s name);\r\n* HIV-1 ribonucleic acid (RNA) detection by a licensed HIV-1 RNA assay demonstrating > 1000 RNA copies/mL;\r\n* Any licensed HIV screening antibody and/or HIV antibody/antigen combination assay confirmed by a second licensed HIV assay such as a HIV-1 western blot confirmation or HIV rapid multispot antibody differentiation assay\r\n* NOTE: a “licensed” assay refers to a United States (U.S.) Food and Drug Administration (FDA)-approved assay, which is required for all investigational food drug (IND) studies"
+      },
+      {
+        "inclusion_indicator": true,
+        "display_order": 5,
+        "description": "Only participants whose lymphoma is untreated are allowed for the dose-finding portion; for the dose expansion cohort both untreated and participants who have received a maximum of one cycle of combination chemotherapy, including rituximab-containing regimens R-cyclophosphamide, doxorubicin hydrochloride, vincristine sulfate, prednisone (CHOP) and R-EPOCH, prior are eligible; the start of previous chemotherapy cycle must occur at least 21 days prior and 28 days maximum to beginning treatment under this protocol, and such cycle will count towards the maximum of 6 cycles under this study (i.e. cycle off study will count as cycle 1)"
+      },
+      {
+        "inclusion_indicator": true,
+        "display_order": 6,
+        "description": "Eastern Cooperative Oncology Group (ECOG) performance status =< 2 (Karnofsky >= 50%)"
+      },
+      {
+        "inclusion_indicator": true,
+        "display_order": 7,
+        "description": "CD4 count >= 100 in the dose-finding cohort; once the dose-finding cohort is complete and if safety is established, participants with any CD4 count, including CD4 count < 100, will be allowed in the dose-escalation phase"
+      },
+      {
+        "inclusion_indicator": true,
+        "display_order": 8,
+        "description": "Absolute neutrophil count: >= 1,000/mm^3, unless decreased due to bone marrow involvement with lymphoma"
+      },
+      {
+        "inclusion_indicator": true,
+        "display_order": 9,
+        "description": "Platelets: >= 75,000/mm^3, unless decreased due to bone marrow involvement with lymphoma"
+      },
+      {
+        "inclusion_indicator": true,
+        "display_order": 10,
+        "description": "Total bilirubin: =< 1.5 institutional upper limit of normal (ULN); if potential due to lymphoma, the first cycle may be given without ibrutinib and if transaminitis and bilirubinemia improves to meet parameters, participant mat be enrolled on the clinical trial"
+      },
+      {
+        "inclusion_indicator": true,
+        "display_order": 11,
+        "description": "Aspartate aminotransferase (AST) (serum glutamic-oxaloacetic transaminase [SGOT])/alanine aminotransferase (ALT) (serum glutamate pyruvate transaminase [SGPT]): < 2 institutional ULN; if potentially due to lymphoma, the first cycle will be given without ibrutinib and if transaminitis and bilirubinemia improves to meet parameters, participant may be enrolled on trial"
+      },
+      {
+        "inclusion_indicator": true,
+        "display_order": 12,
+        "description": "Creatinine levels within normal institutional limits; or, creatinine clearance >= 60 mL/min/1.73 m^2 for participants with creatinine levels above institutional normal; unless decreased due to renal involvement by lymphoma"
+      },
+      {
+        "inclusion_indicator": true,
+        "display_order": 13,
+        "description": "Participants must not be on medications, including antiretroviral (ARV) regimens such as cobicistat, indinavir, or ritonavir, or agents with moderate or strong CYP3A4 inhibition; if on a moderate or strong CYP3A4 inhibitor regimen prior to study enrollment, participants must be switched to a qualifying regimen with the last dose of the strong CYP3A4 inhibitor taken at least one week before administration of ibrutinib"
+      },
+      {
+        "inclusion_indicator": true,
+        "display_order": 14,
+        "description": "Willingness of sexually active participants to use adequate contraception; both men and women of child-bearing potential treated or enrolled on this study must agree to use adequate contraception (hormonal or barrier method of birth control; abstinence) before study entry, for the duration of study participation, 90 days after completion of ibrutinib, and 12 months after the last dose of rituximab, whichever comes last; men who only have sex with other men do not need to use contraception specifically for this study (should a woman become pregnant or suspect she is pregnant while she or her partner is participating in this study, she should inform her treating physician immediately)"
+      },
+      {
+        "inclusion_indicator": true,
+        "display_order": 15,
+        "description": "All participants will be required to be screened for hepatitis B; all participants who present with acute hepatitis B or show normal transaminases and are hepatitis B surface antigen (HBsAg) positive (+) and IgM+ for hepatitis core antigen will not be eligible for trial enrollment; per Infectious Diseases Society of America (IDSA) and Assistance for AIDS Specific Drugs (AASD) guidelines, those participants that show no immunity, defined by the lack of hepatitis B surface antibody, and show evidence of chronic infection (i.e. hepatitis B [HB]sAg+, HBcore+, hepatitis B surface antibody [HBsAB] negative [-]) will be required to be on anti-hepatitis B therapy, during the study, in order to be eligible; the exact hepatitis B therapy will be at the discretion of the infection disease specialist or investigator; if infected with hepatitis B, participants will be permitted to enroll in the study provided liver function tests meet criteria listed above, there is no evidence of cirrhosis AND participants will be required to be on anti-hepatitis B therapy"
+      },
+      {
+        "inclusion_indicator": true,
+        "display_order": 16,
+        "description": "All participants will be required to be screened for hepatitis C; if hepatitis C antibody positive, with or without a positive hepatitis C RNA level, participants will be permitted to enroll in the study provided liver function tests meet criteria listed, and have no evidence of cirrhosis; participants diagnosed with hepatitis C less than 6 months from trial enrollment will be considered to have acute hepatitis C, and will be excluded from study UNLESS hepatitis C viral load is undetectable"
+      },
+      {
+        "inclusion_indicator": true,
+        "display_order": 17,
+        "description": "Adequate cardiac function defined as an ejection fraction on echocardiogram (ECHO) or multi-gated acquisition (MUGA) that is at or above the institutional normal limits"
+      },
+      {
+        "inclusion_indicator": true,
+        "display_order": 18,
+        "description": "Participants must be able to swallow oral pills"
+      },
+      {
+        "inclusion_indicator": true,
+        "display_order": 19,
+        "description": "Ability to understand and willing to sign a written informed consent document"
+      },
+      {
+        "inclusion_indicator": false,
+        "display_order": 20,
+        "description": "Participants who have had chemotherapy other than R-EPOCH or R-CHOP, or radiotherapy other than palliative radiation for medical emergencies (like cord compression), within the last 4 weeks"
+      },
+      {
+        "inclusion_indicator": false,
+        "display_order": 21,
+        "description": "Prior cytotoxic chemotherapy or radiotherapy for this lymphoma"
+      },
+      {
+        "inclusion_indicator": false,
+        "display_order": 22,
+        "description": "Rituximab within 12 months prior to study registration; only exception will be if rituximab was given for indications other than the treatment of aggressive lymphoma, or for one prior cycle of treatment"
+      },
+      {
+        "inclusion_indicator": false,
+        "display_order": 23,
+        "description": "Participants who are receiving any other investigational agents"
+      },
+      {
+        "inclusion_indicator": false,
+        "display_order": 24,
+        "description": "Participants who have previously received ibrutinib for another indication"
+      },
+      {
+        "inclusion_indicator": false,
+        "display_order": 25,
+        "description": "Expected survival < 2 months"
+      },
+      {
+        "inclusion_indicator": false,
+        "display_order": 26,
+        "description": "Participants with a history of an opportunistic fungal infection or active fungal infection requiring, or at high risk of requiring, prophylactic or treatment with fluconazole, voriconazole or posaconazole"
+      },
+      {
+        "inclusion_indicator": false,
+        "display_order": 27,
+        "description": "Participants with known brain metastases from solid tumors should be excluded from this clinical trial"
+      },
+      {
+        "inclusion_indicator": false,
+        "display_order": 28,
+        "description": "Presence of second active tumor, other than non-melanoma skin cancer, carcinoma in situ of the cervix, or Kaposi’s sarcoma (KS) that requires systemic therapy"
+      },
+      {
+        "inclusion_indicator": false,
+        "display_order": 29,
+        "description": "In the dose-finding portion of the study, participants with known or suspected parenchymal brain, spinal cord, leptomeningeal disease prior to study enrollment will be excluded; in the dose-expansion portion of the study, known or suspected parenchymal brain or spinal cord disease, and/or suspected or symptomatic leptomeningeal disease prior to study enrollment will be excluded; asymptomatic leptomeningeal disease only will be allowed in the dose-expansion cohort"
+      },
+      {
+        "inclusion_indicator": false,
+        "display_order": 30,
+        "description": "History of allergic reactions attributed to compounds of similar chemical or biologic composition to ibrutinib or other agents used in study"
+      },
+      {
+        "inclusion_indicator": false,
+        "display_order": 31,
+        "description": "Uncontrolled intercurrent illness including, but not limited to, ongoing or active infection, symptomatic congestive heart failure, unstable angina pectoris, cardiac arrhythmia, or psychiatric illness/social situations that would limit compliance with study requirements"
+      },
+      {
+        "inclusion_indicator": false,
+        "display_order": 32,
+        "description": "Pregnancy or breastfeeding; a pregnancy test must be performed within 7 days prior to ibrutinib initiation in women of childbearing potential; pregnant women; breastfeeding must be discontinued because of unknown but potential risks in the nursing infant"
+      },
+      {
+        "inclusion_indicator": false,
+        "display_order": 33,
+        "description": "Unable to comply with the requirements of the protocol, or unable to provide adequate informed consent in the opinion of the principal investigator"
+      },
+      {
+        "inclusion_indicator": false,
+        "display_order": 34,
+        "description": "Serious, ongoing, non-malignant disease or infection, which in the opinion of the investigator and/or the sponsor would compromise other protocol objectives; participants with active opportunistic infections are ineligible"
+      },
+      {
+        "inclusion_indicator": false,
+        "display_order": 35,
+        "description": "Major surgery, other than diagnostic surgery, occurring 4 weeks prior to study entry; splenectomy will not be considered an exclusionary major surgery"
+      },
+      {
+        "inclusion_indicator": false,
+        "display_order": 36,
+        "description": "History of cutaneous or mucocutaneous reactions, or diseases in the past, due to any cause, severe enough to cause hospitalization or an inability to eat or drink for > 2 days; this exclusion relates to the long-term possibility of severe cutaneous or mucocutaneous reactions to rituximab that might occur at increased frequency in participants who have had severe skin disease or reactions in the past"
+      },
+      {
+        "inclusion_indicator": false,
+        "display_order": 37,
+        "description": "Myocardial infarction (MI) within 6 months prior to study entry, New York Heart Association (NYHA) class II or greater heart failure, uncontrolled angina, severe uncontrolled ventricular arrhythmias, clinically significant pericardial disease, or electrocardiographic evidence of acute ischemic or active conduction system abnormalities"
+      }
+    ],
+    "structured": {
+      "max_age": "999 Years",
+      "max_age_number": 999,
+      "min_age_unit": "Years",
+      "max_age_unit": "Years",
+      "max_age_in_years": 999,
+      "gender": "BOTH",
+      "min_age": "18 Years",
+      "accepts_healthy_volunteers": false,
+      "min_age_number": 18,
+      "min_age_in_years": 18
+    }
+  },
+  "sites": [
+    {
+      "org_state_or_province": "IL",
+      "contact_name": "Ida C. Wong-Sefidan",
+      "contact_phone": "858-822-6276",
+      "recruitment_status_date": "2020-07-08",
+      "org_address_line_2": "Pharmacy Department Lower Level 172",
+      "org_va": false,
+      "org_address_line_1": "1901 West Harrison Street",
+      "org_tty": null,
+      "org_family": null,
+      "org_postal_code": "60612",
+      "contact_email": "icwong@ucsd.edu",
+      "recruitment_status": "ACTIVE",
+      "org_city": "Chicago",
+      "org_email": null,
+      "org_country": "United States",
+      "org_fax": null,
+      "org_phone": "312-864-6000",
+      "org_name": "John H Stroger Jr Hospital of Cook County",
+      "org_coordinates": {
+        "lon": -87.6877,
+        "lat": 41.8804
+      }
+    },
+    {
+      "org_state_or_province": "MA",
+      "contact_name": "Karen Quillen",
+      "contact_phone": "617-638-7828",
+      "recruitment_status_date": "2019-08-15",
+      "org_address_line_2": null,
+      "org_va": false,
+      "org_address_line_1": "One Medical Center Place",
+      "org_tty": null,
+      "org_family": null,
+      "org_postal_code": "02118",
+      "contact_email": "Karen.Quillen@bmc.org",
+      "recruitment_status": "ACTIVE",
+      "org_city": "Boston",
+      "org_email": null,
+      "org_country": "United States",
+      "org_fax": null,
+      "org_phone": "617-353-7571",
+      "org_name": "Boston Medical Center",
+      "org_coordinates": {
+        "lon": -71.0718,
+        "lat": 42.338
+      }
+    },
+    {
+      "org_state_or_province": "WA",
+      "contact_name": "David M. Aboulafia",
+      "contact_phone": "206-223-6193",
+      "recruitment_status_date": "2017-12-15",
+      "org_address_line_2": null,
+      "org_va": false,
+      "org_address_line_1": "1100 Ninth Avenue",
+      "org_tty": null,
+      "org_family": null,
+      "org_postal_code": "98101",
+      "contact_email": "hemda@vmmc.org",
+      "recruitment_status": "ACTIVE",
+      "org_city": "Seattle",
+      "org_email": "vmmc.cancer_clinical_research@VirginiaMason.org",
+      "org_country": "United States",
+      "org_fax": null,
+      "org_phone": null,
+      "org_name": "Virginia Mason Medical Center",
+      "org_coordinates": {
+        "lon": -122.3343,
+        "lat": 47.6115
+      }
+    },
+    {
+      "org_state_or_province": "CA",
+      "contact_name": "Ronald T. Mitsuyasu",
+      "contact_phone": "310-825-6689",
+      "recruitment_status_date": "2018-07-26",
+      "org_address_line_2": "University of California at Los Angeles",
+      "org_va": false,
+      "org_address_line_1": "10833 Le Conte Avenue",
+      "org_tty": null,
+      "org_family": "Jonsson Comprehensive Cancer Center",
+      "org_postal_code": "90095",
+      "contact_email": "rmitsuya@mednet.ucla.edu",
+      "recruitment_status": "ACTIVE",
+      "org_city": "Los Angeles",
+      "org_email": null,
+      "org_country": "United States",
+      "org_fax": null,
+      "org_phone": "888-798-0719\r310-825-4321",
+      "org_name": "UCLA / Jonsson Comprehensive Cancer Center",
+      "org_coordinates": {
+        "lon": -118.4432,
+        "lat": 34.071
+      }
+    },
+    {
+      "org_state_or_province": "CA",
+      "contact_name": "Ida C. Wong-Sefidan",
+      "contact_phone": "858-822-6276",
+      "recruitment_status_date": "2020-07-08",
+      "org_address_line_2": null,
+      "org_va": false,
+      "org_address_line_1": "3855 Health Sciences Drive",
+      "org_tty": null,
+      "org_family": "Moores Comprehensive Cancer Center",
+      "org_postal_code": "92093",
+      "contact_email": "icwong@ucsd.edu",
+      "recruitment_status": "ACTIVE",
+      "org_city": "La Jolla",
+      "org_email": "cancercto@ucsd.edu",
+      "org_country": "United States",
+      "org_fax": null,
+      "org_phone": "858-822-5354\r858-657-7000",
+      "org_name": "UC San Diego Moores Cancer Center",
+      "org_coordinates": {
+        "lon": -117.2575,
+        "lat": 32.8339
+      }
+    },
+    {
+      "org_state_or_province": "CA",
+      "contact_name": "Ida C. Wong-Sefidan",
+      "contact_phone": "858-822-6276",
+      "recruitment_status_date": "2020-07-08",
+      "org_address_line_2": null,
+      "org_va": false,
+      "org_address_line_1": "505 Parnassus Avenue",
+      "org_tty": null,
+      "org_family": "UCSF Helen Diller Family Comprehensive Cancer Center",
+      "org_postal_code": "94143",
+      "contact_email": "icwong@ucsd.edu",
+      "recruitment_status": "ACTIVE",
+      "org_city": "San Francisco",
+      "org_email": null,
+      "org_country": "United States",
+      "org_fax": null,
+      "org_phone": "877-827-3222",
+      "org_name": "UCSF Medical Center-Parnassus",
+      "org_coordinates": {
+        "lon": -122.4584,
+        "lat": 37.7616
+      }
+    },
+    {
+      "org_state_or_province": "FL",
+      "contact_name": "Ida C. Wong-Sefidan",
+      "contact_phone": "858-822-6276",
+      "recruitment_status_date": "2020-07-08",
+      "org_address_line_2": null,
+      "org_va": false,
+      "org_address_line_1": "1475 Northwest 12th Avenue",
+      "org_tty": null,
+      "org_family": "Sylvester Comprehensive Cancer Center",
+      "org_postal_code": "33136",
+      "contact_email": "icwong@ucsd.edu",
+      "recruitment_status": "ACTIVE",
+      "org_city": "Miami",
+      "org_email": null,
+      "org_country": "United States",
+      "org_fax": null,
+      "org_phone": "305-243-2647",
+      "org_name": "University of Miami Miller School of Medicine-Sylvester Cancer Center",
+      "org_coordinates": {
+        "lon": -80.2039,
+        "lat": 25.7869
+      }
+    },
+    {
+      "org_state_or_province": "MD",
+      "contact_name": "Ida C. Wong-Sefidan",
+      "contact_phone": "858-822-6276",
+      "recruitment_status_date": "2020-07-08",
+      "org_address_line_2": null,
+      "org_va": false,
+      "org_address_line_1": "600 North Wolfe Street",
+      "org_tty": null,
+      "org_family": "Sidney Kimmel Comprehensive Cancer Center",
+      "org_postal_code": "21287",
+      "contact_email": "icwong@ucsd.edu",
+      "recruitment_status": "ACTIVE",
+      "org_city": "Baltimore",
+      "org_email": "jhcccro@jhmi.edu",
+      "org_country": "United States",
+      "org_fax": null,
+      "org_phone": "410-955-8804",
+      "org_name": "Johns Hopkins University/Sidney Kimmel Cancer Center",
+      "org_coordinates": {
+        "lon": -76.5621,
+        "lat": 39.3021
+      }
+    },
+    {
+      "org_state_or_province": "MO",
+      "contact_name": "Lee Ratner",
+      "contact_phone": "314-747-7405",
+      "recruitment_status_date": "2018-02-23",
+      "org_address_line_2": null,
+      "org_va": false,
+      "org_address_line_1": "660 South Euclid Avenue",
+      "org_tty": null,
+      "org_family": "Alvin J. Siteman Cancer Center",
+      "org_postal_code": "63110",
+      "contact_email": "lratner@wustl.edu",
+      "recruitment_status": "ACTIVE",
+      "org_city": "Saint Louis",
+      "org_email": "info@siteman.wustl.edu",
+      "org_country": "United States",
+      "org_fax": null,
+      "org_phone": null,
+      "org_name": "Washington University School of Medicine",
+      "org_coordinates": {
+        "lon": -90.267,
+        "lat": 38.6267
+      }
+    },
+    {
+      "org_state_or_province": "MO",
+      "contact_name": "Ida C. Wong-Sefidan",
+      "contact_phone": "858-822-6276",
+      "recruitment_status_date": "2020-07-08",
+      "org_address_line_2": null,
+      "org_va": false,
+      "org_address_line_1": "4921 Parkview Place",
+      "org_tty": null,
+      "org_family": "Alvin J. Siteman Cancer Center",
+      "org_postal_code": "63110",
+      "contact_email": "icwong@ucsd.edu",
+      "recruitment_status": "ACTIVE",
+      "org_city": "Saint Louis",
+      "org_email": null,
+      "org_country": "United States",
+      "org_fax": null,
+      "org_phone": "314-747-7236",
+      "org_name": "Siteman Cancer Center at Washington University",
+      "org_coordinates": {
+        "lon": -90.267,
+        "lat": 38.6267
+      }
+    },
+    {
+      "org_state_or_province": "NC",
+      "contact_name": "Ida C. Wong-Sefidan",
+      "contact_phone": "858-822-6276",
+      "recruitment_status_date": "2020-07-08",
+      "org_address_line_2": "Lineberger Comprehensive Cancer Center Third Floor Administrative Tower CB 7295",
+      "org_va": false,
+      "org_address_line_1": "450 West Drive",
+      "org_tty": null,
+      "org_family": "UNC Lineberger Comprehensive Cancer Center",
+      "org_postal_code": "27599",
+      "contact_email": "icwong@ucsd.edu",
+      "recruitment_status": "ACTIVE",
+      "org_city": "Chapel Hill",
+      "org_email": "cancerclinicaltrials@med.unc.edu",
+      "org_country": "United States",
+      "org_fax": null,
+      "org_phone": null,
+      "org_name": "UNC Lineberger Comprehensive Cancer Center",
+      "org_coordinates": {
+        "lon": -79.0561,
+        "lat": 35.9134
+      }
+    },
+    {
+      "org_state_or_province": "NY",
+      "contact_name": "Ida C. Wong-Sefidan",
+      "contact_phone": "858-822-6276",
+      "recruitment_status_date": "2020-07-08",
+      "org_address_line_2": null,
+      "org_va": false,
+      "org_address_line_1": "1275 York Avenue",
+      "org_tty": null,
+      "org_family": "Memorial Sloan Kettering Cancer Center",
+      "org_postal_code": "10065",
+      "contact_email": "icwong@ucsd.edu",
+      "recruitment_status": "ACTIVE",
+      "org_city": "New York",
+      "org_email": null,
+      "org_country": "United States",
+      "org_fax": null,
+      "org_phone": "212-639-2000",
+      "org_name": "Memorial Sloan Kettering Cancer Center",
+      "org_coordinates": {
+        "lon": -73.9624,
+        "lat": 40.7656
+      }
+    },
+    {
+      "org_state_or_province": "NY",
+      "contact_name": "Murali Janakiram",
+      "contact_phone": "718-920-4826",
+      "recruitment_status_date": "2018-02-13",
+      "org_address_line_2": null,
+      "org_va": false,
+      "org_address_line_1": "111 East 210th Street",
+      "org_tty": null,
+      "org_family": "Albert Einstein Cancer Center",
+      "org_postal_code": "10467",
+      "contact_email": "mjanakir@montefiore.org",
+      "recruitment_status": "ACTIVE",
+      "org_city": "Bronx",
+      "org_email": "eskwak@montefiore.org",
+      "org_country": "United States",
+      "org_fax": null,
+      "org_phone": "718-904-2730",
+      "org_name": "Montefiore Medical Center - Moses Campus",
+      "org_coordinates": {
+        "lon": -73.8721,
+        "lat": 40.8778
+      }
+    },
+    {
+      "org_state_or_province": "OH",
+      "contact_name": "Ida C. Wong-Sefidan",
+      "contact_phone": "858-822-6276",
+      "recruitment_status_date": "2020-07-08",
+      "org_address_line_2": null,
+      "org_va": false,
+      "org_address_line_1": "410 West Tenth Avenue",
+      "org_tty": null,
+      "org_family": "Comprehensive Cancer Center - James Cancer Hospital & Solove Research Institute",
+      "org_postal_code": "43210",
+      "contact_email": "icwong@ucsd.edu",
+      "recruitment_status": "ACTIVE",
+      "org_city": "Columbus",
+      "org_email": "Jamesline@osumc.edu",
+      "org_country": "United States",
+      "org_fax": null,
+      "org_phone": "866-627-7616",
+      "org_name": "Ohio State University Comprehensive Cancer Center",
+      "org_coordinates": {
+        "lon": -83.0218,
+        "lat": 40.0051
+      }
+    },
+    {
+      "org_state_or_province": "PA",
+      "contact_name": "Carlyn Rose Tan",
+      "contact_phone": "215-214-3119",
+      "recruitment_status_date": "2020-02-02",
+      "org_address_line_2": null,
+      "org_va": false,
+      "org_address_line_1": "333 Cottman Avenue",
+      "org_tty": null,
+      "org_family": "Fox Chase Cancer Center",
+      "org_postal_code": "19111",
+      "contact_email": "Carlynrose.tan@tuhs.temple.edu",
+      "recruitment_status": "CLOSED_TO_ACCRUAL",
+      "org_city": "Philadelphia",
+      "org_email": null,
+      "org_country": "United States",
+      "org_fax": null,
+      "org_phone": "215-728-4790",
+      "org_name": "Fox Chase Cancer Center",
+      "org_coordinates": {
+        "lon": -75.0797,
+        "lat": 40.063
+      }
+    },
+    {
+      "org_state_or_province": "PA",
+      "contact_name": "Ida C. Wong-Sefidan",
+      "contact_phone": "858-822-6276",
+      "recruitment_status_date": "2020-07-08",
+      "org_address_line_2": null,
+      "org_va": false,
+      "org_address_line_1": "800 Spruce Street",
+      "org_tty": null,
+      "org_family": "Abramson Cancer Center",
+      "org_postal_code": "19107",
+      "contact_email": "icwong@ucsd.edu",
+      "recruitment_status": "ACTIVE",
+      "org_city": "Philadelphia",
+      "org_email": null,
+      "org_country": "United States",
+      "org_fax": null,
+      "org_phone": "800-789-7366",
+      "org_name": "Pennsylvania Hospital",
+      "org_coordinates": {
+        "lon": -75.1581,
+        "lat": 39.9516
+      }
+    },
+    {
+      "org_state_or_province": "WA",
+      "contact_name": "Manoj P. Menon",
+      "contact_phone": "206-667-4636",
+      "recruitment_status_date": "2018-12-04",
+      "org_address_line_2": null,
+      "org_va": false,
+      "org_address_line_1": "325 Ninth Avenue",
+      "org_tty": null,
+      "org_family": "Fred Hutchinson/University of Washington Cancer Consortium",
+      "org_postal_code": "98104",
+      "contact_email": "mmenon@fredhutch.org",
+      "recruitment_status": "WITHDRAWN",
+      "org_city": "Seattle",
+      "org_email": null,
+      "org_country": "United States",
+      "org_fax": null,
+      "org_phone": "800-852-8546",
+      "org_name": "Harborview Medical Center",
+      "org_coordinates": {
+        "lon": -122.326,
+        "lat": 47.6024
+      }
+    }
+  ],
+  "completion_date_type_code": "ANTICIPATED",
+  "detail_description": "PRIMARY OBJECTIVES:\r\nI. To assess the safety and tolerability of ibrutinib and rituximab (R)-dose adjusted (da)-etoposide, prednisone, vincristine sulfate, cyclophosphamide, and doxorubicin hydrochloride (EPOCH) in participants with acquired immunodeficiency syndrome (AIDS)-related lymphomas (ARL).\r\n\r\nSECONDARY OBJECTIVES:\r\nI. To evaluate the complete response (CR) rates of ARL to ibrutinib and R-da-EPOCH.\r\nII. To measure the 1-year and 2-year overall and progression-free survival of participants with ARL treated with combination ibrutinib and R-da-EPOCH, including preliminary comparison of non-germinal center B-cell (GCB) with historical controls treated with R-da-EPOCH.\r\nIII. To categorize and compare the cell-of-origin by gene expression profiling (GEP) gene expression-based classification (GCB, activated B-cell-like, unclassifiable) to immunohistochemistry (IHC) classification (GCB, non-GCB), estimate the discordant classification, and correlate each biological classification (IHC and GEP) with treatment response rates and survival.\r\nIV. To calculate the percentage of participants who receive two or more cycles of R-da-EPOCH, and are able to continue on a minimum dose level of cyclophosphamide of -1 and above after dose adjustments for hematologic toxicities.\r\nV. To determine the average number of days per cycle participants are able to stay on planned dose of ibrutinib at the recommended phase II dose (RP2D).\r\nVI. To assess the effect of ibrutinib and R-da-EPOCH on the human immunodeficiency virus (HIV) long-term latency reservoir.\r\nVII. To assess the effect and degree of ibrutinib and R-da-EPOCH on T-cell receptor signaling via ITK inhibition.\r\nVIII. To assess the effect of ibrutinib and R-da-EPOCH on B-cell receptor signaling pathway including BTK activity in ARL.\r\nIX. To evaluate the soluble cytokine response to ibrutinib and R-da-EPOCH.\r\nX. To characterize the pharmacokinetics of doxorubicin, etoposide, and vincristine in the presence of ibrutinib, and vice versa, and assess the clinical relevance of any drug-drug interaction and correlate with pharmacodynamics outcomes.\r\n\r\nOUTLINE: This is a dose escalation study of ibrutinib.\r\n\r\nPatients receive rituximab intravenously (IV) on day 1 (for CD20 positive patients only), etoposide IV over 96 hours on days 1-4, doxorubicin hydrochloride IV over 96 hours on days 1-4, vincristine sulfate IV over 96 hours on days 1-4, prednisone orally (PO) daily on days 1-5, cyclophosphamide IV over 1 hour on day 5, and ibrutinib PO once daily (QD) on days 1-21. Treatment repeats every 21 days for up to 6 courses in the absence of disease progression or unacceptable toxicity. Patients also receive pegfilgrastim subcutaneously (SC) from 1 calendar day up to 48 hours or filgrastim SC beginning on day 6 for up to 10 days until absolute neutrophil count (ANC) is satisfactory.\r\n\r\nAfter completion of study treatment, patients are followed up every 3 months for 2 years, and then every 6 months for up to 5 years.",
+  "official_title": "Phase I and Dose-Expansion Study of Ibrutinib and R-da-EPOCH for Front Line Treatment of AIDS-Related Lymphomas",
+  "_phase_sort_order": 4,
+  "collaborators": [
+    {
+      "name": "National Cancer Institute",
+      "functional_role": "FUNDING_SOURCE"
+    }
+  ],
+  "associated_studies": null,
+  "outcome_measures": [
+    {
+      "time_frame": "Up to 5 years",
+      "name": "Average number of days per cycle participants are able to stay on planned dose of ibrutinib",
+      "description": "Average number of days will be calculated.",
+      "type_code": "SECONDARY"
+    },
+    {
+      "time_frame": "Baseline up to 5 years",
+      "name": "Changes in Epstein-Barr virus (EBV) viral loads",
+      "description": "Descriptive statistics will be used to evaluate the changes and compared with treatment completion. If there are sufficient data, the binomial test of proportions will be used to test if the long term viral reservoir is either undetectable or below baseline in at least half of the participants.",
+      "type_code": "SECONDARY"
+    },
+    {
+      "time_frame": "Baseline up to 5 years",
+      "name": "Changes in the levels of human immunodeficiency virus (HIV)-1 viral reservoirs",
+      "description": "Descriptive statistics will be used to evaluate the changes and will be compared with treatment completion. If there are sufficient data, the binomial test of proportions will be used to test if the long term viral reservoir is either undetectable or below baseline in at least half of the participants.",
+      "type_code": "SECONDARY"
+    },
+    {
+      "time_frame": "Up to 5 years",
+      "name": "Complete response rates",
+      "description": "The complete response rates and their corresponding 95% confidence intervals will be calculated for participants with AIDS-related lymphomas (ARL) treated with combination ibrutinib and rituximab (R)-dose adjusted (da)-etoposide, prednisone, vincristine sulfate, cyclophosphamide and doxorubicin hydrochloride (EPOCH).",
+      "type_code": "SECONDARY"
+    },
+    {
+      "time_frame": "Up to 5 years",
+      "name": "Effect of treatment on B-cell receptor signaling pathway including BTK activity",
+      "description": "Descriptive statistics will be used.",
+      "type_code": "SECONDARY"
+    },
+    {
+      "time_frame": "Up to 5 years",
+      "name": "Effect of treatment on HIV latency reservoirs",
+      "description": "Will be correlated with degree of ITK inhibition and Pearson or Spearman correlation coefficients will be used, as appropriate.",
+      "type_code": "SECONDARY"
+    },
+    {
+      "time_frame": "Up to 5 years",
+      "name": "Effect of treatment on T-cell receptor signaling via ITK activity.",
+      "description": "Descriptive statistics will be used.",
+      "type_code": "SECONDARY"
+    },
+    {
+      "time_frame": "Up to 5 years",
+      "name": "Incidence of adverse events graded using Common Terminology Criteria for Adverse Events version 4.0",
+      "description": "Toxicity data will be presented by type and severity for each dose cohort. Incidence of toxicity related dose reductions and treatment discontinuations will be summarized for each dose group.",
+      "type_code": "SECONDARY"
+    },
+    {
+      "time_frame": "Up to 5 years",
+      "name": "Lymphoma cell-of-origin (COO) assessment",
+      "description": "Will be determined by gene expression profiling (GEP) (germinal center B-cell [GCB], activated B-cell [ABC], unclassifiable) and immunohistochemistry [IHC] (GCB, non-GCB). The concordances and discordances between classifications will be estimated with binomial proportions and their 95% corresponding confidence intervals. The response rates and survival as categorized by GEP or IHC will be compared, to see which analysis of COO best correlates with treatment response. Chi-square tests will be used to test the associations between 1) GEP (GCB, ABC, unclassifiable) with response rates and 2) IHC (GCB, non-GCB) with responses rate. The Kaplan Meier method will be used to calculate estimates of OS and PFS within GEP (GCB, ABC, unclassifiable) and within IHC (GCB, non-GCB), as well as their 95% confidence intervals. The log-rank test will be used to test differences with respect to OS and PFS within GEP and within IHC.",
+      "type_code": "SECONDARY"
+    },
+    {
+      "time_frame": "Up to 21 days",
+      "name": "Maximum tolerated dose (MTD) of ibrutinib in combination with chemotherapy",
+      "description": "There will be no formal statistical testing for the dose-finding portion of the study.",
+      "type_code": "PRIMARY"
+    },
+    {
+      "time_frame": "1 year",
+      "name": "Overall survival (OS)",
+      "description": "OS will be estimated using Kaplan Meier method, as well as, their corresponding 95% confidence intervals.",
+      "type_code": "SECONDARY"
+    },
+    {
+      "time_frame": "2 years",
+      "name": "Overall survival (OS)",
+      "description": "OS will be estimated using Kaplan Meier method, as well as, their corresponding 95% confidence intervals.",
+      "type_code": "SECONDARY"
+    },
+    {
+      "time_frame": "Up to 5 years",
+      "name": "Percentage of participants who receive two or more cycles of combination chemotherapy, and are able to continue on a minimum dose level of cyclophosphamide of -1 and above after dose adjustments",
+      "description": "Hematologic toxicities will be calculated.",
+      "type_code": "SECONDARY"
+    },
+    {
+      "time_frame": "Up to 5 years",
+      "name": "Pharmacokinetics (PK) parameters assessment for ibrutinib, doxorubicin hydrochloride, etoposide, and vincristine sulfate",
+      "description": "Relevant individual PK parameters will be estimated using non-compartmental or compartmental PK methods with the software WinNonlin. The PK variables will be tabulated and descriptive statistics (e.g., geometric means and coefficients of variation) and compared across dose levels (if applicable) using nonparametric statistical testing techniques. PK parameters (i.e., steady state concentration [Css], clearance [Cl], and area under the curve [AUC]) will be correlated with pharmacodynamics effects using nonparametric statistical testing techniques.",
+      "type_code": "SECONDARY"
+    },
+    {
+      "time_frame": "1 year",
+      "name": "Progression free survival (PFS)",
+      "description": "PFS will be estimated using Kaplan Meier method, as well as, their corresponding 95% confidence intervals.",
+      "type_code": "SECONDARY"
+    },
+    {
+      "time_frame": "2 years",
+      "name": "Progression free survival (PFS)",
+      "description": "PFS will be estimated using Kaplan Meier method, as well as, their corresponding 95% confidence intervals.",
+      "type_code": "SECONDARY"
+    },
+    {
+      "time_frame": "Up to 21 days",
+      "name": "Recommended phase II dose (RP2D) of ibrutinib in combination with chemotherapy",
+      "description": "There will be no formal statistical testing for the dose-finding portion of the study.",
+      "type_code": "PRIMARY"
+    },
+    {
+      "time_frame": "Up to 5 years",
+      "name": "Soluble cytokine response to treatment",
+      "description": "Descriptive statistics will be used.",
+      "type_code": "SECONDARY"
+    }
+  ],
+  "phase": "I",
+  "central_contact": {
+    "phone": null,
+    "name": null,
+    "type": null,
+    "email": null
+  },
+  "primary_purpose": "TREATMENT",
+  "number_of_arms": 1,
+  "_study_protocol_type_sort_order": 0,
+  "nct_id": "NCT03220022",
+  "biomarkers": [
+    {
+      "eligibility_criterion": "inclusion",
+      "inclusion_indicator": "TRIAL",
+      "synonyms": [
+        "CD20 Antigen Positive",
+        "CD20 Expressing",
+        "CD20 Present",
+        "CD20+",
+        "Leu-16 Positive",
+        "MS4A1 Positive"
+      ],
+      "nci_thesaurus_concept_id": "C128631",
+      "name": "CD20 Positive",
+      "semantic_types": [
+        "Laboratory or Test Result"
+      ],
+      "type": [],
+      "ancestors": [
+        "C16612",
+        "C177692",
+        "C25790",
+        "C3367",
+        "C35682",
+        "C36292",
+        "C38895",
+        "C7057",
+        "C74095",
+        "C77140"
+      ],
+      "assay_purpose": "Eligibility Criterion - Inclusion",
+      "parents": [
+        "C74095",
+        "C177692",
+        "C38895"
+      ]
+    },
+    {
+      "eligibility_criterion": "inclusion",
+      "inclusion_indicator": "TRIAL",
+      "synonyms": [
+        "CD20 Antigen Negative",
+        "Leu-16 Negative",
+        "MS4A1 Negative"
+      ],
+      "nci_thesaurus_concept_id": "C137690",
+      "name": "CD20 Negative",
+      "semantic_types": [
+        "Laboratory or Test Result"
+      ],
+      "type": [],
+      "ancestors": [
+        "C165233",
+        "C16612",
+        "C25790",
+        "C3367",
+        "C35681",
+        "C36292",
+        "C38895",
+        "C7057",
+        "C74095",
+        "C77140"
+      ],
+      "assay_purpose": "Eligibility Criterion - Inclusion",
+      "parents": [
+        "C74095",
+        "C165233",
+        "C38895"
+      ]
+    },
+    {
+      "eligibility_criterion": "inclusion",
+      "inclusion_indicator": "TRIAL",
+      "synonyms": [
+        "HIV Positive",
+        "HIV Positivity",
+        "HIV positive",
+        "HIV test positive",
+        "Positive"
+      ],
+      "nci_thesaurus_concept_id": "C15175",
+      "name": "Human Immunodeficiency Virus Positive",
+      "semantic_types": [
+        "Laboratory or Test Result"
+      ],
+      "type": [],
+      "ancestors": [
+        "C26683",
+        "C3367",
+        "C35553",
+        "C35682",
+        "C36292",
+        "C7057",
+        "C77140"
+      ],
+      "assay_purpose": "Eligibility Criterion - Inclusion",
+      "parents": [
+        "C35553",
+        "C35682"
+      ]
+    },
+    {
+      "eligibility_criterion": "inclusion",
+      "inclusion_indicator": "TREE",
+      "synonyms": [
+        "Diagnostic Test Result",
+        "Test Result"
+      ],
+      "nci_thesaurus_concept_id": "C77140",
+      "name": "Clinical Test Result",
+      "semantic_types": [
+        "Finding"
+      ],
+      "type": [],
+      "ancestors": [
+        "C3367",
+        "C7057"
+      ],
+      "parents": [
+        "C3367"
+      ],
+      "assay_purpose": "Eligibility Criterion - Inclusion"
+    },
+    {
+      "eligibility_criterion": "inclusion",
+      "inclusion_indicator": "TREE",
+      "synonyms": [
+        "Absent",
+        "LOST",
+        "Loss of Expression",
+        "Negative",
+        "Not Expressed"
+      ],
+      "nci_thesaurus_concept_id": "C165233",
+      "name": "Expression Negative",
+      "semantic_types": [
+        "Cell or Molecular Dysfunction"
+      ],
+      "type": [],
+      "ancestors": [
+        "C3367",
+        "C35681",
+        "C7057",
+        "C77140"
+      ],
+      "parents": [
+        "C35681"
+      ],
+      "assay_purpose": "Eligibility Criterion - Inclusion"
+    },
+    {
+      "eligibility_criterion": "inclusion",
+      "inclusion_indicator": "TREE",
+      "synonyms": [],
+      "nci_thesaurus_concept_id": "C7057",
+      "name": "Disease, Disorder or Finding",
+      "semantic_types": [
+        "Conceptual Entity"
+      ],
+      "type": [
+        "branch"
+      ],
+      "ancestors": [],
+      "parents": [],
+      "assay_purpose": "Eligibility Criterion - Inclusion"
+    },
+    {
+      "eligibility_criterion": "inclusion",
+      "inclusion_indicator": "TREE",
+      "synonyms": [],
+      "nci_thesaurus_concept_id": "C25790",
+      "name": "Immunoprotein Gene",
+      "semantic_types": [
+        "Gene or Genome"
+      ],
+      "type": [],
+      "ancestors": [
+        "C16612"
+      ],
+      "parents": [
+        "C16612"
+      ],
+      "assay_purpose": "Eligibility Criterion - Inclusion"
+    },
+    {
+      "eligibility_criterion": "inclusion",
+      "inclusion_indicator": "TREE",
+      "synonyms": [
+        "Observable Entity",
+        "finding"
+      ],
+      "nci_thesaurus_concept_id": "C3367",
+      "name": "Finding",
+      "semantic_types": [
+        "Finding"
+      ],
+      "type": [],
+      "ancestors": [
+        "C7057"
+      ],
+      "parents": [
+        "C7057"
+      ],
+      "assay_purpose": "Eligibility Criterion - Inclusion"
+    },
+    {
+      "eligibility_criterion": "inclusion",
+      "inclusion_indicator": "TREE",
+      "synonyms": [
+        "Positive",
+        "positive test result"
+      ],
+      "nci_thesaurus_concept_id": "C35682",
+      "name": "Positive Laboratory Test Result",
+      "semantic_types": [
+        "Laboratory or Test Result"
+      ],
+      "type": [],
+      "ancestors": [
+        "C3367",
+        "C36292",
+        "C7057",
+        "C77140"
+      ],
+      "parents": [
+        "C36292"
+      ],
+      "assay_purpose": "Eligibility Criterion - Inclusion"
+    },
+    {
+      "eligibility_criterion": "inclusion",
+      "inclusion_indicator": "TREE",
+      "synonyms": [
+        "CD20",
+        "MS4A1",
+        "Membrane-Spanning 4-Domains, Subfamily A, Member 1 Gene"
+      ],
+      "nci_thesaurus_concept_id": "C38895",
+      "name": "MS4A1 Gene",
+      "semantic_types": [
+        "Gene or Genome"
+      ],
+      "type": [
+        "reference_gene"
+      ],
+      "ancestors": [
+        "C16612",
+        "C25790"
+      ],
+      "parents": [
+        "C25790"
+      ],
+      "assay_purpose": "Eligibility Criterion - Inclusion"
+    },
+    {
+      "eligibility_criterion": "inclusion",
+      "inclusion_indicator": "TREE",
+      "synonyms": [
+        "Abnormal Lab Test Result",
+        "Abnormal Laboratory Test",
+        "Abnormal, NOS"
+      ],
+      "nci_thesaurus_concept_id": "C26683",
+      "name": "Abnormal Laboratory Test Result",
+      "semantic_types": [
+        "Laboratory or Test Result"
+      ],
+      "type": [],
+      "ancestors": [
+        "C3367",
+        "C36292",
+        "C7057",
+        "C77140"
+      ],
+      "parents": [
+        "C36292"
+      ],
+      "assay_purpose": "Eligibility Criterion - Inclusion"
+    },
+    {
+      "eligibility_criterion": "inclusion",
+      "inclusion_indicator": "TREE",
+      "synonyms": [
+        "CD20 Status",
+        "Leu-16 Status",
+        "MS4A1 Status"
+      ],
+      "nci_thesaurus_concept_id": "C74095",
+      "name": "CD20 Antigen Status",
+      "semantic_types": [
+        "Laboratory or Test Result"
+      ],
+      "type": [],
+      "ancestors": [
+        "C16612",
+        "C25790",
+        "C3367",
+        "C36292",
+        "C38895",
+        "C7057",
+        "C77140"
+      ],
+      "parents": [
+        "C36292",
+        "C38895"
+      ],
+      "assay_purpose": "Eligibility Criterion - Inclusion"
+    },
+    {
+      "eligibility_criterion": "inclusion",
+      "inclusion_indicator": "TREE",
+      "synonyms": [
+        "Negative",
+        "negative test result"
+      ],
+      "nci_thesaurus_concept_id": "C35681",
+      "name": "Negative Test Result",
+      "semantic_types": [
+        "Finding"
+      ],
+      "type": [],
+      "ancestors": [
+        "C3367",
+        "C7057",
+        "C77140"
+      ],
+      "parents": [
+        "C77140"
+      ],
+      "assay_purpose": "Eligibility Criterion - Inclusion"
+    },
+    {
+      "eligibility_criterion": "inclusion",
+      "inclusion_indicator": "TREE",
+      "synonyms": [
+        "Genes",
+        "gene"
+      ],
+      "nci_thesaurus_concept_id": "C16612",
+      "name": "Gene",
+      "semantic_types": [
+        "Gene or Genome"
+      ],
+      "type": [
+        "branch"
+      ],
+      "ancestors": [],
+      "parents": [],
+      "assay_purpose": "Eligibility Criterion - Inclusion"
+    },
+    {
+      "eligibility_criterion": "inclusion",
+      "inclusion_indicator": "TREE",
+      "synonyms": [],
+      "nci_thesaurus_concept_id": "C35553",
+      "name": "Abnormal Blood Chemistry and Hematology Test Result",
+      "semantic_types": [
+        "Laboratory or Test Result"
+      ],
+      "type": [],
+      "ancestors": [
+        "C26683",
+        "C3367",
+        "C36292",
+        "C7057",
+        "C77140"
+      ],
+      "parents": [
+        "C26683"
+      ],
+      "assay_purpose": "Eligibility Criterion - Inclusion"
+    },
+    {
+      "eligibility_criterion": "inclusion",
+      "inclusion_indicator": "TREE",
+      "synonyms": [
+        "LAB_RESULT",
+        "Lab Findings",
+        "Laboratory Finding",
+        "Laboratory Report",
+        "Labs",
+        "TEST RESULT",
+        "Test Result",
+        "test result",
+        "test_result"
+      ],
+      "nci_thesaurus_concept_id": "C36292",
+      "name": "Laboratory Test Result",
+      "semantic_types": [
+        "Laboratory or Test Result"
+      ],
+      "type": [],
+      "ancestors": [
+        "C3367",
+        "C7057",
+        "C77140"
+      ],
+      "parents": [
+        "C77140"
+      ],
+      "assay_purpose": "Eligibility Criterion - Inclusion"
+    },
+    {
+      "eligibility_criterion": "inclusion",
+      "inclusion_indicator": "TREE",
+      "synonyms": [
+        "Expressed",
+        "Expression Detected"
+      ],
+      "nci_thesaurus_concept_id": "C177692",
+      "name": "Expression Positive",
+      "semantic_types": [
+        "Laboratory or Test Result"
+      ],
+      "type": [],
+      "ancestors": [
+        "C3367",
+        "C35682",
+        "C36292",
+        "C7057",
+        "C77140"
+      ],
+      "parents": [
+        "C35682"
+      ],
+      "assay_purpose": "Eligibility Criterion - Inclusion"
+    }
+  ],
+  "classification_code": null,
+  "current_trial_status_date": "2020-07-08",
+  "diseases": [
+    {
+      "inclusion_indicator": "TRIAL",
+      "is_lead_disease": true,
+      "synonyms": [
+        "AIDS Lymphoma",
+        "AIDS Related Lymphoma",
+        "HIV Associated Lymphoma",
+        "Lymphoma AIDS Related",
+        "Lymphoma, AIDS-Related"
+      ],
+      "nci_thesaurus_concept_id": "C3471",
+      "name": "AIDS-Related Lymphoma",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C4046",
+        "C157709",
+        "C27699"
+      ]
+    },
+    {
+      "inclusion_indicator": "TRIAL",
+      "is_lead_disease": false,
+      "synonyms": [
+        "Ann Arbor Stage II Diffuse Large B-Cell Lymphoma",
+        "Diffuse Large B-Cell Lymphoma Stage II"
+      ],
+      "nci_thesaurus_concept_id": "C8855",
+      "name": "Stage II Diffuse Large B-Cell Lymphoma",
+      "type": [
+        "stage"
+      ],
+      "parents": [
+        "C8843",
+        "C141254"
+      ]
+    },
+    {
+      "inclusion_indicator": "TRIAL",
+      "is_lead_disease": false,
+      "synonyms": [
+        "Ann Arbor Stage III Diffuse Large B-Cell Lymphoma",
+        "Diffuse Large B-Cell Lymphoma Stage III"
+      ],
+      "nci_thesaurus_concept_id": "C8856",
+      "name": "Stage III Diffuse Large B-Cell Lymphoma",
+      "type": [
+        "stage"
+      ],
+      "parents": [
+        "C8844",
+        "C141254"
+      ]
+    },
+    {
+      "inclusion_indicator": "TRIAL",
+      "is_lead_disease": false,
+      "synonyms": [
+        "Ann Arbor Stage IV Diffuse Large B-Cell Lymphoma",
+        "Diffuse Large B-Cell Lymphoma Stage IV"
+      ],
+      "nci_thesaurus_concept_id": "C8857",
+      "name": "Stage IV Diffuse Large B-Cell Lymphoma",
+      "type": [
+        "stage"
+      ],
+      "parents": [
+        "C8845",
+        "C141254"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [
+        "Virus Related Cancer",
+        "Virus Related Malignancy",
+        "Virus-Related Cancer",
+        "Virus-Related Malignancy"
+      ],
+      "nci_thesaurus_concept_id": "C27673",
+      "name": "Virus-Related Malignant Neoplasm",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C27223"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [],
+      "nci_thesaurus_concept_id": "C7062",
+      "name": "Neoplasm by Special Category",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C3262"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [
+        "Lymphoproliferative disease, NOS",
+        "Lymphoproliferative disorder, NOS",
+        "lymphoproliferative disorder"
+      ],
+      "nci_thesaurus_concept_id": "C9308",
+      "name": "Lymphoproliferative Disorder",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C26323"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [
+        "Lymphoproliferative disease, NOS",
+        "Lymphoproliferative disorder, NOS",
+        "lymphoproliferative disorder"
+      ],
+      "nci_thesaurus_concept_id": "C9308",
+      "name": "Lymphoproliferative Disorder",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C26323"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [],
+      "nci_thesaurus_concept_id": "C7062",
+      "name": "Neoplasm by Special Category",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C3262"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [
+        "Immunosuppression-Related Cancer",
+        "Immunosuppression-Related Malignancy",
+        "Immunosuppression-Related Malignant Neoplasm"
+      ],
+      "nci_thesaurus_concept_id": "C27770",
+      "name": "Immunodeficiency-Related Malignant Neoplasm",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C27936",
+        "C9305"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [
+        "Diagnosis",
+        "Disease",
+        "Disease or Disorder",
+        "Disease or Disorder, Non-Neoplastic",
+        "Diseases",
+        "Diseases and Disorders",
+        "Disorder",
+        "Disorders",
+        "condition",
+        "disease",
+        "disease term",
+        "disease type",
+        "disease_term",
+        "disease_type",
+        "disorder"
+      ],
+      "nci_thesaurus_concept_id": "C2991",
+      "name": "Other Disease",
+      "type": [
+        "maintype"
+      ],
+      "parents": [
+        "C7057"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [
+        "Diagnosis",
+        "Disease",
+        "Disease or Disorder",
+        "Disease or Disorder, Non-Neoplastic",
+        "Diseases",
+        "Diseases and Disorders",
+        "Disorder",
+        "Disorders",
+        "condition",
+        "disease",
+        "disease term",
+        "disease type",
+        "disease_term",
+        "disease_type",
+        "disorder"
+      ],
+      "nci_thesaurus_concept_id": "C2991",
+      "name": "Other Disease",
+      "type": [
+        "maintype"
+      ],
+      "parents": [
+        "C7057"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [
+        "Disease by Site"
+      ],
+      "nci_thesaurus_concept_id": "C27551",
+      "name": "Disorder by Site",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C2991"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [
+        "Non-Hodgkin's Lymphoma Stage III",
+        "Stage III Non-Hodgkin Lymphoma",
+        "Stage III Non-Hodgkin's Lymphoma"
+      ],
+      "nci_thesaurus_concept_id": "C8522",
+      "name": "Ann Arbor Stage III Non-Hodgkin Lymphoma",
+      "type": [
+        "stage"
+      ],
+      "parents": [
+        "C8320",
+        "C141140"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [
+        "Disease by Site"
+      ],
+      "nci_thesaurus_concept_id": "C27551",
+      "name": "Disorder by Site",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C2991"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [
+        "Hematopoietic and Lymphoid System Tumor"
+      ],
+      "nci_thesaurus_concept_id": "C35813",
+      "name": "Hematopoietic and Lymphoid System Neoplasm",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C35814",
+        "C3263"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [
+        "Ann Arbor Stage II B-Cell Non-Hodgkin Lymphoma",
+        "B Cell Lymphoma Stage II",
+        "B-Cell Lymphoma Stage II",
+        "Stage II B Cell Lymphoma",
+        "Stage II B-Cell Lymphoma",
+        "Stage II B-Cell Non-Hodgkin's Lymphoma"
+      ],
+      "nci_thesaurus_concept_id": "C8843",
+      "name": "Stage II B-Cell Non-Hodgkin Lymphoma",
+      "type": [
+        "stage"
+      ],
+      "parents": [
+        "C8521",
+        "C141243"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [],
+      "nci_thesaurus_concept_id": "C157709",
+      "name": "HIV-Associated Lymphoproliferative Disorder",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C150672"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [],
+      "nci_thesaurus_concept_id": "C27268",
+      "name": "Lymphoma by Stage",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C3208"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [
+        "Hematopoietic and Lymphoid System Tumor"
+      ],
+      "nci_thesaurus_concept_id": "C35813",
+      "name": "Hematopoietic and Lymphoid System Neoplasm",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C35814",
+        "C3263"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [],
+      "nci_thesaurus_concept_id": "C141140",
+      "name": "Non-Hodgkin Lymphoma by Ann Arbor Stage",
+      "type": [
+        "stage"
+      ],
+      "parents": [
+        "C141139",
+        "C3211"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [],
+      "nci_thesaurus_concept_id": "C179052",
+      "name": "B-Cell Lymphoproliferative Disorder",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C9308"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [
+        "Immunodepression-Related Disorder",
+        "Immunosuppression disorders",
+        "Immunosuppression-Related Disorder"
+      ],
+      "nci_thesaurus_concept_id": "C35686",
+      "name": "Immunodeficiency-Related Disorder",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C27351"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [
+        "AIDS Related Cancer",
+        "AIDS-Related Cancer",
+        "AIDS-Related Malignancies",
+        "AIDS-Related Malignancy",
+        "AIDS-related cancer",
+        "HIV-Associated Malignant Neoplasm"
+      ],
+      "nci_thesaurus_concept_id": "C4046",
+      "name": "AIDS-Related Malignant Neoplasm",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C4991",
+        "C27770",
+        "C27673"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [
+        "Neoplasia",
+        "Neoplasm",
+        "Neoplasm, NOS",
+        "Neoplasms, NOS",
+        "Neoplastic Disease",
+        "Neoplastic Growth",
+        "Tumor, NOS",
+        "neoplasia",
+        "neoplasm",
+        "tumor"
+      ],
+      "nci_thesaurus_concept_id": "C3262",
+      "name": "Other Neoplasm",
+      "type": [
+        "maintype"
+      ],
+      "parents": [
+        "C2991"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [
+        "Neoplasia",
+        "Neoplasm",
+        "Neoplasm, NOS",
+        "Neoplasms, NOS",
+        "Neoplastic Disease",
+        "Neoplastic Growth",
+        "Tumor, NOS",
+        "neoplasia",
+        "neoplasm",
+        "tumor"
+      ],
+      "nci_thesaurus_concept_id": "C3262",
+      "name": "Other Neoplasm",
+      "type": [
+        "maintype"
+      ],
+      "parents": [
+        "C2991"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [],
+      "nci_thesaurus_concept_id": "C27224",
+      "name": "Infection-Related Neoplasm",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C27933"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [
+        "Immunosuppression-Related Neoplasm"
+      ],
+      "nci_thesaurus_concept_id": "C27936",
+      "name": "Immunodeficiency-Related Neoplasm",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C35686",
+        "C27933"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [
+        "B-Cell Lymphocytic Neoplasm"
+      ],
+      "nci_thesaurus_concept_id": "C27907",
+      "name": "B-Cell Neoplasm",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C179052",
+        "C7065"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [
+        "Virus Related Lymphoma"
+      ],
+      "nci_thesaurus_concept_id": "C27699",
+      "name": "Virus-Related Lymphoma",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C3208",
+        "C27673"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [
+        "Ann Arbor Stage II Lymphoma",
+        "Lymphoma Stage II"
+      ],
+      "nci_thesaurus_concept_id": "C8319",
+      "name": "Stage II Lymphoma",
+      "type": [
+        "stage"
+      ],
+      "parents": [
+        "C141139"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [],
+      "nci_thesaurus_concept_id": "C141254",
+      "name": "Diffuse Large B-Cell Lymphoma by Ann Arbor Stage",
+      "type": [
+        "stage"
+      ],
+      "parents": [
+        "C141243",
+        "C8851"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [
+        "Ann Arbor Stage IV Lymphoma",
+        "Lymphoma Stage IV"
+      ],
+      "nci_thesaurus_concept_id": "C8321",
+      "name": "Stage IV Lymphoma",
+      "type": [
+        "stage"
+      ],
+      "parents": [
+        "C141139"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [],
+      "nci_thesaurus_concept_id": "C141243",
+      "name": "B-Cell Non-Hodgkin Lymphoma by Ann Arbor Stage",
+      "type": [
+        "stage"
+      ],
+      "parents": [
+        "C3457",
+        "C141140"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [
+        "Tumor Morphology",
+        "Tumor_Morphology"
+      ],
+      "nci_thesaurus_concept_id": "C4741",
+      "name": "Neoplasm by Morphology",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C3262"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [
+        "Ann Arbor Stage III Lymphoma",
+        "Lymphoma Stage III"
+      ],
+      "nci_thesaurus_concept_id": "C8320",
+      "name": "Stage III Lymphoma",
+      "type": [
+        "stage"
+      ],
+      "parents": [
+        "C141139"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [],
+      "nci_thesaurus_concept_id": "C150672",
+      "name": "Immunodeficiency-Associated Lymphoproliferative Disorder",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C35686",
+        "C9308"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [
+        "LYMPHOMA, MALIGNANT",
+        "Lymphoma (Hodgkin and Non-Hodgkin)",
+        "Lymphoma (Hodgkin's and Non-Hodgkin's)",
+        "Lymphoma, NOS",
+        "Lymphomatous",
+        "Malignant Lymphoma",
+        "lymphoma"
+      ],
+      "nci_thesaurus_concept_id": "C3208",
+      "name": "Lymphoma",
+      "type": [
+        "maintype",
+        "subtype"
+      ],
+      "parents": [
+        "C7065",
+        "C9305"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [
+        "Lymphocytic Tumor",
+        "Lymphocytic and Plasma Cell Neoplasm",
+        "Lymphocytic and Plasma Cell Tumor",
+        "Lymphocytic and Plasma Cell Tumour",
+        "Lymphocytic and Plasmacytic Neoplasm",
+        "Lymphoid Neoplasm",
+        "Lymphoid Tumor",
+        "Lymphoid and Plasma Cell Tumor",
+        "Lymphoid and Plasma Cell Tumour",
+        "Lymphoid and Plasmacytic Neoplasm",
+        "Lymphoid and Plasmacytic Tumor",
+        "Lymphoid and Plasmacytic Tumour"
+      ],
+      "nci_thesaurus_concept_id": "C7065",
+      "name": "Lymphocytic Neoplasm",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C27134",
+        "C9308"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [
+        "Lymphocytic Tumor",
+        "Lymphocytic and Plasma Cell Neoplasm",
+        "Lymphocytic and Plasma Cell Tumor",
+        "Lymphocytic and Plasma Cell Tumour",
+        "Lymphocytic and Plasmacytic Neoplasm",
+        "Lymphoid Neoplasm",
+        "Lymphoid Tumor",
+        "Lymphoid and Plasma Cell Tumor",
+        "Lymphoid and Plasma Cell Tumour",
+        "Lymphoid and Plasmacytic Neoplasm",
+        "Lymphoid and Plasmacytic Tumor",
+        "Lymphoid and Plasmacytic Tumour"
+      ],
+      "nci_thesaurus_concept_id": "C7065",
+      "name": "Lymphocytic Neoplasm",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C27134",
+        "C9308"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [
+        "LYMPHOMA, MALIGNANT",
+        "Lymphoma (Hodgkin and Non-Hodgkin)",
+        "Lymphoma (Hodgkin's and Non-Hodgkin's)",
+        "Lymphoma, NOS",
+        "Lymphomatous",
+        "Malignant Lymphoma",
+        "lymphoma"
+      ],
+      "nci_thesaurus_concept_id": "C3208",
+      "name": "Lymphoma",
+      "type": [
+        "maintype",
+        "subtype"
+      ],
+      "parents": [
+        "C7065",
+        "C9305"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [
+        "Tumor Morphology",
+        "Tumor_Morphology"
+      ],
+      "nci_thesaurus_concept_id": "C4741",
+      "name": "Neoplasm by Morphology",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C3262"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [
+        "Hematopoietic and Lymphoid System Disease"
+      ],
+      "nci_thesaurus_concept_id": "C35814",
+      "name": "Hematopoietic and Lymphoid System Disorder",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C27551"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [
+        "DLBCL",
+        "Diffuse Large B-Cell Lymphoma (DLBCL)",
+        "Diffuse large B-cell lymphoma",
+        "diffuse large B-cell lymphoma"
+      ],
+      "nci_thesaurus_concept_id": "C8851",
+      "name": "Diffuse Large B-Cell Lymphoma",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C7056"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [
+        "Mature B-Cell Lymphoma",
+        "Mature B-Cell Lymphomas",
+        "Mature B-Cell Non-Hodgkin's Lymphoma"
+      ],
+      "nci_thesaurus_concept_id": "C7056",
+      "name": "Mature B-Cell Non-Hodgkin Lymphoma",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C3457",
+        "C27910"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [
+        "Hematopoietic and Lymphoid System Disease"
+      ],
+      "nci_thesaurus_concept_id": "C35814",
+      "name": "Hematopoietic and Lymphoid System Disorder",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C27551"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [
+        "Ann Arbor Stage IV B-Cell Non-Hodgkin Lymphoma",
+        "B Cell Lymphoma Stage IV",
+        "B-Cell Lymphoma Stage IV",
+        "Stage IV B Cell Lymphoma",
+        "Stage IV B-Cell Lymphoma",
+        "Stage IV B-Cell Non-Hodgkin's Lymphoma"
+      ],
+      "nci_thesaurus_concept_id": "C8845",
+      "name": "Stage IV B-Cell Non-Hodgkin Lymphoma",
+      "type": [
+        "stage"
+      ],
+      "parents": [
+        "C8523",
+        "C141243"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [],
+      "nci_thesaurus_concept_id": "C141139",
+      "name": "Lymphoma by Ann Arbor Stage",
+      "type": [
+        "stage"
+      ],
+      "parents": [
+        "C27268"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [
+        "Immunodeficiency and Immunosuppression Disorders"
+      ],
+      "nci_thesaurus_concept_id": "C27351",
+      "name": "Immune System and Related Disorders",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C27551"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [
+        "NHL",
+        "NHL, NOS",
+        "Non-Hodgkin lymphoma, NOS",
+        "Non-Hodgkin's Lymphoma",
+        "Non-Hodgkin's Lymphoma (NHL)",
+        "non-Hodgkin lymphoma"
+      ],
+      "nci_thesaurus_concept_id": "C3211",
+      "name": "Non-Hodgkin Lymphoma",
+      "type": [
+        "maintype",
+        "subtype"
+      ],
+      "parents": [
+        "C3208"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [
+        "Non-Hodgkin's Lymphoma Stage IV",
+        "Stage IV Non-Hodgkin Lymphoma",
+        "Stage IV Non-Hodgkin's Lymphoma"
+      ],
+      "nci_thesaurus_concept_id": "C8523",
+      "name": "Ann Arbor Stage IV Non-Hodgkin Lymphoma",
+      "type": [
+        "stage"
+      ],
+      "parents": [
+        "C8321",
+        "C141140"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [
+        "Ann Arbor Stage III B-Cell Non-Hodgkin Lymphoma",
+        "B Cell Lymphoma Stage III",
+        "B-Cell Lymphoma Stage III",
+        "Stage III B Cell Lymphoma",
+        "Stage III B-Cell Lymphoma",
+        "Stage III B-Cell Non-Hodgkin's Lymphoma"
+      ],
+      "nci_thesaurus_concept_id": "C8844",
+      "name": "Stage III B-Cell Non-Hodgkin Lymphoma",
+      "type": [
+        "stage"
+      ],
+      "parents": [
+        "C8522",
+        "C141243"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [],
+      "nci_thesaurus_concept_id": "C7057",
+      "name": "Disease, Disorder or Finding",
+      "type": [],
+      "parents": []
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [],
+      "nci_thesaurus_concept_id": "C7057",
+      "name": "Disease, Disorder or Finding",
+      "type": [],
+      "parents": []
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [],
+      "nci_thesaurus_concept_id": "C3263",
+      "name": "Neoplasm by Site",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C3262"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [
+        "Non-Hodgkin's Lymphoma Stage II",
+        "Stage II Non-Hodgkin Lymphoma",
+        "Stage II Non-Hodgkin's Lymphoma"
+      ],
+      "nci_thesaurus_concept_id": "C8521",
+      "name": "Ann Arbor Stage II Non-Hodgkin Lymphoma",
+      "type": [
+        "stage"
+      ],
+      "parents": [
+        "C8319",
+        "C141140"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [
+        "Infection Related Cancer",
+        "Infection Related Malignancy",
+        "Infection-Related Cancer",
+        "Infection-Related Malignancy"
+      ],
+      "nci_thesaurus_concept_id": "C27223",
+      "name": "Infection-Related Malignant Neoplasm",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C27224",
+        "C9305"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [
+        "B-Cell Non Hodgkin's Lymphoma",
+        "B-Cell Non-Hodgkin's Lymphoma",
+        "B-cell lymphoma",
+        "Lymphomas Non-Hodgkin's B-Cell",
+        "Non-Hodgkin's B-Cell Lymphoma",
+        "Non-Hodgkin's Lymphoma B-Cell"
+      ],
+      "nci_thesaurus_concept_id": "C3457",
+      "name": "B-Cell Non-Hodgkin Lymphoma",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C27907",
+        "C3211"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [
+        "CA",
+        "Cancer",
+        "Malignancy",
+        "Malignant Growth",
+        "Malignant Neoplastic Disease",
+        "Malignant Tumor",
+        "NEOPLASM, MALIGNANT",
+        "Neoplasm, malignant",
+        "Tumor, malignant, NOS",
+        "Unclassified tumor, malignant",
+        "cancer",
+        "malignancy"
+      ],
+      "nci_thesaurus_concept_id": "C9305",
+      "name": "Malignant Neoplasm",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C7062"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [
+        "CA",
+        "Cancer",
+        "Malignancy",
+        "Malignant Growth",
+        "Malignant Neoplastic Disease",
+        "Malignant Tumor",
+        "NEOPLASM, MALIGNANT",
+        "Neoplasm, malignant",
+        "Tumor, malignant, NOS",
+        "Unclassified tumor, malignant",
+        "cancer",
+        "malignancy"
+      ],
+      "nci_thesaurus_concept_id": "C9305",
+      "name": "Malignant Neoplasm",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C7062"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [
+        "Blood Disease",
+        "Blood Disorder",
+        "Hematologic Disorder",
+        "Hematological Disorder"
+      ],
+      "nci_thesaurus_concept_id": "C26323",
+      "name": "Hematologic and Lymphocytic Disorder",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C35814"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [
+        "Mature B-Cell Lymphocytic Neoplasm"
+      ],
+      "nci_thesaurus_concept_id": "C27910",
+      "name": "Mature B-Cell Neoplasm",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C27907"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [
+        "Blood Disease",
+        "Blood Disorder",
+        "Hematologic Disorder",
+        "Hematological Disorder"
+      ],
+      "nci_thesaurus_concept_id": "C26323",
+      "name": "Hematologic and Lymphocytic Disorder",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C35814"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [
+        "AIDS-related complications",
+        "AIDS/HIV - RelatedDisease Associated with AIDS",
+        "Disease Associated with AIDS"
+      ],
+      "nci_thesaurus_concept_id": "C4991",
+      "name": "AIDS-Related Disorder",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C35686"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [
+        "HEMOLYMPHORETICULAR TUMOR, MALIGNANT",
+        "Hematologic Cancer",
+        "Hematologic Malignancy",
+        "Hematologic Neoplasm",
+        "Hematological Neoplasm",
+        "Hematopoietic Cancer",
+        "Hematopoietic Neoplasm",
+        "Hematopoietic Neoplasms Including Lymphomas",
+        "Hematopoietic and Lymphoid Neoplasm",
+        "Hematopoietic malignancy, NOS",
+        "Malignant Hematologic Neoplasm",
+        "Malignant Hematopoietic Neoplasm",
+        "hematologic cancer"
+      ],
+      "nci_thesaurus_concept_id": "C27134",
+      "name": "Hematopoietic and Lymphoid Cell Neoplasm",
+      "type": [
+        "maintype"
+      ],
+      "parents": [
+        "C26323",
+        "C35813",
+        "C4741"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": false,
+      "synonyms": [],
+      "nci_thesaurus_concept_id": "C3263",
+      "name": "Neoplasm by Site",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C3262"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [
+        "HEMOLYMPHORETICULAR TUMOR, MALIGNANT",
+        "Hematologic Cancer",
+        "Hematologic Malignancy",
+        "Hematologic Neoplasm",
+        "Hematological Neoplasm",
+        "Hematopoietic Cancer",
+        "Hematopoietic Neoplasm",
+        "Hematopoietic Neoplasms Including Lymphomas",
+        "Hematopoietic and Lymphoid Neoplasm",
+        "Hematopoietic malignancy, NOS",
+        "Malignant Hematologic Neoplasm",
+        "Malignant Hematopoietic Neoplasm",
+        "hematologic cancer"
+      ],
+      "nci_thesaurus_concept_id": "C27134",
+      "name": "Hematopoietic and Lymphoid Cell Neoplasm",
+      "type": [
+        "maintype"
+      ],
+      "parents": [
+        "C26323",
+        "C35813",
+        "C4741"
+      ]
+    },
+    {
+      "inclusion_indicator": "TREE",
+      "is_lead_disease": true,
+      "synonyms": [
+        "Neoplasm by Etiology"
+      ],
+      "nci_thesaurus_concept_id": "C27933",
+      "name": "Neoplasm by Cause",
+      "type": [
+        "subtype"
+      ],
+      "parents": [
+        "C7062"
+      ]
+    }
+  ],
+  "_primary_purpose_sort_order": 0,
+  "protocol_id": "AMC-101",
+  "active_sites_count": 15,
+  "arms": [
+    {
+      "interventions": [
+        {
+          "inclusion_indicator": "TRIAL",
+          "synonyms": [
+            "Kyocristine",
+            "Oncovin",
+            "Vincasar",
+            "Vincosid",
+            "Vincrex",
+            "Vincristine Sulfate"
+          ],
+          "nci_thesaurus_concept_id": "C1739",
+          "name": "Vincristine Sulfate",
+          "description": "The sulfate salt of a natural alkaloid isolated from the plant Vinca rosea Linn with antimitotic and antineoplastic activities. Vincristine binds irreversibly to microtubules and spindle proteins in S phase of the cell cycle and interferes with the formation of the mitotic spindle, thereby arresting tumor cells in metaphase. This agent also depolymerizes microtubules and may also interfere with amino acid, cyclic AMP, and glutathione metabolism; calmodulin-dependent Ca++ -transport ATPase activity; cellular respiration; and nucleic acid and lipid biosynthesis. Check for active clinical trials or closed clinical trials using this agent. (NCI Thesaurus)Health professional",
+          "category": "agent",
+          "type": "Drug",
+          "parents": [
+            "C932",
+            "C67422"
+          ]
+        },
+        {
+          "inclusion_indicator": "TRIAL",
+          "synonyms": [
+            "CYCLO-cell",
+            "Carloxan",
+            "Cicloxal",
+            "Cycloblastin",
+            "Cycloblastine",
+            "Cyclostin",
+            "Cyclostine",
+            "Cytophosphan",
+            "Fosfaseron",
+            "Genoxal",
+            "Genuxal",
+            "Ledoxina",
+            "Cyclophosphamide"
+          ],
+          "nci_thesaurus_concept_id": "C405",
+          "name": "Cyclophosphamide",
+          "description": "A synthetic alkylating agent chemically related to the nitrogen mustards with antineoplastic and immunosuppressive activities.  In the liver, cyclophosphamide is converted to the active metabolites aldophosphamide and phosphoramide mustard, which bind to DNA, thereby inhibiting DNA replication and initiating cell death. Check for active clinical trials or closed clinical trials using this agent. (NCI Thesaurus)Health professional",
+          "category": "agent",
+          "type": "Drug",
+          "parents": [
+            "C574",
+            "C697"
+          ]
+        },
+        {
+          "inclusion_indicator": "TRIAL",
+          "synonyms": [
+            "Laboratory Biomarker Analysis"
+          ],
+          "nci_thesaurus_concept_id": "C64263",
+          "name": "Laboratory Biomarker Analysis",
+          "description": null,
+          "category": "other",
+          "type": "Other",
+          "parents": [
+            "C63333",
+            "C74957"
+          ]
+        },
+        {
+          "inclusion_indicator": "TRIAL",
+          "synonyms": [
+            "Imbruvica",
+            "Ibrutinib"
+          ],
+          "nci_thesaurus_concept_id": "C81934",
+          "name": "Ibrutinib",
+          "description": "An orally bioavailable, small-molecule inhibitor of Bruton's tyrosine kinase (BTK) with potential antineoplastic activity. Upon oral administration, ibrutinib binds to and irreversibly inhibits BTK activity, thereby preventing both B-cell activation and B-cell-mediated signaling. This leads to an inhibition of the growth of malignant B cells that overexpress BTK. BTK, a member of the src-related BTK/Tec family of cytoplasmic tyrosine kinases, is required for B cell receptor signaling, plays a key role in B-cell maturation, and is overexpressed in a number of B-cell malignancies. The expression of BTK in tumor cells is also associated with increased proliferation and survival. Check for active clinical trials or closed clinical trials using this agent. (NCI Thesaurus)Health professional",
+          "category": "agent",
+          "type": "Drug",
+          "parents": [
+            "C129825",
+            "C124801"
+          ]
+        },
+        {
+          "inclusion_indicator": "TRIAL",
+          "synonyms": [
+            "Pharmacological Study"
+          ],
+          "nci_thesaurus_concept_id": "C62674",
+          "name": "Pharmacological Study",
+          "description": null,
+          "category": "other",
+          "type": "Other",
+          "parents": [
+            "C63536"
+          ]
+        },
+        {
+          "inclusion_indicator": "TRIAL",
+          "synonyms": [
+            "Adriacin",
+            "Adriamycin",
+            "Adriblastina",
+            "Adriblastine",
+            "Adrimedac",
+            "DOXO-CELL",
+            "Doxolem",
+            "Doxorubin",
+            "Farmiblastina",
+            "Rubex",
+            "Doxorubicin Hydrochloride"
+          ],
+          "nci_thesaurus_concept_id": "C1326",
+          "name": "Doxorubicin Hydrochloride",
+          "description": "The hydrochloride salt of doxorubicin, an anthracycline antibiotic with antineoplastic activity. Doxorubicin, isolated from the bacterium Streptomyces peucetius var. caesius, is the hydroxylated congener of daunorubicin. Doxorubicin intercalates between base pairs in the DNA helix, thereby preventing DNA replication and ultimately inhibiting protein synthesis. Additionally, doxorubicin inhibits topoisomerase II which results in an increased and stabilized cleavable enzyme-DNA linked complex during DNA replication and subsequently prevents the ligation of the nucleotide strand after double-strand breakage. Doxorubicin also forms oxygen free radicals resulting in cytotoxicity secondary to lipid peroxidation of cell membrane lipids; the formation of oxygen free radicals also contributes to the toxicity of the anthracycline antibiotics, namely the cardiac and cutaneous vascular effects.  Check for active clinical trials or closed clinical trials using this agent. (NCI Thesaurus)Health prof",
+          "category": "agent",
+          "type": "Drug",
+          "parents": [
+            "C67502"
+          ]
+        },
+        {
+          "inclusion_indicator": "TRIAL",
+          "synonyms": [
+            "Fulphila",
+            "Jinyouli",
+            "Neulasta",
+            "Neulastim",
+            "Nyvepria",
+            "Pegcyte",
+            "Udenyca",
+            "Ziextenzo",
+            "Pegfilgrastim"
+          ],
+          "nci_thesaurus_concept_id": "C1854",
+          "name": "Pegfilgrastim",
+          "description": "A long-acting pegylated form of a recombinant therapeutic agent which is chemically identical to or similar to an endogenous human granulocyte colony-stimulating factor (G-CSF). Produced endogenously by monocytes, fibroblasts, and endothelial cells, G-CSF binds to and activates specific cell surface receptors, stimulating neutrophil progenitor proliferation and differentiation and selected neutrophil functions. Conjugation of the cytokine with a branched polyethylene glycol molecule (pegylation) significantly increases its therapeutic half-life. Check for active clinical trials or closed clinical trials using this agent. (NCI Thesaurus)Health professional",
+          "category": "agent",
+          "type": "Biological/Vaccine",
+          "parents": [
+            "C387"
+          ]
+        },
+        {
+          "inclusion_indicator": "TRIAL",
+          "synonyms": [
+            "MabThera",
+            "Rituxan",
+            "Truxima",
+            "Rituximab"
+          ],
+          "nci_thesaurus_concept_id": "C1702",
+          "name": "Rituximab",
+          "description": "A recombinant chimeric murine/human antibody directed against the CD20 antigen, a hydrophobic transmembrane protein located on normal pre-B and mature B lymphocytes. Following binding, rituximab triggers a host cytotoxic immune response against CD20-positive cells. Check for active clinical trials or closed clinical trials using this agent. (NCI Thesaurus)Health professional",
+          "category": "agent",
+          "type": "Biological/Vaccine",
+          "parents": [
+            "C141215",
+            "C129822"
+          ]
+        },
+        {
+          "inclusion_indicator": "TRIAL",
+          "synonyms": [
+            "Lastet",
+            "Etoposide"
+          ],
+          "nci_thesaurus_concept_id": "C491",
+          "name": "Etoposide",
+          "description": "A semisynthetic derivative of podophyllotoxin, a substance extracted from the mandrake root Podophyllum peltatum.  Possessing potent antineoplastic properties, etoposide binds to and inhibits topoisomerase II and its function in ligating cleaved DNA molecules, resulting in the accumulation of single- or double-strand DNA breaks, the inhibition of DNA replication and transcription, and apoptotic cell death.  Etoposide acts primarily in the G2 and S phases of the cell cycle. Check for active clinical trials or closed clinical trials using this agent. (NCI Thesaurus)Health professional",
+          "category": "agent",
+          "type": "Drug",
+          "parents": [
+            "C1331"
+          ]
+        },
+        {
+          "inclusion_indicator": "TRIAL",
+          "synonyms": [
+            "Neupogen",
+            "Nivestym",
+            "Tevagrastim",
+            "Filgrastim"
+          ],
+          "nci_thesaurus_concept_id": "C1474",
+          "name": "Filgrastim",
+          "description": "A recombinant, non-glycosylated cytokine which is chemically identical to or similar to the endogenous cytokine human granulocyte colony-stimulating factor (G-CSF) isoform B, with immunomodulating activity. Filgrastim binds to and activates G-CSF receptors with the same biological activity and stability as the endogenous cytokine, thereby controlling the production, differentiation, and function of neutrophilic granulocyte progenitors. Check for active clinical trials or closed clinical trials using this agent. (NCI Thesaurus)Health professional",
+          "category": "agent",
+          "type": "Biological/Vaccine",
+          "parents": [
+            "C387"
+          ]
+        },
+        {
+          "inclusion_indicator": "TRIAL",
+          "synonyms": [
+            "Adasone",
+            "Cortancyl",
+            "Dacortin",
+            "DeCortin",
+            "Decortisyl",
+            "Decorton",
+            "Deltacortene",
+            "Deltison",
+            "Deltra",
+            "Econosone",
+            "Meprosona-F",
+            "Ofisolona",
+            "Panafcort",
+            "Panasol-S",
+            "Paracort",
+            "Perrigo Prednisone",
+            "Predicor",
+            "Predicorten",
+            "Prednicort",
+            "Prednidib",
+            "Prednilonga",
+            "Predniment",
+            "Prednisone Intensol",
+            "Prednitone",
+            "Promifen",
+            "Rayos",
+            "Servisone",
+            "Prednisone"
+          ],
+          "nci_thesaurus_concept_id": "C770",
+          "name": "Prednisone",
+          "description": "A synthetic glucocorticoid with anti-inflammatory and immunomodulating properties.  After cell surface receptor attachment and cell entry, prednisone enters the nucleus where it binds to and activates specific nuclear receptors, resulting in an altered gene expression and inhibition of proinflammatory cytokine production.  This agent also decreases the number of circulating lymphocytes, induces cell differentiation, and stimulates apoptosis in sensitive tumor cell populations. Check for active clinical trials or closed clinical trials using this agent. (NCI Thesaurus)Health professional",
+          "category": "agent",
+          "type": "Drug",
+          "parents": [
+            "C521"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Vinca Alkaloids"
+          ],
+          "nci_thesaurus_concept_id": "C932",
+          "name": "Vinca Alkaloid Compound",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C221",
+            "C1931"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Alkaloids"
+          ],
+          "nci_thesaurus_concept_id": "C221",
+          "name": "Alkaloid",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C718"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [],
+          "nci_thesaurus_concept_id": "C718",
+          "name": "Organic Chemical",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C1913"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [],
+          "nci_thesaurus_concept_id": "C1913",
+          "name": "Drug or Chemical by Structure",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C1908"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [],
+          "nci_thesaurus_concept_id": "C1908",
+          "name": "Drug, Food, Chemical or Biomedical Material",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": []
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [],
+          "nci_thesaurus_concept_id": "C1931",
+          "name": "Antineoplastic Plant Product",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C274",
+            "C1907"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Anti-Cancer Agents",
+            "Anti-Tumor Agents",
+            "Anti-Tumor Drugs",
+            "Antineoplastic Drugs",
+            "Antineoplastics",
+            "Antiproliferative Agents",
+            "Antiproliferative Drugs",
+            "Cancer Drug",
+            "Chemotherapeutic Agents, Neoplastic Disease",
+            "Tumor-Specific Treatment Agents"
+          ],
+          "nci_thesaurus_concept_id": "C274",
+          "name": "Antineoplastic Agent",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C1909"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [],
+          "nci_thesaurus_concept_id": "C1909",
+          "name": "Pharmacologic Substance",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C1908"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Drug Derived from Natural Products"
+          ],
+          "nci_thesaurus_concept_id": "C1907",
+          "name": "Drug, Natural Product",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C1909"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Vinca-Domain Binding Agents",
+            "Vinca-Site Binding Agent",
+            "Vinca-Site Binding Agents"
+          ],
+          "nci_thesaurus_concept_id": "C67422",
+          "name": "Vinca-Domain Binding Agent",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C25974"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Tubulin Binding Agents"
+          ],
+          "nci_thesaurus_concept_id": "C25974",
+          "name": "Tubulin Binding Agent",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C273"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Antimitotic Drugs",
+            "Antimitotics",
+            "Microtubular Function Inhibitors",
+            "Mitosis Inhibitor Agents",
+            "Mitosis Inhibitor Drugs",
+            "Mitosis Inhibitors",
+            "Mitotic Inhibitor Agents",
+            "Mitotic Inhibitor Drugs",
+            "Mitotic Inhibitors"
+          ],
+          "nci_thesaurus_concept_id": "C273",
+          "name": "Antimitotic Agent",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C274"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Immunosuppressive Agents"
+          ],
+          "nci_thesaurus_concept_id": "C574",
+          "name": "Immunosuppressant",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C308"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "BRM",
+            "Biological Response Modifier",
+            "Biomodulators",
+            "Immune Mediators",
+            "Immune Modulators",
+            "Immune Regulators",
+            "Immunomodulating Agent",
+            "Immunomodulators",
+            "Immunomodulatory Agent",
+            "Immunopotentiators",
+            "Immunotherapy Agent",
+            "Immunotherapy"
+          ],
+          "nci_thesaurus_concept_id": "C308",
+          "name": "Immunotherapy",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C1909"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [],
+          "nci_thesaurus_concept_id": "C697",
+          "name": "Nitrogen Mustard Compound",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C2114"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [],
+          "nci_thesaurus_concept_id": "C2114",
+          "name": "Mustard Agent",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C1590"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Chemotherapy Alkylating Agents",
+            "Chemotherapy Alkylators"
+          ],
+          "nci_thesaurus_concept_id": "C1590",
+          "name": "Antineoplastic Alkylating Agent",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C2842"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [],
+          "nci_thesaurus_concept_id": "C2842",
+          "name": "DNA Binding Agent",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C274"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Biomarker Analysis"
+          ],
+          "nci_thesaurus_concept_id": "C63333",
+          "name": "Biomarker Analysis",
+          "description": "",
+          "category": "none",
+          "type": "Other",
+          "parents": [
+            "C25218"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [],
+          "nci_thesaurus_concept_id": "C25218",
+          "name": "Intervention or Procedure",
+          "description": "",
+          "category": "none",
+          "type": "Other",
+          "parents": [
+            "C16203"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [],
+          "nci_thesaurus_concept_id": "C16203",
+          "name": "Clinical or Research Activity",
+          "description": "",
+          "category": "none",
+          "type": "Other",
+          "parents": [
+            "C43431"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [],
+          "nci_thesaurus_concept_id": "C43431",
+          "name": "Activity",
+          "description": "",
+          "category": "none",
+          "type": "Other",
+          "parents": []
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [],
+          "nci_thesaurus_concept_id": "C74957",
+          "name": "Mixed Category Laboratory Procedure",
+          "description": "",
+          "category": "none",
+          "type": "Other",
+          "parents": [
+            "C25294"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Lab Test",
+            "Lab Tests",
+            "Laboratory Test",
+            "Test",
+            "Tests",
+            "Laboratory Procedure"
+          ],
+          "nci_thesaurus_concept_id": "C25294",
+          "name": "Laboratory Procedure",
+          "description": "",
+          "category": "none",
+          "type": "Other",
+          "parents": [
+            "C25218"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Anti-cancer Enzyme Inhibitor"
+          ],
+          "nci_thesaurus_concept_id": "C129825",
+          "name": "Antineoplastic Enzyme Inhibitor",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C129824",
+            "C471"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Anti-cancer Protein Inhibitor",
+            "Antineoplastic Protein Antagonist"
+          ],
+          "nci_thesaurus_concept_id": "C129824",
+          "name": "Antineoplastic Protein Inhibitor",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C2189"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Signal Transduction Inhibitor"
+          ],
+          "nci_thesaurus_concept_id": "C2189",
+          "name": "Signal Transduction Inhibitor",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C274"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Enzyme Antagonist",
+            "Enzyme Inhibitor Agent",
+            "Enzyme Inhibitor Drug"
+          ],
+          "nci_thesaurus_concept_id": "C471",
+          "name": "Enzyme Inhibitor",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C1909"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Tyrosine-Protein Kinase BTK Protein"
+          ],
+          "nci_thesaurus_concept_id": "C124801",
+          "name": "BTK Inhibitor",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C163774",
+            "C1967"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [],
+          "nci_thesaurus_concept_id": "C163774",
+          "name": "BTK-targeting Agent",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C163758"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Anti-tumor Targeted Therapy Agent",
+            "Molecularly Targeted Therapy Agent",
+            "Targeted Agent",
+            "Targeted Therapeutic Agent"
+          ],
+          "nci_thesaurus_concept_id": "C163758",
+          "name": "Targeted Therapy Agent",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C274"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "PTK Inhibitors",
+            "Protein Tyrosine Kinase Inhibitors",
+            "TK Inhibitors",
+            "Tyrosine Kinase Inhibitor"
+          ],
+          "nci_thesaurus_concept_id": "C1967",
+          "name": "Tyrosine Kinase Inhibitor",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C1404"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Protein Kinase Inhibitor"
+          ],
+          "nci_thesaurus_concept_id": "C1404",
+          "name": "Protein Kinase Inhibitor",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C471"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [],
+          "nci_thesaurus_concept_id": "C63536",
+          "name": "Study",
+          "description": "",
+          "category": "none",
+          "type": "Other",
+          "parents": [
+            "C15429"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Research"
+          ],
+          "nci_thesaurus_concept_id": "C15429",
+          "name": "Research Activity",
+          "description": "",
+          "category": "none",
+          "type": "Other",
+          "parents": [
+            "C16203"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [],
+          "nci_thesaurus_concept_id": "C67502",
+          "name": "Doxorubicin Preparation",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C1594"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Anthracyclines",
+            "Chemotherapy, Cancer, Anthracyclines",
+            "Anthracycline Antineoplastic Antibiotic"
+          ],
+          "nci_thesaurus_concept_id": "C1594",
+          "name": "Anthracycline Antineoplastic Antibiotic",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C259",
+            "C2115",
+            "C1968"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Anticancer Antibiotic",
+            "Anticancer Antibiotics",
+            "Antineoplastic Antibiotics",
+            "Antitumor Antibiotic",
+            "Antitumor Antibiotics"
+          ],
+          "nci_thesaurus_concept_id": "C259",
+          "name": "Antineoplastic Antibiotic",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C274"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [],
+          "nci_thesaurus_concept_id": "C2115",
+          "name": "DNA Minor Groove Binding Agent",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C2161"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [],
+          "nci_thesaurus_concept_id": "C2161",
+          "name": "DNA Groove Binding Agent",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C2842"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Topoisomerase-II Inhibitors"
+          ],
+          "nci_thesaurus_concept_id": "C1968",
+          "name": "Topoisomerase-II Inhibitor",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C1748"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "DNA Topoisomerase Inhibitors",
+            "Topoisomerase Inhibitors"
+          ],
+          "nci_thesaurus_concept_id": "C1748",
+          "name": "Topoisomerase Inhibitor",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C129825"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Recombinant Hematopoietic Colony-stimulating Factor"
+          ],
+          "nci_thesaurus_concept_id": "C387",
+          "name": "Recombinant Colony Stimulating Factor",
+          "description": "",
+          "category": "agent category",
+          "type": "Biological/Vaccine",
+          "parents": [
+            "C1283",
+            "C2395"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Cytokines"
+          ],
+          "nci_thesaurus_concept_id": "C1283",
+          "name": "Recombinant Cytokine",
+          "description": "",
+          "category": "agent category",
+          "type": "Biological/Vaccine",
+          "parents": [
+            "C307",
+            "C308"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Biological Products",
+            "Biologicals",
+            "Biologics",
+            "Biopharmaceuticals",
+            "Immunologic, Immunochemical",
+            "Immunologics"
+          ],
+          "nci_thesaurus_concept_id": "C307",
+          "name": "Biological Agent",
+          "description": "",
+          "category": "agent category",
+          "type": "Biological/Vaccine",
+          "parents": [
+            "C1909"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [],
+          "nci_thesaurus_concept_id": "C2395",
+          "name": "Recombinant Hematopoietic Growth Factor",
+          "description": "",
+          "category": "agent category",
+          "type": "Biological/Vaccine",
+          "parents": [
+            "C530"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Growth Agents"
+          ],
+          "nci_thesaurus_concept_id": "C530",
+          "name": "Recombinant Growth Factor",
+          "description": "",
+          "category": "agent category",
+          "type": "Biological/Vaccine",
+          "parents": [
+            "C307"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [],
+          "nci_thesaurus_concept_id": "C141215",
+          "name": "Anti-CD20 Monoclonal Antibody",
+          "description": "",
+          "category": "agent category",
+          "type": "Biological/Vaccine",
+          "parents": [
+            "C164034",
+            "C20401"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [],
+          "nci_thesaurus_concept_id": "C164034",
+          "name": "CD20-targeting Agent",
+          "description": "",
+          "category": "agent category",
+          "type": "Biological/Vaccine",
+          "parents": [
+            "C163758"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Monoclonal Antibodies",
+            "Monoclonal Antibody Therapy"
+          ],
+          "nci_thesaurus_concept_id": "C20401",
+          "name": "Monoclonal Antibody Therapy",
+          "description": "",
+          "category": "agent category",
+          "type": "Biological/Vaccine",
+          "parents": [
+            "C307",
+            "C308"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Anti-cancer Antibody",
+            "Anticancer Antibody",
+            "Antineoplastic Ab"
+          ],
+          "nci_thesaurus_concept_id": "C129822",
+          "name": "Antineoplastic Antibody",
+          "description": "",
+          "category": "agent category",
+          "type": "Biological/Vaccine",
+          "parents": [
+            "C129821"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Anti-cancer Biological Agent",
+            "Anticancer Biological",
+            "Antineoplastic Biological",
+            "Antineoplastic Biotherapeutic",
+            "Antineoplastic Biological Agent"
+          ],
+          "nci_thesaurus_concept_id": "C129821",
+          "name": "Antineoplastic Biological Agent",
+          "description": "",
+          "category": "agent category",
+          "type": "Biological/Vaccine",
+          "parents": [
+            "C274",
+            "C307"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [],
+          "nci_thesaurus_concept_id": "C1331",
+          "name": "Epipodophyllotoxin Compound",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C1931",
+            "C1968"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Glucocorticoid"
+          ],
+          "nci_thesaurus_concept_id": "C521",
+          "name": "Therapeutic Glucocorticoid",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C211"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Corticosteroids"
+          ],
+          "nci_thesaurus_concept_id": "C211",
+          "name": "Therapeutic Corticosteroid",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C2364",
+            "C574"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Adrenal Drugs"
+          ],
+          "nci_thesaurus_concept_id": "C2364",
+          "name": "Adrenal Agent",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C1636"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Steroid Hormone",
+            "Synthetic Steroids"
+          ],
+          "nci_thesaurus_concept_id": "C1636",
+          "name": "Therapeutic Steroid Hormone",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C548"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Synthetic Hormone",
+            "Therapeutic Hormone"
+          ],
+          "nci_thesaurus_concept_id": "C548",
+          "name": "Therapeutic Hormone",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C147908"
+          ]
+        },
+        {
+          "inclusion_indicator": "TREE",
+          "synonyms": [
+            "Hormonal Therapy Agent",
+            "Hormone Therapy"
+          ],
+          "nci_thesaurus_concept_id": "C147908",
+          "name": "Hormone Therapy",
+          "description": "",
+          "category": "agent category",
+          "type": "Drug",
+          "parents": [
+            "C1909"
+          ]
+        }
+      ],
+      "name": "Treatment (R-da-EPOCH)",
+      "description": "Patients receive rituximab IV on day 1 (for CD20 positive patients only), etoposide IV over 96 hours on days 1-4, doxorubicin hydrochloride IV over 96 hours on days 1-4, vincristine sulfate IV over 96 hours on days 1-4, prednisone PO daily on days 1-5, cyclophosphamide IV over 1 hour on day 5, and ibrutinib PO QD on days 1-21. Treatment repeats every 21 days for up to 6 courses in the absence of disease progression or unacceptable toxicity. Patients also receive pegfilgrastim SC from 1 calendar day up to 48 hours or filgrastim SC beginning on day 6 for up to 10 days until ANC is satisfactory.",
+      "type": "EXPERIMENTAL"
+    }
+  ],
+  "study_model_code": null,
+  "nci_id": "NCI-2017-01240",
+  "why_study_stopped": null,
+  "brief_summary": "This phase I trial studies the side effect and best dose of ibrutinib in combination with rituximab, etoposide, prednisone, vincristine sulfate, cyclophosphamide, and doxorubicin hydrochloride in treating patients with human immunodeficiency virus (HIV)-positive stage II-IV diffuse large B-cell lymphomas. Ibrutinib may stop the growth of cancer cells by blocking some of the enzymes needed for cell growth. Monoclonal antibodies, such as rituximab, may interfere with the ability of cancer cells to grow and spread. Drugs used in chemotherapy, such as etoposide, prednisone, vincristine sulfate, cyclophosphamide, and doxorubicin hydrochloride, work in different ways to stop the growth of cancer cells, either by killing the cells, by stopping them from dividing, or by stopping them from spreading. Giving ibrutinib and etoposide, prednisone, vincristine sulfate, cyclophosphamide, and doxorubicin hydrochloride may work better in treating patients with HIV-positive diffuse large B-cell lymphomas.",
+  "brief_title": "Ibrutinib, Rituximab, Etoposide, Prednisone, Vincristine Sulfate, Cyclophosphamide, and Doxorubicin Hydrochloride in Treating Patients with HIV-Positive Stage II-IV Diffuse Large B-Cell Lymphomas",
+  "study_population_description": null,
+  "sampling_method_code": null,
+  "minimum_target_accrual_number": 54,
+  "_current_trial_status_sort_order": 0,
+  "start_date": "2017-11-03",
+  "record_verification_date": "2021-09-14",
+  "ctep_id": "AMC-101",
+  "current_trial_status": "Active",
+  "study_model_other_text": null,
+  "masking": {
+    "role_caregiver": null,
+    "masking": null,
+    "role_investigator": null,
+    "role_outcome_assessor": null,
+    "role_subject": null,
+    "allocation_code": "NA"
+  },
+  "acronym": null,
+  "anatomic_sites": [
+    "Non-Hodgkin Lymphoma"
+  ],
+  "ccr_id": null,
+  "start_date_type_code": "ACTUAL",
+  "principal_investigator": "Ida C. Wong-Sefidan",
+  "study_source": "National",
+  "completion_date": "2023-09-30",
+  "study_subtype_code": null,
+  "study_protocol_type": "Interventional"
+}
