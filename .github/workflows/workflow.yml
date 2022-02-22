@@ -21,7 +21,7 @@ jobs:
     needs: extract_build_info
     env:
       OWNER: ${{ needs.extract_build_info.outputs.repo_owner }}
-    runs-on: windows-latest
+    runs-on: windows-2019
 
     steps:
     - uses: actions/checkout@v1
@@ -35,7 +35,7 @@ jobs:
 
     - name: Restore NuGet Packages
       run: nuget restore clinical-trials-search-print.sln
-      
+
     - name: Build
       run: |
         REM Find and build all the unit test projects.
@@ -56,7 +56,7 @@ jobs:
       run: |
         echo "$BUILD_INFO"
         echo "$BUILD_INFO" > $GITHUB_WORKSPACE/publish/build-info.json
-      shell: bash      
+      shell: bash
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v1.0.0
