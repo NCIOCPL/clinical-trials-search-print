@@ -230,7 +230,7 @@
 					<h1 id="ctPrintBodyHeading">Your Clinical Trials Search Results</h1>
 					<div id="bodyHeadingLinks">
 						<a id="printPage" href="javascript:window.print();">Print</a> |
-						<a id="ctl10_EmailResults" href="${generatePrintURL}" target="_blank">E-Mail These Results</a> |
+						<a id="ctl10_EmailResults" href="/CTS.Print/Display?printID=${generatePrintURL}" target="_blank">E-Mail These Results</a> |
 						<a id="newSearch" href="$PageData.NewSearchLink">New Search</a>
 					</div>
 				</div>
@@ -253,6 +253,25 @@
 			</div>
 		</div>
 	</div>
+
+## NOTE: The "body" string is a multi-line template string. Be careful when editing it.
+    <script>
+        const subject = "Clinical Trials from the National Cancer Institute's Website";
+        const body = `Print-Friendly Clinical Trial Descriptions
+
+${document.location}
+
+Please note that the URL will expire after 90 days.
+
+You can find educational materials about clinical trials on NCI's Web site at http://www.cancer.gov/clinicaltrials. NCI's Web site, www.cancer.gov, contains comprehensive information about cancer causes and prevention, screening and diagnosis, treatment and survivorship; clinical trials; statistics; funding, training and employment opportunities; and the institute and its programs.
+
+You can also get cancer information online through the LiveHelp instant messaging service at http://livehelp.cancer.gov. If you live in the United States, you may call the NCI's Cancer Information Service toll-free at 1-800-4-CANCER (1-800-422-6237) for cancer information in English and Spanish.`;
+
+        let newLink = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+
+        const mailtoLink = document.getElementById("ctl10_EmailResults");
+        mailtoLink.attributes['href'].value = newLink;
+    </script>
 
 	<!-- DTM PAGEBOTTOM TAG - DO NOT MODIFY -->
 	<script type="text/javascript">_satellite.pageBottom();</script>
