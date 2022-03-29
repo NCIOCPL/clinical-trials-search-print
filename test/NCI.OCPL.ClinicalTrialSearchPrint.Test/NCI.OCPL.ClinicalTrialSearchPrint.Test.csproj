@@ -96,6 +96,7 @@
     <Compile Include="TestObjects\CTSPrintRequestHandler_GetFields_SearchCriteria_Null.cs" />
     <Compile Include="TestObjects\CTSPrintRequestHandler_GetFields_TrialIDs_Single.cs" />
     <Compile Include="Tests\CTSPrintRequestHandler_GetFields.cs" />
+    <Compile Include="Tests\CTSPrintRequestHandler_RemoveNonRecruitingSites.cs" />
     <Compile Include="Tests\CTSPrintRequestHandler_SetLocationStateNames.cs" />
     <Compile Include="Tests\CTSPrintRequestHandler_GetRequestBody.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

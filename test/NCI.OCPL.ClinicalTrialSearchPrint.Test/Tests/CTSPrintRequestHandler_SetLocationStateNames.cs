@@ -1,10 +1,5 @@
-﻿using System.IO;
-
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using Xunit;
-
-using NCI.Test.IO;
 
 
 namespace NCI.OCPL.ClinicalTrialSearchPrint.Test

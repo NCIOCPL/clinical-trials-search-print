@@ -61,6 +61,7 @@
     <Compile Include="Models\LocationCriteriaFactory.cs" />
     <Compile Include="Models\SearchCriteria.cs" />
     <Compile Include="Models\SearchCriteriaFactory.cs" />
+    <Compile Include="Models\SiteStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rendering\GeoLocation.cs" />
     <Compile Include="Rendering\PrintRenderer.cs" />

@@ -74,6 +74,7 @@
     <Compile Include="Tests\Models\SearchCriteria_HasCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\Models\SearchCriteria_ToJson.cs" />
+    <Compile Include="Tests\Models\SiteStatus_IsActivelyRecruiting.cs" />
     <Compile Include="Tests\Models\TestObjects\CriteriaList_Base.cs" />
     <Compile Include="Tests\Models\TestObjects\TrialPhase_StringSelect.cs" />
     <Compile Include="Tests\Models\TestObjects\TrialPhase_List.cs" />

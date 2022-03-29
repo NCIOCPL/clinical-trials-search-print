@@ -196,6 +196,7 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint
 
                 LocationCriteria locationData = LocationCriteriaFactory.Create(searchCriteria);
 
+                RemoveNonRecruitingSites(trialDetails);
                 SetLocationStateNames(trialDetails);
 
                 // Get the path to the page template.
@@ -291,9 +292,30 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint
         }
 
         /// <summary>
+        /// Alters the list of trials to remove all sites which are not current recruiting.
+        /// </summary>
+        /// <param name="trialData">The JSON data structure returned by a successful call to the <see cref="IClinicalTrialsAPIClient.GetMultipleTrials(IEnumerable{string}, int, int)"/> method. </param>
+        public void RemoveNonRecruitingSites(JObject trialData)
+        {
+            foreach (JToken trial in trialData["data"])
+            {
+                JToken original = trial["sites"];
+                if(original != null && original.Type == JTokenType.Array)
+                {
+                    var clean = ((JArray)original).Where(site => SiteStatus.IsActivelyRecruiting(site["recruitment_status"]?.Value<string>()));
+                    trial["sites"] = new JArray(clean);
+                }
+                else
+                {
+                    log.WarnFormat("Site List is empty. {0}", trial.ToString());
+                }
+            }    
+        }
+
+        /// <summary>
         /// Alters all trial sites to replace the 'org_state_or_province' property's state abbreviation with its actual name.
         /// </summary>
-        /// <param name="trials">The JSON data structure returned by a successful call to the Clinical Trials API.</param>
+        /// <param name="trialData">The JSON data structure returned by a successful call to the <see cref="IClinicalTrialsAPIClient.GetMultipleTrials(IEnumerable{string}, int, int)"/> method. </param>
         public void SetLocationStateNames(JObject trialData)
         {
             foreach (JToken trial in trialData["data"])
