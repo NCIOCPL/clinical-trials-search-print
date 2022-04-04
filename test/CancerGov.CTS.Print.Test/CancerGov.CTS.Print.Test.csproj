@@ -88,6 +88,7 @@
     <Compile Include="Tests\Rendering\TrialVelocityTools_GetTrialType.cs" />
     <Compile Include="Tests\Rendering\TrialVelocityTools_GetPhase.cs" />
     <Compile Include="Tests\Rendering\TrialVelocityTools_GetSecondaryIDsString.cs" />
+    <Compile Include="Tests\Rendering\VelocityTools_HtmlEncode.cs" />
     <Compile Include="Tests\Rendering\VelocityTools_IsNullOrWhitespace.cs" />
   </ItemGroup>
   <ItemGroup />

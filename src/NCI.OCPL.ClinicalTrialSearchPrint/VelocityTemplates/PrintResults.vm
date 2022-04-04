@@ -125,7 +125,7 @@
 			</table>
 
 			<h3>Description</h3>
-			<div>$trial.brief_summary</div>
+			<div>$Tools.HtmlEncode($trial.brief_summary)</div>
 
 			<h3 class="printHeading">Eligibility Criteria</h3>
 
@@ -153,7 +153,7 @@
 				<h4>Inclusion Criteria</h4>
 				#foreach($include in $inclusionCriteria)
 					#each
-					<li>$include.description</li>
+					<li>$Tools.HtmlEncode($include.description)</li>
 					#before
 						<div>
 							<ul>
@@ -166,7 +166,7 @@
 				<h4>Exclusion Criteria</h4>
 				#foreach($criterion in $exclusionCriteria)
 					#each
-						<li>$criterion.description</li>
+						<li>$Tools.HtmlEncode($criterion.description)</li>
 					#before
 						<div>
 							<ul>

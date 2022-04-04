@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Web;
 
 using Common.Logging;
 using Newtonsoft.Json.Linq;
@@ -88,7 +89,7 @@ namespace CancerGov.CTS.Print.Rendering
             }
 
             /// <summary>
-            /// Override of IsNullOrWhitespace for checking whether JSON values are empty or whitespace.
+            /// Overload of IsNullOrWhitespace for checking whether JSON values are empty or whitespace.
             /// </summary>
             /// <param name="str">The JSON value to check.</param>
             /// <returns>True if the value is null, or contains either the empty string or white space.</returns>
@@ -129,6 +130,29 @@ namespace CancerGov.CTS.Print.Rendering
                     return now.ToString();
                 else
                     return now.ToString(format);
+            }
+
+            /// <summary>
+            /// Encodes <c>str</c>, replacing any special characters with HTML encoded equivalents.
+            /// Wrapper for <see cref="System.Web.HttpUtility.HtmlEncode(string)"/>.
+            /// </summary>
+            /// <param name="str">A JSON string to be encoded.</param>
+            /// <returns>A web-safe version of <c>str</c>.</returns>
+            public string HtmlEncode(JValue str)
+            {
+                string val = str?.Value<string>();
+                return HtmlEncode(val);
+            }
+
+            /// <summary>
+            /// Encodes <c>str</c>, replacing any special characters with HTML encoded equivalents.
+            /// Wrapper for <see cref="System.Web.HttpUtility.HtmlEncode(string)"/>.
+            /// </summary>
+            /// <param name="str">The string to be encoded.</param>
+            /// <returns>A web-safe version of <c>str</c>.</returns>
+            public string HtmlEncode(string str)
+            {
+                return HttpUtility.HtmlEncode(str);
             }
 
 		}
