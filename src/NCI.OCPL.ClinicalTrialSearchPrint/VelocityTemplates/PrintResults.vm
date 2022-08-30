@@ -195,11 +195,7 @@
 				<span>Note:</span> Information about participating sites on pharmaceutical industry trials may be incomplete, so please look up the <a class="nctIdLink" href="http://clinicaltrials.gov/show/$trial.nct_id" target="_blank">NCT number</a> on ClinicalTrials.gov
 			</div>
 			<div>
-				#if (($PageData.LocationData.IsVAOnly && $PageData.LocationData.LocationType != "Hospital") || ($PageData.LocationData.LocationType == "CountryCityState" || $PageData.LocationData.LocationType == "Zip" || $PageData.LocationData.LocationType == "AtNIH"))##
-					#set($locationsToPrint = $PageData.TrialTools.GetFilteredLocations($trial.sites, $PageData.LocationData))
-				#else
-					#set($locationsToPrint =  $trial.sites)
-				#end
+				#set($locationsToPrint =  $trial.sites)
 				#DrawSitesForNormal($locationsToPrint false)
 			</div>
 		</div>

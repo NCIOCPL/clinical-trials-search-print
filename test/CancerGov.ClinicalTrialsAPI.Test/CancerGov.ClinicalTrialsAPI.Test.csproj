@@ -84,6 +84,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClinicalTrialsAPIClientTests_Chunks.cs" />
     <Compile Include="ClinicalTrialsAPIClientTests_General.cs" />
     <Compile Include="ClinicalTrialsAPIClientTests_GetMultipleTrials.cs" />
     <Compile Include="ClinicalTrialsAPIClientTests_GetOneTrial.cs" />

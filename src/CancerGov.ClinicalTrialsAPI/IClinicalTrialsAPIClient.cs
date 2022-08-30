@@ -20,10 +20,9 @@ namespace CancerGov.ClinicalTrialsAPI
         /// Retrieve the details of a list of trials.
         /// </summary>
         /// <param name="trialIDs">The set of trials to retrieve</param>
-        /// <param name="from">Offset into the set of possible returns for the first result to retrieve.</param>
         /// <param name="size">Number of results to retrieve.</param>
         /// <returns>An object containing an array of trial details.</returns>
-        Task<JObject> GetMultipleTrials(IEnumerable<string> trialIDs, int size = 10, int from = 0);
+        Task<JObject> GetMultipleTrials(IEnumerable<string> trialIDs);
 
         /// <summary>
         /// Gets a collection of disease names from the API.

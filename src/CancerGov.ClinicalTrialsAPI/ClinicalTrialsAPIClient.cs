@@ -15,6 +15,8 @@ namespace CancerGov.ClinicalTrialsAPI
 {
     public class ClinicalTrialsAPIClient : IClinicalTrialsAPIClient
     {
+        public const int API_MAX_TRIAL_COUNT = 50;
+
         public const string ARGUMENT_NOT_NULL_MSG = "Argument must not be null.";
         public const string BASE_ADDRESS_REQUIRED_MSG = "A base address is required";
         public const string ARGUMENT_API_KEY_MSG = "A valid API key is required.";
@@ -90,28 +92,43 @@ namespace CancerGov.ClinicalTrialsAPI
         /// Retrieve the details of a list of trials.
         /// </summary>
         /// <param name="trialIDs">The set of trials to retrieve</param>
-        /// <param name="from">Offset into the set of possible returns.</param>
         /// <param name="size">Number of results to retrieve.</param>
         /// <returns>An object containing an array of trial details.</returns>
-        async public Task<JObject> GetMultipleTrials(
-            IEnumerable<string> trialIDs,
-            int size = 10,
-            int from = 0
-        )
+        async public Task<JObject> GetMultipleTrials(IEnumerable<string> trialIDs)
         {
-            size = size > 0 ? size : 10;
-            from = from > 0 ? from : 0;
+            const int OFFSET = 0; // The IDs are unique, no other offset makes sense.
 
-            JObject requestBody = new JObject();
-            requestBody.Add(new JProperty("size", size));
-            requestBody.Add(new JProperty("from", from));
-            requestBody.Add(new JProperty("nci_id", trialIDs));
+            // Break the list of trials up into a size the API can handle per-request.
+            IEnumerable<IEnumerable<string>> chunks = Chunks(trialIDs, API_MAX_TRIAL_COUNT);
 
-            HttpContent httpContent = await ReturnPostRespContent("trials", requestBody);
-            string responseBody = await httpContent.ReadAsStringAsync();
-            JObject result = JObject.Parse(responseBody);
+            // Make a request for each chunk, but asynchronously so they happen "at the same time".
+            IEnumerable<JObject> responseBodies = await Task.WhenAll(
+                chunks.Select(async individualChunk =>
+                {
+                    JObject requestBody = new JObject();
+                    requestBody.Add(new JProperty("size", individualChunk.Count()));
+                    requestBody.Add(new JProperty("from", OFFSET));
+                    requestBody.Add(new JProperty("nci_id", individualChunk));
 
-            return result;
+                    HttpContent httpContent = await ReturnPostRespContent("trials", requestBody);
+                    string responseBody = await httpContent.ReadAsStringAsync();
+                    JObject result = JObject.Parse(responseBody);
+
+                    return result;
+                })
+            );
+
+            // Build an aggregate "response" object with the same shape as one coming directly from the API.
+            JArray data = new JArray();
+            JsonMergeSettings mergeSettings = new JsonMergeSettings { MergeArrayHandling = MergeArrayHandling.Concat };
+            foreach(JObject body in responseBodies)
+                data.Merge(body["data"], mergeSettings);
+
+            return JObject.FromObject(new
+                {
+                    total= data.Count,
+                    data = data
+                });
         }
 
         /// <inheritdoc/>
@@ -274,6 +291,36 @@ namespace CancerGov.ClinicalTrialsAPI
             return responseContent;
         }
 
+        /// <summary>
+        /// Helper method to break a list of values into smaller chunks.
+        /// </summary>
+        /// <remarks>You'd probably want to use the IEnumerable<![CDATA[>]]>Chunk() extension method
+        /// from <seealso cref="System.Collections.Generic"/> before writing something like this.
+        /// Unfortunately, that method isn't implmented until .Net 6. So, here we are.
+        /// </remarks>
+        /// <param name="values">The list of values to break up.</param>
+        /// <param name="chunkSize">The maximum chunk size.</param>
+        /// <returns></returns>
+        public static IEnumerable<IEnumerable<string>> Chunks(IEnumerable<string> values, int chunkSize)
+        {
+            List<string> chunk = new List<string>(chunkSize);
+            int counter = 0;
 
+            foreach (string value in values)
+            {
+                chunk.Add(value);
+                counter++;
+
+                if((counter % chunkSize) == 0)
+                {
+                    yield return chunk;
+                    chunk = new List<string>(chunkSize);
+                }
+            }
+
+            // Tricky bit, don't return anything if there aren't any leftover values to return.
+            if(chunk.Count > 0)
+                yield return chunk;
+        }
     }
 }

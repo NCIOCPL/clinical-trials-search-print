@@ -194,7 +194,7 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint
             try
             {
                 IClinicalTrialsAPIClient apiClient = GetClinicalTrialsApiClient();
-                trialDetails = await apiClient.GetMultipleTrials(trialIDs, trialIDs.Length);
+                trialDetails = await apiClient.GetMultipleTrials(trialIDs);
             }
             catch (Exception ex)
             {
@@ -210,7 +210,21 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint
                 LocationCriteria locationData = LocationCriteriaFactory.Create(searchCriteria);
 
                 RemoveNonRecruitingSites(trialDetails);
+
+                if((locationData.IsVAOnly && locationData.LocationType != LocationType.Hospital) || (locationData.LocationType == LocationType.CountryCityState || locationData.LocationType == LocationType.Zip || locationData.LocationType == LocationType.AtNIH))
+                {
+                    foreach(JObject trial in trialDetails["data"].Values<JObject>())
+                    {
+                        JArray rawSites = new JArray(trial["sites"].Values<JToken>().ToArray());
+                        JArray filteredSites = GetFilteredLocations(rawSites, locationData);
+                        trial["sites"] = filteredSites;
+                    }
+
+                }
+
+                // Important: After this call, trial sites contain state NAMES instead of codes.
                 SetLocationStateNames(trialDetails);
+
                 trialDetails = EnforceTrialOrder(trialDetails, trialIDs);
 
                 // Get the path to the page template.
@@ -356,6 +370,88 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint
                 }
             }
         }
+
+
+        /// <summary>
+        /// Filters a list of trial sites to match the search location criteria.
+        ///
+        ///     LocationType.AtNIH - returns only the sites at the NIH campus.
+        ///
+        ///     LocationType.CountryCityState - returns only the sites matching the specified
+        ///                                     Country, City, and State. No filtering occurs
+        ///                                     for sub-criteria which were not included in
+        ///                                     the criteria object.
+        ///
+        ///     LocationType.Zip - returns only the sites within searchParams.ZipRadius miles
+        ///                        of searchParams.GeoLocation.
+        /// 
+        /// NOTE: LocationTypes for Hospital and None will not be filtered.
+        /// </summary>
+        /// <returns>An array of trial sites matching the location criteria.</returns> 
+        public JArray GetFilteredLocations(JArray sites, LocationCriteria searchParams)
+        {
+            IEnumerable<JToken> rtnSites = sites;
+
+            switch (searchParams.LocationType)
+            {
+                case LocationType.AtNIH:
+                    {
+                        rtnSites = rtnSites.Where(s => s["org_postal_code"]?.Value<string>() == "20892");
+                        break;
+                    }
+                case LocationType.CountryCityState:
+                    {
+                        if (searchParams.HasCountry)
+                        {
+                            rtnSites = rtnSites.Where(s => StringComparer.CurrentCultureIgnoreCase.Equals(s["org_country"]?.Value<string>(), searchParams.Country));
+                        }
+
+                        if (searchParams.HasCity)
+                        {
+                            rtnSites = rtnSites.Where(s => StringComparer.CurrentCultureIgnoreCase.Equals(s["org_city"]?.Value<string>(), searchParams.City));
+                        }
+
+                        if (searchParams.HasState)
+                        {
+                            rtnSites = rtnSites.Where(s => searchParams.States.Contains(s["org_state_or_province"]?.Value<string>()));
+                        }
+
+                        break;
+                    }
+                case LocationType.Zip:
+                    {
+                        rtnSites = rtnSites.Where(site =>
+                        {
+                            JToken jLat = site.SelectToken("org_coordinates.lat");
+                            JToken jLon = site.SelectToken("org_coordinates.lon");
+                            string country = site["org_country"]?.Value<string>();
+
+                            return StringComparer.CurrentCultureIgnoreCase.Equals(country, "United States")
+                                && jLat != null
+                                && jLon != null
+                                && searchParams.GeoLocation.DistanceBetween(new GeoLocation(jLat.Value<float>(), jLon.Value<float>())) <= searchParams.ZipRadius;
+                        });
+
+                        break;
+                    }
+                default:
+                    {
+                        //Basically we can't/shouldn't filter.
+                        break;
+                    }
+            }
+
+            if (searchParams.IsVAOnly && searchParams.LocationType != LocationType.Hospital)
+            {
+                rtnSites = rtnSites.Where(s => s["org_va"] != null && s["org_va"].Value<bool>());
+            }
+
+            // Convert to an array so we get the correct constructor. (IEnumerable<JToken> is treated as a single Object,
+            // which would lead to an array with a single element, containing a nested array with the actual result.
+            JArray ret = new JArray(rtnSites.ToArray());
+            return ret;
+        }
+
 
         /// <summary>
         /// Reorders the trial details in a clinical trials API response to match the

@@ -26,7 +26,7 @@ namespace CancerGov.ClinicalTrialsAPI.Test
             JObject expectedBody = JObject.Parse(@"
                 {
                     ""from"": 0,
-                    ""size"": 10,
+                    ""size"": 3,
                     ""nci_id"": [""NCI-2014-01507"",""NCI-2015-00054"",""NCI-2013-00875""]
                 }
             ");
@@ -93,48 +93,6 @@ namespace CancerGov.ClinicalTrialsAPI.Test
             await Assert.ThrowsAsync<APIServerErrorException>(
                 () => client.GetMultipleTrials(trialIDs)
             );
-        }
-
-        [Theory]
-        [InlineData(-5, 10, 0, 0)]
-        [InlineData(0, 10, -7, 0)]
-        [InlineData(2, 2, 10, 10)]
-        [InlineData(10, 10, 0, 0)]
-        async public void VaryPagingParameters(int size, int expectedSize, int from, int expectedFrom)
-        {
-            string[] trialIDs = { "NCI-2014-01507", "NCI-2015-00054", "NCI-2013-00875" };
-
-
-            Mock<IClinicalTrialSearchAPISection> mockConfig = new Mock<IClinicalTrialSearchAPISection>();
-            mockConfig.SetupGet(x => x.APIKey).Returns(API_KEY);
-
-            MockHttpMessageHandler mockHandler = new MockHttpMessageHandler();
-            ByteArrayContent content = HttpClientMockHelper.CreateResponseBody(JSON_CONTENT, "{\"unimportant\":\"JSON value\"}");
-
-            mockHandler
-                .Expect($"{BASE_URL}trials")
-                .With(request =>
-                {
-                    string bodyString = request.Content.ReadAsStringAsync().Result;
-                    JObject actualBody = JObject.Parse(bodyString);
-                    int actualSize = actualBody["size"].Value<int>();
-                    int actualFrom = actualBody["from"].Value<int>();
-                     
-                    return expectedSize == actualSize
-                        && expectedFrom == actualFrom;
-                })
-                .Respond(HttpStatusCode.OK, content);
-
-            mockHandler.Fallback
-                .Respond(HttpStatusCode.OK, content);
-
-            HttpClient mockedClient = new HttpClient(mockHandler);
-            mockedClient.BaseAddress = new Uri(BASE_URL);
-
-            ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient(mockedClient, mockConfig.Object);
-            await client.GetMultipleTrials(trialIDs, size, from);
-
-            mockHandler.VerifyNoOutstandingExpectation();
         }
 
         [Fact]
