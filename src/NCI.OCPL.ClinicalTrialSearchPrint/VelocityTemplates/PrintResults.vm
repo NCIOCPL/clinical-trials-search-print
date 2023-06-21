@@ -120,7 +120,7 @@
 					<td class="trialIDCell">
 						<span class = "dataTableIDLabel">Primary ID</span> $trial.protocol_id<br>
 						<span class = "dataTableIDLabel">Secondary IDs</span> $PageData.TrialTools.GetSecondaryIDsString($trial)<br>
-						<span class = "dataTableIDLabel">Clinicaltrials.gov ID</span> <a class="nctIdLink" href="http://clinicaltrials.gov/show/$trial.nct_id" target="_blank">$trial.nct_id</a><br>
+						<span class = "dataTableIDLabel">Clinicaltrials.gov ID</span> <a class="nctIdLink" href="http://clinicaltrials.gov/study/$trial.nct_id" target="_blank">$trial.nct_id</a><br>
 					</td>
 			</table>
 
