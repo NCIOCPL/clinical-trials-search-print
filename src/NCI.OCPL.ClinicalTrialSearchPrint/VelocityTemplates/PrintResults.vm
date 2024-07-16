@@ -207,7 +207,7 @@
 <head>
 	 <meta name="robots" content="noindex">
 	 <title>Clinical Trial Search Results</title>
-	 <script src="//assets.adobedtm.com/f1bfa9f7170c81b1a9a9ecdcc6c5215ee0b03c84/satelliteLib-5b3dcf1f2676c378b518a1583ef5355acd83cd3d.js"></script>
+	 <script src="https://assets.adobedtm.com/6a4249cd0a2c/949e98979342/launch-5f2a5357bf66.min.js" async></script>
 	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	 <script src="/CTS.Print-js/BasicCTSPrintPage.js" type="text/javascript"></script>
 

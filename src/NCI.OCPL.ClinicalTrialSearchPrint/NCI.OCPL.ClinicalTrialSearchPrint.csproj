@@ -46,6 +46,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AWSSDK.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AWSSDK.Core.3.7.400.1\lib\net45\AWSSDK.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.S3, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AWSSDK.S3.3.7.400.1\lib\net45\AWSSDK.S3.dll</HintPath>
+    </Reference>
     <Reference Include="Common.Logging, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Common.Logging.3.4.1\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
@@ -114,6 +120,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\NCILibrary.Core\NCILibrary.Core.csproj">
+      <Project>{855cddf5-bb6d-4fdb-afce-9b8c1c9d0d87}</Project>
+      <Name>NCILibrary.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CancerGov.ClinicalTrialsAPI\CancerGov.ClinicalTrialsAPI.csproj">
       <Project>{12836211-b27c-4706-a398-98ad892d7afe}</Project>
       <Name>CancerGov.ClinicalTrialsAPI</Name>
@@ -122,6 +132,10 @@
       <Project>{291eaea0-d3ec-47e6-97f6-f4e0f3dc335a}</Project>
       <Name>CancerGov.CTS.Print</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\AWSSDK.S3.3.7.400.1\analyzers\dotnet\cs\AWSSDK.S3.CodeAnalysis.dll" />
+    <Analyzer Include="..\..\packages\AWSSDK.S3.3.7.400.1\analyzers\dotnet\cs\SharedAnalysisCode.dll" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
