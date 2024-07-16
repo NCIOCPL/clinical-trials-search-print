@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace CancerGov.CTS.Print.DataManager
 {
@@ -27,15 +24,6 @@ namespace CancerGov.CTS.Print.DataManager
     }
 
     /// <summary>
-    /// This is for CTS print being attempted without a valid SQL connection
-    /// </summary>
-    public class DbConnectionException : CTSPrintException
-    {
-        public DbConnectionException() : base() { }
-        public DbConnectionException(string message) : base(message) { }
-    }
-
-    /// <summary>
     /// This is for attempts to retrieve print pages based on print ID that doesn't exist
     /// </summary>
     public class PrintIDNotFoundException : CTSPrintException
@@ -53,5 +41,14 @@ namespace CancerGov.CTS.Print.DataManager
         public PrintFetchFailureException(string message) : base(message) { }
     }
 
+
+    /// <summary>
+    /// This is for when savinging a CTS print page fails
+    /// </summary>
+    public class PrintSaveFailureException : CTSPrintException
+    {
+        public PrintSaveFailureException() : base() { }
+        public PrintSaveFailureException(string message) : base(message) { }
+    }
 
 }
