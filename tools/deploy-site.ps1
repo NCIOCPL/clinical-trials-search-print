@@ -13,6 +13,10 @@
 	The hostname of te API website. Required.
 	.PARAMETER code_folder
 	The folder from which to copy the latest code. Required.
+	.PARAMETER site_root
+	The root folder where the site will be created. Required.
+	.PARAMETER backup_root
+	Root folder for backups of the old code. Required.
 #>
 
 Param(
@@ -26,13 +30,17 @@ Param(
 	[string]$site_hostname = "",
 
 	[Parameter(mandatory=$true)]
-	[string]$code_folder = ""
+	[string]$code_folder = "",
+
+	[Parameter(mandatory=$true)]
+	[string]$site_root = "",
+
+	[Parameter(mandatory=$true)]
+	[string]$backup_root = ""
 );
 
 ## Named constants
-New-Variable -Name "CONTENT_ROOT" -Value "E:\Content"			-Option Constant;
-New-Variable -Name "SITES_ROOT"   -Value "E:\Content"			-Option Constant;
-New-Variable -Name "BACKUP_ROOT"  -Value "E:\backups"			-Option Constant;
+New-Variable -Name "SITES_ROOT"   -Value $site_root			-Option Constant;
 
 function Main() {
 	## The WebAdministration module requires elevated privileges.
@@ -84,7 +92,6 @@ function CreateSite() {
 	## Make site directories
 	## Should check non-existence first
 	foreach ( $folder in (
-			$CONTENT_ROOT,
 			$SITES_ROOT,
 			$sitePath,
 			$appPath
