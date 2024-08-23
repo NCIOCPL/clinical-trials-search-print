@@ -31,7 +31,7 @@ if len(sys.argv) != 2:
     sys.exit(1)
 
 ## This is the wrong encoding.  Need to find out what SQL Server exports.
-with open(sys.argv[1], encoding='utf-8') as datafile:
+with open(sys.argv[1], encoding='utf-8-sig') as datafile:
     csv.field_size_limit(sys.maxsize)
     reader = csv.reader(datafile)
 
