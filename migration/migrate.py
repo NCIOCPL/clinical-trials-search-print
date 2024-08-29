@@ -21,19 +21,28 @@ content - A blob of HTML representing the actual page.
 import boto3
 from botocore.exceptions import ClientError
 import csv
+import os
 import sys
 
 S3_CLIENT = boto3.client("s3")
 
-BUCKET = 'S3 bucket name goes here!'
-
 if len(sys.argv) != 2:
-    print( "Please provide the input file name as a command line argument.")
-    sys.exit(1)
+    raise RuntimeError( "Please provide the input file name as a command line argument.")
+
+
+if (
+    'CTS_BUCKET_NAME' not in os.environ
+    or os.environ['CTS_BUCKET_NAME'] is None
+    or os.environ['CTS_BUCKET_NAME'].strip() == ''
+):
+    raise RuntimeError("The 'CTS_BUCKET_NAME' environment variable has not been set.")
+
+BUCKET = os.environ['CTS_BUCKET_NAME']
 
 ## This is the wrong encoding.  Need to find out what SQL Server exports.
-count = 0
-errors = 0
+loadedCount = 0
+errorCount = 0
+totalCount = 0
 with open(sys.argv[1], encoding='utf-8-sig') as datafile:
     csv.field_size_limit(sys.maxsize)
     reader = csv.reader(datafile)
@@ -61,15 +70,25 @@ with open(sys.argv[1], encoding='utf-8-sig') as datafile:
                 Body = bytearray(content, 'utf-8'),
                 ContentType = 'text/html'
             )
-            count += 1
+            loadedCount += 1
+
+        # Handle AWS-related errors.
         except ClientError as err:
-            errors += 1
+            errorCount += 1
             print(err)
 
+            # Bail completely for expired token.
             if err.response['Error']['Code'] == 'ExpiredToken':
                 raise RuntimeError (
                     '\n\n\n\tFatal error - Expired token.\n\n'
                 ) from err
 
+        # Non-AWS errors
+        except BaseException as err:
+            errorCount += 1
+            print(err)
 
-print( f'Loaded {count} documents. {errors} errors.')
+        finally:
+            totalCount += 1
+
+print( f'Processed {totalCount} docments: Loaded {loadedCount} with {errorCount} errors.')
