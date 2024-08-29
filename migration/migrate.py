@@ -19,6 +19,7 @@ content - A blob of HTML representing the actual page.
 """
 
 import boto3
+from botocore.exceptions import ClientError
 import csv
 import sys
 
@@ -31,6 +32,8 @@ if len(sys.argv) != 2:
     sys.exit(1)
 
 ## This is the wrong encoding.  Need to find out what SQL Server exports.
+count = 0
+errors = 0
 with open(sys.argv[1], encoding='utf-8-sig') as datafile:
     csv.field_size_limit(sys.maxsize)
     reader = csv.reader(datafile)
@@ -50,10 +53,23 @@ with open(sys.argv[1], encoding='utf-8-sig') as datafile:
         metadata['trial-id-list'] = trialIDs
 
         print(key)
-        S3_CLIENT.put_object(
-            Key = key,
-            Bucket = BUCKET,
-            Metadata = metadata,
-            Body = bytearray(content, 'utf-8'),
-            ContentType = 'text/html'
-        )
+        try:
+            S3_CLIENT.put_object(
+                Key = key,
+                Bucket = BUCKET,
+                Metadata = metadata,
+                Body = bytearray(content, 'utf-8'),
+                ContentType = 'text/html'
+            )
+            count += 1
+        except ClientError as err:
+            errors += 1
+            print(err)
+
+            if err.response['Error']['Code'] == 'ExpiredToken':
+                raise RuntimeError (
+                    '\n\n\n\tFatal error - Expired token.\n\n'
+                ) from err
+
+
+print( f'Loaded {count} documents. {errors} errors.')
