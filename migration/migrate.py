@@ -18,32 +18,32 @@ searchParams - A string containing the JSON search criteria.
 content - A blob of HTML representing the actual page.
 """
 
-import boto3
-from botocore.exceptions import ClientError
 import csv
 import os
 import sys
 
+import boto3
+from botocore.exceptions import ClientError
+
 S3_CLIENT = boto3.client("s3")
 
 if len(sys.argv) != 2:
-    raise RuntimeError( "Please provide the input file name as a command line argument.")
+    raise RuntimeError("Please provide the input file name as a command line argument.")
 
 
 if (
-    'CTS_BUCKET_NAME' not in os.environ
-    or os.environ['CTS_BUCKET_NAME'] is None
-    or os.environ['CTS_BUCKET_NAME'].strip() == ''
+    "CTS_BUCKET_NAME" not in os.environ
+    or os.environ["CTS_BUCKET_NAME"] is None
+    or os.environ["CTS_BUCKET_NAME"].strip() == ""
 ):
     raise RuntimeError("The 'CTS_BUCKET_NAME' environment variable has not been set.")
 
-BUCKET = os.environ['CTS_BUCKET_NAME']
+BUCKET = os.environ["CTS_BUCKET_NAME"]
 
-## This is the wrong encoding.  Need to find out what SQL Server exports.
 loadedCount = 0
 errorCount = 0
 totalCount = 0
-with open(sys.argv[1], encoding='utf-8-sig') as datafile:
+with open(sys.argv[1], encoding="utf-8-sig") as datafile:
     csv.field_size_limit(sys.maxsize)
     reader = csv.reader(datafile)
 
@@ -56,19 +56,19 @@ with open(sys.argv[1], encoding='utf-8-sig') as datafile:
         content = row[4]
 
         metadata = {}
-        metadata['migrated-data'] = 'True'
-        metadata['originally-generated'] = cacheDate
-        metadata['search-criteria'] = searchParams
-        metadata['trial-id-list'] = trialIDs
+        metadata["migrated-data"] = "True"
+        metadata["originally-generated"] = cacheDate
+        metadata["search-criteria"] = searchParams
+        metadata["trial-id-list"] = trialIDs
 
         print(key)
         try:
             S3_CLIENT.put_object(
-                Key = key,
-                Bucket = BUCKET,
-                Metadata = metadata,
-                Body = bytearray(content, 'utf-8'),
-                ContentType = 'text/html'
+                Key=key,
+                Bucket=BUCKET,
+                Metadata=metadata,
+                Body=bytearray(content, "utf-8"),
+                ContentType="text/html",
             )
             loadedCount += 1
 
@@ -78,17 +78,17 @@ with open(sys.argv[1], encoding='utf-8-sig') as datafile:
             print(err)
 
             # Bail completely for expired token.
-            if err.response['Error']['Code'] == 'ExpiredToken':
-                raise RuntimeError (
-                    '\n\n\n\tFatal error - Expired token.\n\n'
-                ) from err
+            if err.response["Error"]["Code"] == "ExpiredToken":
+                raise RuntimeError("\n\n\n\tFatal error - Expired token.\n\n") from err
 
         # Non-AWS errors
-        except BaseException as err:
+        except Exception as err:
             errorCount += 1
             print(err)
 
         finally:
             totalCount += 1
 
-print( f'Processed {totalCount} docments: Loaded {loadedCount} with {errorCount} errors.')
+print(
+    f"Processed {totalCount} docments: Loaded {loadedCount} with {errorCount} errors."
+)
