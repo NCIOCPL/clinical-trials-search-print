@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\Microsoft.CodeAnalysis.CSharp.CodeStyle.4.11.0\build\Microsoft.CodeAnalysis.CSharp.CodeStyle.props" Condition="Exists('..\..\packages\Microsoft.CodeAnalysis.CSharp.CodeStyle.4.11.0\build\Microsoft.CodeAnalysis.CSharp.CodeStyle.props')" />
   <Import Project="..\..\packages\xunit.runner.visualstudio.2.8.2\build\net462\xunit.runner.visualstudio.props" Condition="Exists('..\..\packages\xunit.runner.visualstudio.2.8.2\build\net462\xunit.runner.visualstudio.props')" />
   <Import Project="..\..\packages\xunit.runner.msbuild.2.9.2\build\net452\xunit.runner.msbuild.props" Condition="Exists('..\..\packages\xunit.runner.msbuild.2.9.2\build\net452\xunit.runner.msbuild.props')" />
   <Import Project="..\..\packages\xunit.core.2.9.2\build\xunit.core.props" Condition="Exists('..\..\packages\xunit.core.2.9.2\build\xunit.core.props')" />
@@ -130,6 +131,10 @@
   <ItemGroup>
     <Analyzer Include="..\..\packages\AWSSDK.S3.3.7.404.5\analyzers\dotnet\cs\AWSSDK.S3.CodeAnalysis.dll" />
     <Analyzer Include="..\..\packages\AWSSDK.S3.3.7.404.5\analyzers\dotnet\cs\SharedAnalysisCode.dll" />
+    <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.CSharp.CodeStyle.4.11.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CodeStyle.dll" />
+    <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.CSharp.CodeStyle.4.11.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CodeStyle.Fixes.dll" />
+    <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.CSharp.CodeStyle.4.11.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.CodeStyle.dll" />
+    <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.CSharp.CodeStyle.4.11.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.CodeStyle.Fixes.dll" />
     <Analyzer Include="..\..\packages\xunit.analyzers.1.16.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
     <Analyzer Include="..\..\packages\xunit.analyzers.1.16.0\analyzers\dotnet\cs\xunit.analyzers.fixes.dll" />
   </ItemGroup>
@@ -176,8 +181,11 @@
     <Error Condition="!Exists('..\..\packages\xunit.runner.msbuild.2.9.2\build\net452\xunit.runner.msbuild.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\xunit.runner.msbuild.2.9.2\build\net452\xunit.runner.msbuild.props'))" />
     <Error Condition="!Exists('..\..\packages\xunit.runner.msbuild.2.9.2\build\net452\xunit.runner.msbuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\xunit.runner.msbuild.2.9.2\build\net452\xunit.runner.msbuild.targets'))" />
     <Error Condition="!Exists('..\..\packages\xunit.runner.visualstudio.2.8.2\build\net462\xunit.runner.visualstudio.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\xunit.runner.visualstudio.2.8.2\build\net462\xunit.runner.visualstudio.props'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.CodeAnalysis.CSharp.CodeStyle.4.11.0\build\Microsoft.CodeAnalysis.CSharp.CodeStyle.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.CodeAnalysis.CSharp.CodeStyle.4.11.0\build\Microsoft.CodeAnalysis.CSharp.CodeStyle.props'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.CodeAnalysis.CSharp.CodeStyle.4.11.0\build\Microsoft.CodeAnalysis.CSharp.CodeStyle.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.CodeAnalysis.CSharp.CodeStyle.4.11.0\build\Microsoft.CodeAnalysis.CSharp.CodeStyle.targets'))" />
   </Target>
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <Import Project="..\..\packages\xunit.core.2.9.2\build\xunit.core.targets" Condition="Exists('..\..\packages\xunit.core.2.9.2\build\xunit.core.targets')" />
   <Import Project="..\..\packages\xunit.runner.msbuild.2.9.2\build\net452\xunit.runner.msbuild.targets" Condition="Exists('..\..\packages\xunit.runner.msbuild.2.9.2\build\net452\xunit.runner.msbuild.targets')" />
+  <Import Project="..\..\packages\Microsoft.CodeAnalysis.CSharp.CodeStyle.4.11.0\build\Microsoft.CodeAnalysis.CSharp.CodeStyle.targets" Condition="Exists('..\..\packages\Microsoft.CodeAnalysis.CSharp.CodeStyle.4.11.0\build\Microsoft.CodeAnalysis.CSharp.CodeStyle.targets')" />
 </Project>

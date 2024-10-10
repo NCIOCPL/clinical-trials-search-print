@@ -93,15 +93,15 @@ namespace CancerGov.CTS.Print.PrintCache
             await cm.Save(new Guid(expectedKey), new string[] { "trial-id-1", "trial-id-2" }, criteria, expectedBody);
 
             Assert.NotNull(actualRequest);
-            Assert.Equal(actualRequest.Key, expectedKey);
-            Assert.Equal(actualRequest.ContentBody, expectedBody);
+            Assert.Equal(expectedKey, actualRequest.Key);
+            Assert.Equal(expectedBody, actualRequest.ContentBody);
 
             Assert.NotEmpty(actualRequest.Metadata.Keys);
             Assert.Contains(trial_id_key, actualRequest.Metadata.Keys);
             Assert.Contains(search_criteria_key, actualRequest.Metadata.Keys);
 
-            Assert.Equal(actualRequest.Metadata[trial_id_key], expectedTrialList);
-            Assert.Equal(actualRequest.Metadata[search_criteria_key], expectedSearchCriteria);
+            Assert.Equal(expectedTrialList, actualRequest.Metadata[trial_id_key]);
+            Assert.Equal(expectedSearchCriteria, actualRequest.Metadata[search_criteria_key]);
 
         }
     }
