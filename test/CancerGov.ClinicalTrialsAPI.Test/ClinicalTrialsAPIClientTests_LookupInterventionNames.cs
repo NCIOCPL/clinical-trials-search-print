@@ -11,6 +11,7 @@ using Xunit;
 using NCI.Test.Net;
 
 using CancerGov.ClinicalTrialsAPI.Test.Testdata.LookupInterventionNames;
+using System.Threading.Tasks;
 
 namespace CancerGov.ClinicalTrialsAPI.Test
 {
@@ -30,7 +31,7 @@ namespace CancerGov.ClinicalTrialsAPI.Test
 
         [Theory]
         [MemberData(nameof(RequestStructure_Data))]
-        async public void RequestStructure(IEnumerable<string> interventionList, string expectedUrl)
+        public async Task RequestStructure(IEnumerable<string> interventionList, string expectedUrl)
         {
             string expectedString = "{\"expectation\":\"expectation met\"}";
             JObject expectedResult = JObject.Parse(expectedString);
@@ -71,7 +72,7 @@ namespace CancerGov.ClinicalTrialsAPI.Test
         [InlineData(HttpStatusCode.BadGateway)] // 502
         [InlineData(HttpStatusCode.ServiceUnavailable)] // 503
         [InlineData(HttpStatusCode.GatewayTimeout)] // 504
-        async public void ServerError(HttpStatusCode status)
+        public async Task ServerError(HttpStatusCode status)
         {
             string[] interventionList = { "C1234", "C5678", "C9012", "C3456" };
 
@@ -103,7 +104,7 @@ namespace CancerGov.ClinicalTrialsAPI.Test
 
         [Theory]
         [MemberData(nameof(EmptyArrays))]
-        async public void EmptyInterventionList(IEnumerable<string> interventionList)
+        public async Task EmptyInterventionList(IEnumerable<string> interventionList)
         {
             Mock<IClinicalTrialSearchAPISection> mockConfig = new Mock<IClinicalTrialSearchAPISection>();
             mockConfig.SetupGet(x => x.APIKey).Returns(API_KEY);
@@ -143,7 +144,7 @@ namespace CancerGov.ClinicalTrialsAPI.Test
 
         [Theory]
         [MemberData(nameof(InvalidConceptIds))]
-        async public void InvalidInterventionList(IEnumerable<string> interventionList)
+        public async Task InvalidInterventionList(IEnumerable<string> interventionList)
         {
             Mock<IClinicalTrialSearchAPISection> mockConfig = new Mock<IClinicalTrialSearchAPISection>();
             mockConfig.SetupGet(x => x.APIKey).Returns(API_KEY);
@@ -174,7 +175,7 @@ namespace CancerGov.ClinicalTrialsAPI.Test
 
         [Theory]
         [MemberData(nameof(ExistingInterventions))]
-        async public void InterventionExists(LookupInterventionNames_Base data)
+        public async Task InterventionExists(LookupInterventionNames_Base data)
         {
             // The actual id list doesn't matter since the simulated response is passed in.
             string[] interventionIDs = new string[] { "C123", "C456" };

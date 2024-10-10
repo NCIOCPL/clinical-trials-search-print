@@ -34,10 +34,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="RichardSzalay.MockHttp, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7059d3aca2a9eddc, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\RichardSzalay.MockHttp.6.0.0\lib\net45\RichardSzalay.MockHttp.dll</HintPath>
+    <Reference Include="RichardSzalay.MockHttp, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7059d3aca2a9eddc, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\RichardSzalay.MockHttp.7.0.0\lib\netstandard2.0\RichardSzalay.MockHttp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

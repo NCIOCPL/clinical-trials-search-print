@@ -44,7 +44,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(SearchCriteriaFactory.LABEL_CANCER_TYPE, crit.Label);
@@ -152,7 +152,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(SearchCriteriaFactory.LABEL_AGE, crit.Label);
@@ -193,7 +193,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(SearchCriteriaFactory.LABEL_KEYWORDS, crit.Label);
@@ -214,7 +214,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(SearchCriteriaFactory.LABEL_KEYWORDS, crit.Label);
@@ -253,7 +253,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(SearchCriteriaFactory.LABEL_VA_ONLY, crit.Label);
@@ -337,7 +337,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(SearchCriteriaFactory.LABEL_LOCATION_ZIP, crit.Label);
@@ -432,7 +432,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(SearchCriteriaFactory.LABEL_LOCATION_HOSPITAL, crit.Label);
@@ -453,7 +453,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(SearchCriteriaFactory.LABEL_LOCATION_AT_NIH, crit.Label);
@@ -474,7 +474,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(SearchCriteriaFactory.LABEL_HEALTHY_VOLUNTEERS, crit.Label);
@@ -557,7 +557,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(data.ExpectedLabel, crit.Label);
@@ -600,7 +600,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(SearchCriteriaFactory.LABEL_DRUG_LIST, crit.Label);
@@ -626,7 +626,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(data.ExpectedLabel, crit.Label);
@@ -647,7 +647,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(SearchCriteriaFactory.LABEL_TRIAL_ID, crit.Label);
@@ -671,7 +671,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(SearchCriteriaFactory.LABEL_TRIAL_INVESTIGATORS, crit.Label);
@@ -696,7 +696,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(SearchCriteriaFactory.LABEL_TRIAL_LEAD_ORG, crit.Label);
