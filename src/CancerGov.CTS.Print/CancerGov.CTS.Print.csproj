@@ -54,9 +54,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -79,10 +77,6 @@
     <ProjectReference Include="..\..\Libraries\NCILibrary.Core\NCILibrary.Core.csproj">
       <Project>{855cddf5-bb6d-4fdb-afce-9b8c1c9d0d87}</Project>
       <Name>NCILibrary.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\NCILibrary.DataManager\NCILibrary.DataManager.csproj">
-      <Project>{b75a2778-14f2-472a-80d6-a3128e2ad6b2}</Project>
-      <Name>NCILibrary.DataManager</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
