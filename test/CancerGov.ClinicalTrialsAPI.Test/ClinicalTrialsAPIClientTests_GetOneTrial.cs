@@ -10,6 +10,7 @@ using Xunit;
 
 using NCI.Test.IO;
 using NCI.Test.Net;
+using System.Threading.Tasks;
 
 namespace CancerGov.ClinicalTrialsAPI.Test
 {
@@ -20,7 +21,7 @@ namespace CancerGov.ClinicalTrialsAPI.Test
         const string API_KEY = "key1234";
 
         [Fact]
-        async public void RequestStructure()
+        public async Task RequestStructure()
         {
             Mock<IClinicalTrialSearchAPISection> mockConfig = new Mock<IClinicalTrialSearchAPISection>();
             mockConfig.SetupGet(x => x.APIKey).Returns(API_KEY);
@@ -55,7 +56,7 @@ namespace CancerGov.ClinicalTrialsAPI.Test
         [InlineData(HttpStatusCode.BadGateway)] // 502
         [InlineData(HttpStatusCode.ServiceUnavailable)] // 503
         [InlineData(HttpStatusCode.GatewayTimeout)] // 504
-        async public void ServerError(HttpStatusCode status)
+        public async Task ServerError(HttpStatusCode status)
         {
             Mock<IClinicalTrialSearchAPISection> mockConfig = new Mock<IClinicalTrialSearchAPISection>();
             mockConfig.SetupGet(x => x.APIKey).Returns(API_KEY);
@@ -80,7 +81,7 @@ namespace CancerGov.ClinicalTrialsAPI.Test
 
 
         [Fact]
-        async public void TrialExists()
+        public async Task TrialExists()
         {
             string trialID = "NCT02194738";
 
@@ -103,7 +104,7 @@ namespace CancerGov.ClinicalTrialsAPI.Test
 
 
         [Fact]
-        async public void TrialNotFound()
+        public async Task TrialNotFound()
         {
             string trialID = "NCT0999999999";
 

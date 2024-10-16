@@ -44,7 +44,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(SearchCriteriaFactory.LABEL_CANCER_TYPE, crit.Label);
@@ -152,7 +152,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(SearchCriteriaFactory.LABEL_AGE, crit.Label);
@@ -193,7 +193,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(SearchCriteriaFactory.LABEL_KEYWORDS, crit.Label);
@@ -214,7 +214,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(SearchCriteriaFactory.LABEL_KEYWORDS, crit.Label);
@@ -253,7 +253,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(SearchCriteriaFactory.LABEL_VA_ONLY, crit.Label);
@@ -337,7 +337,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(SearchCriteriaFactory.LABEL_LOCATION_ZIP, crit.Label);
@@ -432,7 +432,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(SearchCriteriaFactory.LABEL_LOCATION_HOSPITAL, crit.Label);
@@ -453,7 +453,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(SearchCriteriaFactory.LABEL_LOCATION_AT_NIH, crit.Label);
@@ -474,7 +474,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(SearchCriteriaFactory.LABEL_HEALTHY_VOLUNTEERS, crit.Label);
@@ -549,7 +549,9 @@ namespace CancerGov.CTS.Print.Models.Tests
         /// </summary>
         /// <param name="data"></param>
         [Theory]
+#pragma warning disable xUnit1042 // The member referenced by the MemberData attribute returns untyped data rows
         [MemberData(nameof(TrialType_Data))]
+#pragma warning restore xUnit1042 // The member referenced by the MemberData attribute returns untyped data rows
         public void TrialTypes_ItemsChecked(CriteriaList_Base data)
         {
             var mockCriteria = data.MockCriteria;
@@ -557,7 +559,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(data.ExpectedLabel, crit.Label);
@@ -600,7 +602,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(SearchCriteriaFactory.LABEL_DRUG_LIST, crit.Label);
@@ -618,7 +620,9 @@ namespace CancerGov.CTS.Print.Models.Tests
         /// Handle variations of a valid trial phase list.
         /// </summary>
         [Theory]
+#pragma warning disable xUnit1042 // The member referenced by the MemberData attribute returns untyped data rows
         [MemberData(nameof(TrialPhase_Data))]
+#pragma warning restore xUnit1042 // The member referenced by the MemberData attribute returns untyped data rows
         public void TrialPhases(CriteriaList_Base data)
         {
             var mockCriteria = data.MockCriteria;
@@ -626,7 +630,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(data.ExpectedLabel, crit.Label);
@@ -647,7 +651,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(SearchCriteriaFactory.LABEL_TRIAL_ID, crit.Label);
@@ -671,7 +675,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(SearchCriteriaFactory.LABEL_TRIAL_INVESTIGATORS, crit.Label);
@@ -696,7 +700,7 @@ namespace CancerGov.CTS.Print.Models.Tests
             var criteria = SearchCriteriaFactory.Create(mockCriteria);
 
             Assert.True(criteria.HasCriteria);
-            Assert.Equal(1, criteria.Criteria.Count);
+            Assert.Single(criteria.Criteria);
 
             Criterion crit = criteria.Criteria[0];
             Assert.Equal(SearchCriteriaFactory.LABEL_TRIAL_LEAD_ORG, crit.Label);
