@@ -208,8 +208,6 @@
 	 <meta name="robots" content="noindex">
 	 <title>Clinical Trial Search Results</title>
 	 <script src="https://assets.adobedtm.com/6a4249cd0a2c/949e98979342/launch-5f2a5357bf66.min.js" async></script>
-	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	 <script src="/CTS.Print-js/BasicCTSPrintPage.js" type="text/javascript"></script>
 
 	 <link rel="stylesheet" id="gFonts" href="https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700,700i" />
 	 <link href="/CTS.Print-styles/nvcg.css" rel="stylesheet" />
@@ -218,7 +216,6 @@
      <meta name="Generator" content="CTS.Print" />
 </head>
 <body>
-	<div class="wa-data-element hide" data-prop3="/" data-prop6="Comprehensive Cancer Information" data-prop16="Comprehensive Cancer Information" data-prop25="01/01/1980" data-prop44="Clinical Trials" data-prop62="Clinical Trials: Print Results Page" data-evar44="Clinical Trials" data-evar62="Clinical Trials: Print Results Page" ></div>
 	<div id="cgovContainer">
 		<div id="CT-results-print-banner"><img id="NCILogo" src="https://www.cancer.gov/profiles/custom/cgov_site/themes/custom/cgov/static/images/design-elements/logos/nci-logo-full.svg" alt="NCI Logo"/></div>
 		<div id="cgvBody">
@@ -255,6 +252,8 @@
 ##       A copy of this script exists in print-legacy.txt for use with pages generated
 ##       prior to this version of CTS.Print.  It may be deleted 90 days after go-live.
     <script id="print-script">
+
+        // Set up e-mail link.
         const subject = "Clinical Trials from the National Cancer Institute's Website";
         const body = `Print-Friendly Clinical Trial Descriptions
 
@@ -270,9 +269,34 @@ You can also get cancer information online through the LiveHelp instant messagin
 
         const mailtoLink = document.getElementById("ctl10_EmailResults");
         mailtoLink.attributes['href'].value = newLink;
+
+        // Set up analytics.
+        const loc = new URL(window.location.toString()).searchParams;
+        const printID = loc.get('printID');
+
+        window.NCIDataLayer = window.NCIDataLayer || [];
+        const pageInfo = {
+            name: "www.cancer.gov/cts.print/display",
+            title: "Clinical Trials Print Results Page",
+            metaTitle: "Clinical Trial Search Results",
+            language: "english",
+            type: "CTS Print Results",
+            audience: "none",
+            channel: "Clinical Trials Print Results Page",
+            contentGroup: "Clinical Trials",
+            publishedDate: "01/01/1980",
+            additionalDetails: {
+                printID: `${printID}`
+            }
+        };
+        window.NCIDataLayer.push({
+            type: 'PageLoad',
+            event: 'CTSPrintPageLoad',
+            page: pageInfo
+        });
+
+
     </script>
 
-	<!-- DTM PAGEBOTTOM TAG - DO NOT MODIFY -->
-	<script type="text/javascript">_satellite.pageBottom();</script>
 </body>
 </html>

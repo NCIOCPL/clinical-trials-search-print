@@ -103,7 +103,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CTS.Print-js\BasicCTSPrintPage.js" />
-    <Content Include="CTS.Print-js\print-legacy.txt" />
     <Content Include="CTS.Print-styles\nci-logo-full.svg" />
   </ItemGroup>
   <ItemGroup>
