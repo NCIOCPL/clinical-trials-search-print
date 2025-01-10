@@ -49,7 +49,7 @@ with open(sys.argv[1], encoding="utf-8-sig") as datafile:
 
     for row in reader:
 
-        key = row[0]
+        key = row[0].lower()
         cacheDate = row[1]
         trialIDs = row[2]
         searchParams = row[3]
