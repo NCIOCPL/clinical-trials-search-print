@@ -40,9 +40,12 @@ if (
 
 BUCKET = os.environ["CTS_BUCKET_NAME"]
 
+# The linter is being stupid. These are running totals, not constants.
+# pylint: disable=invalid-name
 loadedCount = 0
 errorCount = 0
 totalCount = 0
+# pylint: enable=invalid-name
 with open(sys.argv[1], encoding="utf-8-sig") as datafile:
     csv.field_size_limit(sys.maxsize)
     reader = csv.reader(datafile)
@@ -55,11 +58,15 @@ with open(sys.argv[1], encoding="utf-8-sig") as datafile:
         searchParams = row[3]
         content = row[4]
 
+        metadataKey = f"{key}-metadata"
+
+        # Convert trials into the string representation of an array,
+        trialList = '["' + '","'.join(trialIDs.split(',')) + '"]'
+        searchMetadata = f"{{\"trial_ids\": {trialList}, \"search_criteria\": {searchParams} }}"
+
         metadata = {}
         metadata["migrated-data"] = "True"
         metadata["originally-generated"] = cacheDate
-        metadata["search-criteria"] = searchParams
-        metadata["trial-id-list"] = trialIDs
 
         print(key)
         try:
@@ -69,6 +76,13 @@ with open(sys.argv[1], encoding="utf-8-sig") as datafile:
                 Metadata=metadata,
                 Body=bytearray(content, "utf-8"),
                 ContentType="text/html",
+            )
+            S3_CLIENT.put_object(
+                Key=metadataKey,
+                Bucket=BUCKET,
+                Metadata=metadata,
+                Body=bytearray(searchMetadata, "utf-8"),
+                ContentType="application/json",
             )
             loadedCount += 1
 
@@ -82,9 +96,11 @@ with open(sys.argv[1], encoding="utf-8-sig") as datafile:
                 raise RuntimeError("\n\n\n\tFatal error - Expired token.\n\n") from err
 
         # Non-AWS errors
+        # pylint: disable=broad-exception-caught
         except Exception as err:
             errorCount += 1
             print(err)
+        # pylint: enable=broad-exception-caught
 
         finally:
             totalCount += 1

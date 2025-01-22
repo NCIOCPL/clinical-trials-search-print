@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -6,7 +7,6 @@ using System.Threading.Tasks;
 using Amazon.S3;
 using Amazon.S3.Model;
 using CancerGov.CTS.Print.DataManager;
-using CancerGov.CTS.Print.Models;
 using Moq;
 using Xunit;
 
@@ -34,7 +34,8 @@ namespace CancerGov.CTS.Print.PrintCache
 
             const string key = "ca761232-ed42-11ce-bacd-00aa0057b223";
 
-            SearchCriteria criteria = SearchCriteriaFactory.Create(null);
+            // Exact contents don't matter, we just need something.
+            string mockMetadata = "{\"trial_ids\": [ \"trial-id-1\", \"trial-id-2\"],\"search_criteria\": null}";
 
             var cm = new PrintCacheManager(mockClientConfig.Object, "fake-bucket-name");
 
@@ -42,7 +43,7 @@ namespace CancerGov.CTS.Print.PrintCache
                 (
                     async () =>
                     {
-                        await cm.Save(new Guid(key), new string[] { "trial-id-1", "trial-id-2" }, criteria, "blob of HTML");
+                        await cm.Save(new Guid(key), mockMetadata, "blob of HTML");
                     }
                 );
             Assert.Equal(
@@ -64,44 +65,50 @@ namespace CancerGov.CTS.Print.PrintCache
         {
             Mock<IAmazonS3> mockClientConfig = new Mock<IAmazonS3>();
 
-            PutObjectRequest actualRequest = null;
-
             PutObjectResponse mockResponse = new PutObjectResponse
             {
                 HttpStatusCode = status
             };
 
-            const string expectedKey = "ca761232-ed42-11ce-bacd-00aa0057b223";
+            const string mockBucketName = "fake-bucket-name";
+
+            const string contentKey = "ca761232-ed42-11ce-bacd-00aa0057b223";
+            string metadataKey = $"{contentKey}-metadata";  // Can't put this as a const in C# 7.3.
+
+            // The exact strings don't matter, we just need values.
+            const string expectedMetadata = "\"trial_ids\": [\"trial-id-1\",\"trial-id-2\"], \"search_criteria\":{\"trialTypes\":[{\"label\":\"Supportive Care\",\"value\":\"supportive_care\",\"checked\":true}],\"location\": \"search-location-country\",\"country\": \"Canada\"}";
             const string expectedBody = "<html><body><p>Blob of HTML</p></body></html>";
 
-            // Need to accomodate AWS prepending "x-amz-meta-" to the metadata field names.
-            string trial_id_key = String.Format("x-amz-meta-{0}", PrintCacheManager.METADATA_TRIAL_ID_LIST_KEY);
-            string search_criteria_key = String.Format("x-amz-meta-{0}", PrintCacheManager.METADATA_SEARCH_CRITERIA_KEY);
-            const string expectedTrialList = "trial-id-1,trial-id-2";
-            const string expectedSearchCriteria = "[{\"Label\":\"Country\",\"Value\":\"Canada\"},{\"Label\":\"Supportive Care\",\"Value\":\"supportive_care\"}]";
 
             mockClientConfig.Setup(svc => svc.PutObjectAsync(It.IsAny<PutObjectRequest>(), It.IsAny<CancellationToken>()))
-                .Callback((PutObjectRequest request, CancellationToken tok) => actualRequest = request)
                 .ReturnsAsync(mockResponse);
 
-            SearchCriteria criteria = SearchCriteriaFactory.Create(null);
-            criteria.Add("Country", "Canada");
-            criteria.Add("Supportive Care", "supportive_care");
+            var cm = new PrintCacheManager(mockClientConfig.Object, mockBucketName);
 
-            var cm = new PrintCacheManager(mockClientConfig.Object, "fake-bucket-name");
+            await cm.Save(new Guid(contentKey), expectedMetadata, expectedBody);
 
-            await cm.Save(new Guid(expectedKey), new string[] { "trial-id-1", "trial-id-2" }, criteria, expectedBody);
+            // Verify a request was made to save the metadata.
+            mockClientConfig.Verify(svc => svc.PutObjectAsync(
+                    It.Is<PutObjectRequest>(req =>
+                        req.BucketName == mockBucketName
+                        && req.Key == metadataKey
+                        && req.ContentBody == expectedMetadata
+                        && req.ContentType == "application/json"
+                    ),
+                    It.IsAny<CancellationToken>()
+                ), Times.Once()
+            );
 
-            Assert.NotNull(actualRequest);
-            Assert.Equal(expectedKey, actualRequest.Key);
-            Assert.Equal(expectedBody, actualRequest.ContentBody);
-
-            Assert.NotEmpty(actualRequest.Metadata.Keys);
-            Assert.Contains(trial_id_key, actualRequest.Metadata.Keys);
-            Assert.Contains(search_criteria_key, actualRequest.Metadata.Keys);
-
-            Assert.Equal(expectedTrialList, actualRequest.Metadata[trial_id_key]);
-            Assert.Equal(expectedSearchCriteria, actualRequest.Metadata[search_criteria_key]);
+            mockClientConfig.Verify(svc => svc.PutObjectAsync(
+                    It.Is<PutObjectRequest>(req =>
+                        req.BucketName == mockBucketName
+                        && req.Key == contentKey
+                        && req.ContentBody == expectedBody
+                        && req.ContentType == "text/html"
+                    ),
+                    It.IsAny<CancellationToken>()
+                ), Times.Once()
+            );
 
         }
     }
