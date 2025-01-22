@@ -308,9 +308,12 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint
                 string referenceURL = String.Format(PrintPageDisplayURLFormat, key);
                 page = page.Replace("${generatePrintURL}", referenceURL);
 
-                // Save the results.
+                // Use the entire request body as metadata.
+                string rawRequestData = requestBody.ToString(Formatting.None);
+
+                // Save the page.
                 var datamgr = GetPrintCacheManager();
-                await datamgr.Save(key, trialIDs, criteria, page);
+                await datamgr.Save(key, rawRequestData, page);
 
                 // Set up the return.
                 statusCode = 200;
