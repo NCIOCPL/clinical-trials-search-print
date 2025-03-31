@@ -207,4 +207,3 @@ function BackupFiles($siteName, $sitePath) {
 }
 
 Main;
-Read-Host -Prompt "Press Enter to exit."

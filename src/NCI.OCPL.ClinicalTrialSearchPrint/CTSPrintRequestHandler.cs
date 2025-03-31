@@ -8,6 +8,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 
+using Amazon.S3;
+
 using Common.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -17,18 +19,87 @@ using CancerGov.CTS.Print.DataManager;
 using CancerGov.CTS.Print.Models;
 using CancerGov.CTS.Print.Rendering;
 
+using CGovLocationType = CancerGov.CTS.Print.Models.LocationType;
+
 namespace NCI.OCPL.ClinicalTrialSearchPrint
 {
     // Handles all requests for the CTS.Print service.
     public class CTSPrintRequestHandler : HttpTaskAsyncHandler
     {
+        const string DEFAULT_CTS_PRINT_TEMPLATE = "~/VelocityTemplates/PrintResults.vm";
+
+        const string DEFAULT_CTS_PRINT_DISPLAY_URL_FORMAT = "/CTS.Print/Display?printid={0}";
+
         public static string MISSING_FIELD_MESSAGE { get; } = "Field is empty or not found";
 
         public static string MUST_BE_RELATIVE_LINK_MESSAGE { get; } = "Must be an absolute path.";
 
         public static string INVALID_CHARACTERS_MESSAGE { get; } = "Field contains invalid characters";
 
-        static ILog log = LogManager.GetLogger(typeof(PrintCacheManager));
+        static readonly ILog log = LogManager.GetLogger(typeof(PrintCacheManager));
+
+        /// <summary>
+        /// Get the location of the printed page velocity template;
+        /// </summary>
+        private string PrintTemplate
+        {
+            get
+            {
+                string printTemplatePath = ConfigurationManager.AppSettings["printTemplate"];
+                if (String.IsNullOrWhiteSpace(printTemplatePath))
+                    printTemplatePath = DEFAULT_CTS_PRINT_TEMPLATE;
+                return printTemplatePath;
+            }
+        }
+
+        /// <summary>
+        /// Get the format string for the URL to use when retrieving the generated page.
+        /// </summary>
+        private string PrintPageDisplayURLFormat
+        {
+            get
+            {
+                string formatString = ConfigurationManager.AppSettings["displayUrlFormat"];
+                if (String.IsNullOrWhiteSpace(formatString))
+                    formatString = DEFAULT_CTS_PRINT_DISPLAY_URL_FORMAT;
+                return formatString;
+            }
+        }
+
+        /// <summary>
+        /// Get the name of the environment variable to retrieve the S3 bucket's name.
+        /// </summary>
+        private string S3BucketVariableName
+        {
+            get
+            {
+                string varName = ConfigurationManager.AppSettings["S3BucketName_Var"];
+                if (String.IsNullOrWhiteSpace(varName))
+                {
+                    varName = "ClinicalTrials_S3BucketName";
+                }
+                return varName;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve the S3 bucket's name from an environment variable.
+        /// </summary>
+        private string S3BucketName
+        {
+            get
+            {
+                string bucketName = Environment.GetEnvironmentVariable(S3BucketVariableName);
+                if (String.IsNullOrWhiteSpace(bucketName))
+                {
+                    string configMsg = $"S3 bucket environment variable '{bucketName}' is not set.";
+
+                    log.Error(configMsg);
+                    throw new ConfigurationErrorsException(configMsg);
+                }
+                return bucketName;
+            }
+        }
 
         // A single instance of HttpClient is intended to be shared by all requests within
         // an application.
@@ -49,8 +120,10 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint
                 AutomaticDecompression = System.Net.DecompressionMethods.GZip | System.Net.DecompressionMethods.Deflate
             };
 
-            _httpClient = new HttpClient(handler);
-            _httpClient.BaseAddress = baseUrl;
+            _httpClient = new HttpClient(handler)
+            {
+                BaseAddress = baseUrl
+            };
 
             // Formally add the accept headers. NOTE: Brotli compression is not supported in the 4.x framework. That requires .Net Core 3.0 and later.
             _httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("gzip"));
@@ -70,20 +143,20 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint
             // Generate on Post requests.
             if (request.HttpMethod == "POST")
             {
-                (int StatusCode, string ContentType, string Content) result = await GenerateCachedPage(request);
+                (int StatusCode, string ContentType, string Content) = await GenerateCachedPage(request);
 
-                context.Response.StatusCode = result.StatusCode;
-                context.Response.ContentType = result.ContentType;
-                context.Response.Write(result.Content);
+                context.Response.StatusCode = StatusCode;
+                context.Response.ContentType = ContentType;
+                context.Response.Write(Content);
             }
             // Retrieve the page on GET requests.
             else if (request.HttpMethod == "GET")
             {
-                (int StatusCode, string Content) result = await GetCachedContent(request.QueryString["printid"], context);
+                (int StatusCode, string Content) = await GetCachedContent(request.QueryString["printid"], context);
 
-                context.Response.StatusCode = result.StatusCode;
+                context.Response.StatusCode = StatusCode;
                 context.Response.ContentType = "text/html";
-                context.Response.Write(result.Content);
+                context.Response.Write(Content);
             }
             // Anything else, return an error.
             else
@@ -103,7 +176,6 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint
         public async Task<(int StatusCode, string Content)> GetCachedContent(string printID, HttpContext context)
         {
             PrintCacheManager cacheManager = GetPrintCacheManager();
-            string referenceURL = context.Request.Url.ToString();
 
             Guid cacheID;
             int statusCode;
@@ -112,14 +184,6 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint
             if (Guid.TryParse(printID, out cacheID))
             {
                 string data = await cacheManager.GetPage(cacheID);
-                data = data.Replace("${generatePrintURL}", referenceURL);
-
-                // Hack to enable "Email These Results" functionality for pages generated by the previous generator.
-                if(data.IndexOf(@"<meta name=""Generator"" content=""CTS.Print"" />") < 0)
-                {
-                    string legacyScript = context.Server.MapPath("~/CTS.Print-js/print-legacy.txt");
-                    data = InsertLegacyPrintScript(data, legacyScript);
-                }
 
                 if (!String.IsNullOrWhiteSpace(data))
                 {
@@ -211,7 +275,7 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint
 
                 RemoveNonRecruitingSites(trialDetails);
 
-                if((locationData.IsVAOnly && locationData.LocationType != LocationType.Hospital) || (locationData.LocationType == LocationType.CountryCityState || locationData.LocationType == LocationType.Zip || locationData.LocationType == LocationType.AtNIH))
+                if((locationData.IsVAOnly && locationData.LocationType != CGovLocationType.Hospital) || (locationData.LocationType == CGovLocationType.CountryCityState || locationData.LocationType == CGovLocationType.Zip || locationData.LocationType == CGovLocationType.AtNIH))
                 {
                     foreach(JObject trial in trialDetails["data"].Values<JObject>())
                     {
@@ -228,7 +292,7 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint
                 trialDetails = EnforceTrialOrder(trialDetails, trialIDs);
 
                 // Get the path to the page template.
-                string template = ConfigurationManager.AppSettings["printTemplate"];
+                string template = PrintTemplate;
                 if (String.IsNullOrWhiteSpace(template))
                     throw new ConfigurationErrorsException("printTemplate not set");
                 template = request.RequestContext.HttpContext.Server.MapPath(template);
@@ -237,15 +301,24 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint
                 var renderer = new PrintRenderer(template);
                 string page = renderer.Render(trialDetails, criteria, locationData, linkTemplate, newSearchLink);
 
-                // Save the results.
-                string connString = ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString;
-                var datamgr = new PrintCacheManager(connString);
-                Guid cacheId = datamgr.Save(trialIDs, criteria, page);
+                // Generate document key
+                Guid key = Guid.NewGuid();
+
+                // Insert link to the page.
+                string referenceURL = String.Format(PrintPageDisplayURLFormat, key);
+                page = page.Replace("${generatePrintURL}", referenceURL);
+
+                // Use the entire request body as metadata.
+                string rawRequestData = requestBody.ToString(Formatting.None);
+
+                // Save the page.
+                var datamgr = GetPrintCacheManager();
+                await datamgr.Save(key, rawRequestData, page);
 
                 // Set up the return.
                 statusCode = 200;
                 contentType = "application/json";
-                responseBody = $"{{\"printID\": \"{cacheId}\"}}";
+                responseBody = $"{{\"printID\": \"{key}\"}}";
             }
             catch (Exception ex)
             {
@@ -351,7 +424,7 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint
                 {
                     log.WarnFormat("Site List is empty. {0}", trial.ToString());
                 }
-            }    
+            }
         }
 
         /// <summary>
@@ -384,22 +457,22 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint
         ///
         ///     LocationType.Zip - returns only the sites within searchParams.ZipRadius miles
         ///                        of searchParams.GeoLocation.
-        /// 
+        ///
         /// NOTE: LocationTypes for Hospital and None will not be filtered.
         /// </summary>
-        /// <returns>An array of trial sites matching the location criteria.</returns> 
+        /// <returns>An array of trial sites matching the location criteria.</returns>
         public JArray GetFilteredLocations(JArray sites, LocationCriteria searchParams)
         {
             IEnumerable<JToken> rtnSites = sites;
 
             switch (searchParams.LocationType)
             {
-                case LocationType.AtNIH:
+                case CGovLocationType.AtNIH:
                     {
                         rtnSites = rtnSites.Where(s => s["org_postal_code"]?.Value<string>() == "20892");
                         break;
                     }
-                case LocationType.CountryCityState:
+                case CGovLocationType.CountryCityState:
                     {
                         if (searchParams.HasCountry)
                         {
@@ -418,7 +491,7 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint
 
                         break;
                     }
-                case LocationType.Zip:
+                case CGovLocationType.Zip:
                     {
                         rtnSites = rtnSites.Where(site =>
                         {
@@ -441,7 +514,7 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint
                     }
             }
 
-            if (searchParams.IsVAOnly && searchParams.LocationType != LocationType.Hospital)
+            if (searchParams.IsVAOnly && searchParams.LocationType != CGovLocationType.Hospital)
             {
                 rtnSites = rtnSites.Where(s => s["org_va"] != null && s["org_va"].Value<bool>());
             }
@@ -527,28 +600,24 @@ namespace NCI.OCPL.ClinicalTrialSearchPrint
         /// <exception cref="ConfigurationErrorsException"></exception>
         private PrintCacheManager GetPrintCacheManager()
         {
-            string connString = ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString;
-
-            if(String.IsNullOrWhiteSpace(connString))
-            {
-                log.Error("DbConnectionString not configured.");
-                throw new ConfigurationErrorsException("DbConnectionString not configured.");
-            }
-
-            return new PrintCacheManager(connString);
+            AmazonS3Config config = GetS3ClientConfig();
+            AmazonS3Client client = new AmazonS3Client(config);
+            return new PrintCacheManager(client, S3BucketName);
         }
 
-        public string InsertLegacyPrintScript(string data, string scriptPath)
+        /// <summary>
+        /// Get an <see cref="https://docs.aws.amazon.com/sdkfornet/v3/apidocs/items/S3/TS3Config.html">AmazonS3Config</see>
+        /// object with our custom settings.
+        /// </summary>
+        /// <returns>A customized AmazonS3Config instance.</returns>
+        private AmazonS3Config GetS3ClientConfig()
         {
-            string script = File.ReadAllText(scriptPath);
-            string modified;
+            AmazonS3Config config = new AmazonS3Config()
+            {
+                AllowAutoRedirect = true    // Follow any redirects on the S3.
+            };
 
-            int contentEndPoint = data.IndexOf("</body", StringComparison.InvariantCultureIgnoreCase);
-            modified = data.Substring(0, contentEndPoint)
-                + script
-                + data.Substring(contentEndPoint);
-
-            return modified;
+            return config;
         }
     }
 }

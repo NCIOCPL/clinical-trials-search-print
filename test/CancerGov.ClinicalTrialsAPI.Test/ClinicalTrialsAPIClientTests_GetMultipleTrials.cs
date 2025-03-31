@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net.Http;
 using System.Net;
+using System.Threading.Tasks;
 
 using Moq;
 using Newtonsoft.Json.Linq;
@@ -20,7 +21,7 @@ namespace CancerGov.ClinicalTrialsAPI.Test
         const string API_KEY = "key1234";
 
         [Fact]
-        async public void RequestStructure()
+        public async Task RequestStructure()
         {
             string[] trialIDs = { "NCI-2014-01507", "NCI-2015-00054", "NCI-2013-00875" };
             JObject expectedBody = JObject.Parse(@"
@@ -71,7 +72,7 @@ namespace CancerGov.ClinicalTrialsAPI.Test
         [InlineData(HttpStatusCode.BadGateway)] // 502
         [InlineData(HttpStatusCode.ServiceUnavailable)] // 503
         [InlineData(HttpStatusCode.GatewayTimeout)] // 504
-        async public void ServerError(HttpStatusCode status)
+        public async Task ServerError(HttpStatusCode status)
         {
             string[] trialIDs = { "NCI-2014-01507", "NCI-2015-00054", "NCI-2013-00875" };
 
@@ -96,7 +97,7 @@ namespace CancerGov.ClinicalTrialsAPI.Test
         }
 
         [Fact]
-        async public void TrialsExist()
+        public async Task TrialsExist()
         {
             string[] trialIDs = { "NCI-2014-01507", "NCI-2015-00054", "NCI-2013-00875" };
 
@@ -118,7 +119,7 @@ namespace CancerGov.ClinicalTrialsAPI.Test
 
 
         [Fact]
-        async public void TrialNotFound()
+        public async Task TrialNotFound()
         {
             string[] trialIDs = { "NCI-2014-999999", "NCI-2015-999999", "NCI-2013-999999" };
 
