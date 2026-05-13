@@ -25,17 +25,14 @@ jobs:
       contents: read
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
       name: Checkout Code
 
     - name: Setup MSBuild Path
-      uses: microsoft/setup-msbuild@v2
-      with:
-        # Stick to VS 2022, block later versions for now.
-        vs-version: '[17.0,18.0)'
+      uses: microsoft/setup-msbuild@v3
 
     - name: Setup NuGet
-      uses: NuGet/setup-nuget@v2
+      uses: NuGet/setup-nuget@v4
 
     - name: Restore NuGet Packages
       run: nuget restore clinical-trials-search-print.sln
@@ -63,7 +60,7 @@ jobs:
           output-name: "${{github.workspace}}/publish/cts.print/build-info.json"
 
     - name: Upload Artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: clinical-trials-search-print
         path: .\publish
