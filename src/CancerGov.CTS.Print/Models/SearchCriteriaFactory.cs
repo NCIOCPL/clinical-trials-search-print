@@ -30,6 +30,7 @@ namespace CancerGov.CTS.Print.Models
         public const string LABEL_TRIAL_TYPE = "Trial Type";
         public const string LABEL_DRUG_LIST = "Drug/Drug Family";
         public const string LABEL_OTHER_TREATMENTS = "Other Treatments";
+        public const string LABEL_PRIOR_TREATMENT = "Prior Drugs or Other Treatments";
         public const string LABEL_TREATMENT_PHASE = "Trial Phase";
         public const string LABEL_TRIAL_ID = "Trial ID";
         public const string LABEL_TRIAL_INVESTIGATORS = "Trial Investigators";
@@ -68,6 +69,7 @@ namespace CancerGov.CTS.Print.Models
                 GetSelectedCriteria(rawCriteria, criteria, "trialTypes", LABEL_TRIAL_TYPE, "label", "checked");
                 GetCriteriaList(rawCriteria, criteria, LABEL_DRUG_LIST, "drugs", "name");
                 GetCriteriaList(rawCriteria, criteria, LABEL_OTHER_TREATMENTS, "treatments", "name");
+                GetCriteriaList(rawCriteria, criteria, LABEL_PRIOR_TREATMENT, "priorTherapy", "name");
                 GetSelectedCriteria(rawCriteria, criteria, "trialPhases", LABEL_TREATMENT_PHASE, "label", "checked");
                 GetCriterion(rawCriteria, criteria, LABEL_TRIAL_ID, "trialId");
                 GetCriterion(rawCriteria, criteria, LABEL_TRIAL_INVESTIGATORS, "investigator", "term");
